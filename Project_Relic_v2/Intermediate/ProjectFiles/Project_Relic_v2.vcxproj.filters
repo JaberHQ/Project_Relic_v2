@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Project_Relic_v2.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Project_Relic_v2.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\Project_Relic_v2Editor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Project_Relic_v2">
+      <UniqueIdentifier>{C16AB064-9819-39AE-AC2D-5AC558CB8798}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2Character.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Project_Relic_v2Character.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2GameMode.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Project_Relic_v2GameMode.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2PlayerController.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Project_Relic_v2PlayerController.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Combat">
+      <UniqueIdentifier>{4BDDD53F-00EA-37E6-A676-905ECA9A5842}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\CombatCharacter.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\CombatCharacter.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\CombatGameMode.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\CombatGameMode.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\CombatPlayerController.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\CombatPlayerController.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Combat\AI">
+      <UniqueIdentifier>{06F7C3A7-F2BE-3542-A4AF-A3402907057C}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatAIController.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatAIController.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatEnemy.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatEnemy.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatEnemySpawner.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatEnemySpawner.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatStateTreeUtility.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\CombatStateTreeUtility.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\EnvQueryContext_Player.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\AI\EnvQueryContext_Player.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\AI</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Combat\Animation">
+      <UniqueIdentifier>{26E0AD0E-77F9-3690-B33F-EF181E9C6ED6}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Animation\AnimNotify_CheckChargedAttack.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Animation</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Animation\AnimNotify_CheckChargedAttack.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Animation</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Animation\AnimNotify_CheckCombo.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Animation</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Animation\AnimNotify_CheckCombo.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Animation</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Animation\AnimNotify_DoAttackTrace.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Animation</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Animation\AnimNotify_DoAttackTrace.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Animation</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Combat\Gameplay">
+      <UniqueIdentifier>{15AA93B2-2097-3519-97BA-A62C40592312}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatActivationVolume.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatActivationVolume.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatCheckpointVolume.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatCheckpointVolume.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatDamageableBox.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatDamageableBox.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatDummy.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatDummy.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatLavaFloor.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Gameplay\CombatLavaFloor.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Gameplay</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Combat\Interfaces">
+      <UniqueIdentifier>{CD8F0647-972C-39C0-810B-DC0CEB8D139E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Interfaces\CombatActivatable.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Interfaces</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Interfaces\CombatActivatable.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Interfaces</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Interfaces\CombatAttacker.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Interfaces</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Interfaces\CombatAttacker.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Interfaces</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\Interfaces\CombatDamageable.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Interfaces</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\Interfaces\CombatDamageable.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\Interfaces</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Combat\UI">
+      <UniqueIdentifier>{6C95EDBB-88E5-3EF6-B576-F1AE9C65D4A9}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Combat\UI\CombatLifeBar.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Combat\UI\CombatLifeBar.h">
+      <Filter>Source\Project_Relic_v2\Variant_Combat\UI</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Platforming">
+      <UniqueIdentifier>{6AA0B92A-6B90-33EC-B2F8-77191409599A}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Platforming\PlatformingCharacter.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Platforming\PlatformingCharacter.h">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Platforming\PlatformingGameMode.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Platforming\PlatformingGameMode.h">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Platforming\PlatformingPlayerController.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Platforming\PlatformingPlayerController.h">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_Platforming\Animation">
+      <UniqueIdentifier>{0604BA68-7D52-3BD3-95D6-573AAB3B903C}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_Platforming\Animation\AnimNotify_EndDash.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming\Animation</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_Platforming\Animation\AnimNotify_EndDash.h">
+      <Filter>Source\Project_Relic_v2\Variant_Platforming\Animation</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_SideScrolling">
+      <UniqueIdentifier>{8C9AD0AA-EB04-3E27-9585-B7D9423C8E4B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingCameraManager.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingCameraManager.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingCharacter.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingCharacter.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingGameMode.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingGameMode.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingPlayerController.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\SideScrollingPlayerController.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_SideScrolling\AI">
+      <UniqueIdentifier>{8D367437-AE4F-32DC-B64C-7704EFEC453A}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\AI\SideScrollingAIController.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\AI\SideScrollingAIController.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\AI\SideScrollingNPC.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\AI\SideScrollingNPC.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\AI</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\AI\SideScrollingStateTreeUtility.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\AI\SideScrollingStateTreeUtility.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\AI</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_SideScrolling\Gameplay">
+      <UniqueIdentifier>{FF1D6D3F-906D-3E4E-A3C7-BB7D38496D20}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingJumpPad.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingJumpPad.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingMovingPlatform.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingMovingPlatform.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingPickup.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingPickup.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingSoftPlatform.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Gameplay\SideScrollingSoftPlatform.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Gameplay</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_SideScrolling\Interfaces">
+      <UniqueIdentifier>{9AC1CA2F-05FC-3642-A75D-2E63D1D088BC}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Interfaces\SideScrollingInteractable.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Interfaces</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\Interfaces\SideScrollingInteractable.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\Interfaces</Filter>
+    </ClInclude>
+    <Filter Include="Source\Project_Relic_v2\Variant_SideScrolling\UI">
+      <UniqueIdentifier>{6DCBC63E-A802-3764-878A-55CF2993F938}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\UI\SideScrollingUI.cpp">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\Variant_SideScrolling\UI\SideScrollingUI.h">
+      <Filter>Source\Project_Relic_v2\Variant_SideScrolling\UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

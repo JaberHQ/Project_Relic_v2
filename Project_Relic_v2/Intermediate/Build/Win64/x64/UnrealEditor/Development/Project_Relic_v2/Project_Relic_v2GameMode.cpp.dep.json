@@ -1,0 +1,19 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\project_relic_v2gamemode.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\x64\\project_relic_v2editor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\project_relic_v2\\definitions.project_relic_v2.h",
+            "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\project_relic_v2gamemode.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\project_relic_v2gamemode.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

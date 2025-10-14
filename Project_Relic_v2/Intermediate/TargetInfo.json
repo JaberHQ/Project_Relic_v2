@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Project_Relic_v2",
+			"Path": "..\\Source\\Project_Relic_v2.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "Project_Relic_v2Editor",
+			"Path": "..\\Source\\Project_Relic_v2Editor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
