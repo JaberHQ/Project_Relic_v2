@@ -73,7 +73,9 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::Look);
 
 		// Crouching
-		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoCrouch);
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AProject_Relic_v2Character::BeginCrouch);
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AProject_Relic_v2Character::EndCrouch);
+
 
 	}
 	else
@@ -152,12 +154,22 @@ void AProject_Relic_v2Character::DoJumpEnd()
 	StopJumping();
 }
 
-void AProject_Relic_v2Character::DoCrouchStart()
+void AProject_Relic_v2Character::BeginCrouch()
 {
 	Crouch();
 }
 
-void AProject_Relic_v2Character::DoCrouchStart()
+void AProject_Relic_v2Character::EndCrouch()
 {
 	UnCrouch();
 }
+
+//void AProject_Relic_v2Character::DoCrouchStart()
+//{
+//	Crouch();
+//}
+//
+//void AProject_Relic_v2Character::DoCrouchStart()
+//{
+//	UnCrouch();
+//}

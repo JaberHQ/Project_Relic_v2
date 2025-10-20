@@ -93,12 +93,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
 
+	void BeginCrouch();
+	void EndCrouch();
+
 	/** Crouching */
-	UFUNCTION(BlueprintCallable, Category = "Input")
+	/*UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoCrouchStart();
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void DoCrouchEnd();
+	virtual void DoCrouchEnd();*/
 
 
 	/*UFUNCTION(BlueprintCallable, Category = "Movement")

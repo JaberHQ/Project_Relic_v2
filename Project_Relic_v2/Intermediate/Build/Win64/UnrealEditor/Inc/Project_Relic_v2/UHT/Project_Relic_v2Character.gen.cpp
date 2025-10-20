@@ -22,72 +22,6 @@ PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character_NoReg
 UPackage* Z_Construct_UPackage__Script_Project_Relic_v2();
 // ********** End Cross Module References **********************************************************
 
-// ********** Begin Class AProject_Relic_v2Character Function DoCrouchEnd **************************
-struct Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchEnd_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Input" },
-		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchEnd_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "DoCrouchEnd", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchEnd_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchEnd_Statics::Function_MetaDataParams)},  };
-UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchEnd()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchEnd_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AProject_Relic_v2Character::execDoCrouchEnd)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->DoCrouchEnd();
-	P_NATIVE_END;
-}
-// ********** End Class AProject_Relic_v2Character Function DoCrouchEnd ****************************
-
-// ********** Begin Class AProject_Relic_v2Character Function DoCrouchStart ************************
-struct Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchStart_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Input" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "/** Crouching */" },
-#endif
-		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Crouching" },
-#endif
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchStart_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "DoCrouchStart", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchStart_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchStart_Statics::Function_MetaDataParams)},  };
-UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchStart()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchStart_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AProject_Relic_v2Character::execDoCrouchStart)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->DoCrouchStart();
-	P_NATIVE_END;
-}
-// ********** End Class AProject_Relic_v2Character Function DoCrouchStart **************************
-
 // ********** Begin Class AProject_Relic_v2Character Function DoJumpEnd ****************************
 struct Z_Construct_UFunction_AProject_Relic_v2Character_DoJumpEnd_Statics
 {
@@ -273,8 +207,6 @@ void AProject_Relic_v2Character::StaticRegisterNativesAProject_Relic_v2Character
 {
 	UClass* Class = AProject_Relic_v2Character::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
-		{ "DoCrouchEnd", &AProject_Relic_v2Character::execDoCrouchEnd },
-		{ "DoCrouchStart", &AProject_Relic_v2Character::execDoCrouchStart },
 		{ "DoJumpEnd", &AProject_Relic_v2Character::execDoJumpEnd },
 		{ "DoJumpStart", &AProject_Relic_v2Character::execDoJumpStart },
 		{ "DoLook", &AProject_Relic_v2Character::execDoLook },
@@ -411,8 +343,6 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchEnd, "DoCrouchEnd" }, // 2750799325
-		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouchStart, "DoCrouchStart" }, // 2393294011
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoJumpEnd, "DoJumpEnd" }, // 3753467309
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoJumpStart, "DoJumpStart" }, // 2364487555
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoLook, "DoLook" }, // 222299045
@@ -479,10 +409,10 @@ AProject_Relic_v2Character::~AProject_Relic_v2Character() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 3684527316U) },
+		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 3022635529U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_1996674801(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_2709471510(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

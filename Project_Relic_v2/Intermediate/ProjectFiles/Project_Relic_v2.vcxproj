@@ -75,7 +75,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D9E46C81-6B72-3145-B646-857D74245914}</ProjectGuid>
+    <ProjectGuid>{C943938C-4858-36F4-A1E6-CA4F32101FB6}</ProjectGuid>
     <RootNamespace>Project_Relic_v2</RootNamespace>
   </PropertyGroup>
   <Import Project="UECommon.props" />
@@ -260,12 +260,6 @@
     <None Include="..\..\Project_Relic_v2.uproject"/>
     <None Include="..\..\Source\Project_Relic_v2.Target.cs"/>
     <None Include="..\..\Source\Project_Relic_v2Editor.Target.cs"/>
-    <None Include="..\..\.vsconfig"/>
-    <None Include="..\..\Config\DefaultEditor.ini"/>
-    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini"/>
-    <None Include="..\..\Config\DefaultEngine.ini"/>
-    <None Include="..\..\Config\DefaultGame.ini"/>
-    <None Include="..\..\Config\DefaultInput.ini"/>
     <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs"/>
     <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
