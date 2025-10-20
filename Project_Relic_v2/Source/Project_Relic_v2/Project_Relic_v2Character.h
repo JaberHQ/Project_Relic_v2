@@ -30,6 +30,9 @@ class AProject_Relic_v2Character : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* WeaponComponent;
 	
 protected:
 
@@ -49,6 +52,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* CrouchAction;
+
 public:
 
 	/** Constructor */
@@ -66,6 +72,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	virtual void BeginPlay() override;
 
 public:
 
@@ -85,6 +93,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
 
+	/** Crouching */
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoCrouchStart();
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoCrouchEnd();
+
+
+	/*UFUNCTION(BlueprintCallable, Category = "Movement")
+	void SetIsCrouching(bool isCrouched);
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	bool GetIsCrouching() const;*/
+
+
 public:
 
 	/** Returns CameraBoom subobject **/
@@ -92,5 +115,8 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+private:
+	//bool bIsCrouching;
 };
 

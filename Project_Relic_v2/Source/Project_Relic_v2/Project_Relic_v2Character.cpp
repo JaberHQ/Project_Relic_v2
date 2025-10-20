@@ -34,6 +34,7 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
+	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -48,6 +49,9 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
+	// Create a Weapon Component
+	WeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponComponent"));
+	WeaponComponent->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -67,6 +71,10 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::Look);
+
+		// Crouching
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoCrouch);
+
 	}
 	else
 	{
@@ -90,6 +98,16 @@ void AProject_Relic_v2Character::Look(const FInputActionValue& Value)
 
 	// route the input
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
+}
+
+void AProject_Relic_v2Character::BeginPlay()
+{
+	/*Super::BeginPlay();
+
+	if (WeaponComponent)
+	{
+		WeaponComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("hand_rSocket"));
+	}*/
 }
 
 void AProject_Relic_v2Character::DoMove(float Right, float Forward)
@@ -132,4 +150,14 @@ void AProject_Relic_v2Character::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+void AProject_Relic_v2Character::DoCrouchStart()
+{
+	Crouch();
+}
+
+void AProject_Relic_v2Character::DoCrouchStart()
+{
+	UnCrouch();
 }
