@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Lvl_ThirdPerson.umap",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Blueprints/BP_PlayerController.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Blueprints/BP_GameMode.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/Input/Actions/IA_Crouch.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/__ExternalActors__/ThirdPerson/Lvl_ThirdPerson/C/HY/Q7CPP7VHOXBAMAJI90W626.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Blueprints/BP_Project_Relic_v2GameMode.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/__ExternalActors__/ThirdPerson/Lvl_ThirdPerson/F/4G/TYFCMQ9MC435YW6FZBF5FS.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Blueprints/BP_ThirdPersonPlayerController.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Blueprints/BP_ThirdPersonGameMode.uasset"
+			]
+		}
+	]
+}

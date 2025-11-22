@@ -75,8 +75,6 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 		// Crouching
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AProject_Relic_v2Character::BeginCrouch);
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AProject_Relic_v2Character::EndCrouch);
-
-
 	}
 	else
 	{
