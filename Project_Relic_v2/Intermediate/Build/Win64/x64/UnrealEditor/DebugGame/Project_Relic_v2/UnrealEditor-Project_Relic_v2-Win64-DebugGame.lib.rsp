@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-Project_Relic_v2-Win64-DebugGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/Project_Relic_v2Editor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h.obj"
+"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.1.cpp.obj"
+"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.2.cpp.obj"
+"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.3.cpp.obj"
+"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Default.rc2.res"
+/OUT:"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/UnrealEditor-Project_Relic_v2-Win64-DebugGame.lib"

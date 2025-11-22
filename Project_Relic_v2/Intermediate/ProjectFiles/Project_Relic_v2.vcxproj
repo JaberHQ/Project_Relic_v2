@@ -260,6 +260,11 @@
     <None Include="..\..\Project_Relic_v2.uproject"/>
     <None Include="..\..\Source\Project_Relic_v2.Target.cs"/>
     <None Include="..\..\Source\Project_Relic_v2Editor.Target.cs"/>
+    <None Include="..\..\Config\DefaultEditor.ini"/>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini"/>
+    <None Include="..\..\Config\DefaultEngine.ini"/>
+    <None Include="..\..\Config\DefaultGame.ini"/>
+    <None Include="..\..\Config\DefaultInput.ini"/>
     <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs"/>
     <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
