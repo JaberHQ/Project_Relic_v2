@@ -6,11 +6,12 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/TimelineComponent.h" 
 #include "Project_Relic_v2Character.generated.h"
-
 class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
+class UCurveFloat;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -53,6 +54,26 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* CrouchAction;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UTimelineComponent* CrouchTimelineComp;
+
+	FOnTimelineEvent CrouchTimelineFinishedEvent;
+	FOnTimelineFloat CrouchTimelineUpdateEvent;
+
+	UFUNCTION()
+	void CrouchTimelineUpdateFunction(float value);
+
+	UFUNCTION()
+	void CrouchTimelineFinishedFunction();
+
+
+	UPROPERTY(EditAnywhere, Category = "Timeline")
+	UCurveFloat* CrouchFloatCurve;
+
 public:
 
 	/** Constructor */
@@ -62,6 +83,8 @@ protected:
 
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual void BeginPlay() override;
 
 protected:
 
@@ -89,6 +112,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
 
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoCrouchStart();
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoCrouchEnd();
+
+
 public:
 
 	/** Returns CameraBoom subobject **/
@@ -97,6 +127,7 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-
+private:
+	bool bCrouching;
 };
 

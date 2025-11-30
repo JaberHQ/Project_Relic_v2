@@ -12,6 +12,7 @@
 #include "InputActionValue.h"
 #include "Project_Relic_v2.h"
 
+
 AProject_Relic_v2Character::AProject_Relic_v2Character()
 {
 	// Set size for collision capsule
@@ -51,6 +52,7 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	WeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
 	WeaponComponent->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 
+	CrouchTimelineComp = CreateDefaultSubobject<UTimelineComponent>(TEXT("CrouchTimelineComp"));
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -70,12 +72,44 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::Look);
+
+		// Crouching
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AProject_Relic_v2Character::DoCrouchStart);
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AProject_Relic_v2Character::DoCrouchEnd);
+
 	}
 	else
 	{
 		UE_LOG(LogProject_Relic_v2, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
 }
+
+void AProject_Relic_v2Character::BeginPlay()
+{
+	Super::BeginPlay();
+
+		//CrouchTimelineUpdateEvent.BindUFunction(this, FName("CrouchTimelineUpdateFunction"));
+		//CrouchTimelineComp->AddInterpFloat(CrouchFloatCurve, CrouchTimelineUpdateEvent);
+		
+		
+	CrouchTimelineFinishedEvent.BindUFunction(this, FName("CrouchTimelineFinishedFunction"));
+	CrouchTimelineComp->SetTimelineFinishedFunc(CrouchTimelineFinishedEvent);
+	CrouchTimelineComp->PlayFromStart();
+}
+
+void AProject_Relic_v2Character::CrouchTimelineUpdateFunction(float value)
+{
+	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, value));
+}
+
+void AProject_Relic_v2Character::CrouchTimelineFinishedFunction()
+{
+	//CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, value));
+
+	UE_LOG(LogTemp, Warning, TEXT("Finished Event Called."));
+
+}
+
 
 void AProject_Relic_v2Character::Move(const FInputActionValue& Value)
 {
@@ -135,4 +169,27 @@ void AProject_Relic_v2Character::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+void AProject_Relic_v2Character::DoCrouchStart()
+{
+	
+	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
+
+
+	if(CrouchTimelineComp)
+	{
+		CrouchTimelineComp->Play();
+	}
+}
+
+
+void AProject_Relic_v2Character::DoCrouchEnd()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+
+	if(CrouchTimelineComp)
+	{
+		CrouchTimelineComp->Reverse();
+	}
 }

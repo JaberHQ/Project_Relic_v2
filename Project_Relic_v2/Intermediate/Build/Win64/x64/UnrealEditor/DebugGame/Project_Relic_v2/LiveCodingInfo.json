@@ -63,7 +63,9 @@
 			"CombatPlayerController.cpp.obj",
 			"CombatActivationVolume.cpp.obj",
 			"CombatCheckpointVolume.cpp.obj",
-			"CombatDamageableBox.cpp.obj",
+			"CombatDamageableBox.cpp.obj"
+		],
+		"Module.Project_Relic_v2.3.cpp.obj": [
 			"CombatDummy.cpp.obj",
 			"CombatLavaFloor.cpp.obj",
 			"CombatActivatable.cpp.obj",
@@ -71,9 +73,7 @@
 			"CombatDamageable.cpp.obj",
 			"CombatLifeBar.cpp.obj",
 			"AnimNotify_EndDash.cpp.obj",
-			"PlatformingCharacter.cpp.obj"
-		],
-		"Module.Project_Relic_v2.3.cpp.obj": [
+			"PlatformingCharacter.cpp.obj",
 			"PlatformingGameMode.cpp.obj",
 			"PlatformingPlayerController.cpp.obj",
 			"SideScrollingAIController.cpp.obj",
