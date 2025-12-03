@@ -7,11 +7,13 @@
 #include "Logging/LogMacros.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h" 
+#include "CrouchTimelineComponent.h"
 #include "Project_Relic_v2Character.generated.h"
 class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
 class UCurveFloat;
+class USkeletalMeshComponent;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -20,7 +22,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
  *  A simple player-controllable third person character
  *  Implements a controllable orbiting camera
  */
-UCLASS(abstract)
+UCLASS(Abstract)
 class AProject_Relic_v2Character : public ACharacter
 {
 	GENERATED_BODY()
@@ -35,6 +37,10 @@ class AProject_Relic_v2Character : public ACharacter
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* WeaponComponent;
+	
+	/* Put actor into character and use it */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UCrouchTimelineComponent* CrouchTimeline;
 	
 protected:
 
@@ -58,21 +64,7 @@ protected:
 	UInputAction* CrouchAction;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UTimelineComponent* CrouchTimelineComp;
-
-	FOnTimelineEvent CrouchTimelineFinishedEvent;
-	FOnTimelineFloat CrouchTimelineUpdateEvent;
-
-	UFUNCTION()
-	void CrouchTimelineUpdateFunction(float value);
-
-	UFUNCTION()
-	void CrouchTimelineFinishedFunction();
-
-
-	UPROPERTY(EditAnywhere, Category = "Timeline")
-	UCurveFloat* CrouchFloatCurve;
+	
 
 public:
 
@@ -83,6 +75,8 @@ protected:
 
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual void Tick(float DeltaTime) override;
 
 	virtual void BeginPlay() override;
 
@@ -113,12 +107,13 @@ public:
 	virtual void DoJumpEnd();
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void DoCrouchStart();
+	virtual void DoCrouch();
+
+	/*UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoCrouchEnd();*/
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void DoCrouchEnd();
-
-
+	bool GetIsCrouching();
 public:
 
 	/** Returns CameraBoom subobject **/
@@ -128,6 +123,6 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 private:
-	bool bCrouching;
+	bool bIsCrouching;
 };
 

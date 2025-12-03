@@ -266,6 +266,10 @@
     <None Include="..\..\Config\DefaultEngine.ini" />
     <None Include="..\..\Config\DefaultGame.ini" />
     <None Include="..\..\Config\DefaultInput.ini" />
+    <ClCompile Include="..\..\Source\Project_Relic_v2\CrouchTimelineComponent.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\CrouchTimelineComponent.h" />
     <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs" />
     <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

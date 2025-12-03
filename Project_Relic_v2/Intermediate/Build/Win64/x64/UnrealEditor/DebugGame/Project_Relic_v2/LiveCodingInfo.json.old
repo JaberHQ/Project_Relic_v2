@@ -25,6 +25,7 @@
 		],
 		"Module.Project_Relic_v2.2.cpp.obj": [
 			"CrouchTimelineActor.gen.cpp.obj",
+			"CrouchTimelineComponent.gen.cpp.obj",
 			"EnvQueryContext_Player.gen.cpp.obj",
 			"PlatformingCharacter.gen.cpp.obj",
 			"PlatformingGameMode.gen.cpp.obj",
@@ -48,6 +49,7 @@
 			"SideScrollingUI.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
 			"CrouchTimelineActor.cpp.obj",
+			"CrouchTimelineComponent.cpp.obj",
 			"Project_Relic_v2.cpp.obj",
 			"Project_Relic_v2Character.cpp.obj",
 			"Project_Relic_v2GameMode.cpp.obj",

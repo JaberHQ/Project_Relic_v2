@@ -15,6 +15,8 @@
 
 AProject_Relic_v2Character::AProject_Relic_v2Character()
 {
+	PrimaryActorTick.bCanEverTick = true;
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -49,10 +51,16 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
+	// Create a weapon component
 	WeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
 	WeaponComponent->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 
-	CrouchTimelineComp = CreateDefaultSubobject<UTimelineComponent>(TEXT("CrouchTimelineComp"));
+	// Create a timeline for crouching 
+	CrouchTimeline = CreateDefaultSubobject<UCrouchTimelineComponent>(TEXT("CrouchTimeline"));
+
+	// Crouch
+	bIsCrouching = false;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -74,9 +82,7 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::Look);
 
 		// Crouching
-		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AProject_Relic_v2Character::DoCrouchStart);
-		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AProject_Relic_v2Character::DoCrouchEnd);
-
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoCrouch);
 	}
 	else
 	{
@@ -84,32 +90,15 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 	}
 }
 
+void AProject_Relic_v2Character::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
 void AProject_Relic_v2Character::BeginPlay()
 {
 	Super::BeginPlay();
-
-		//CrouchTimelineUpdateEvent.BindUFunction(this, FName("CrouchTimelineUpdateFunction"));
-		//CrouchTimelineComp->AddInterpFloat(CrouchFloatCurve, CrouchTimelineUpdateEvent);
-		
-		
-	CrouchTimelineFinishedEvent.BindUFunction(this, FName("CrouchTimelineFinishedFunction"));
-	CrouchTimelineComp->SetTimelineFinishedFunc(CrouchTimelineFinishedEvent);
-	CrouchTimelineComp->PlayFromStart();
 }
-
-void AProject_Relic_v2Character::CrouchTimelineUpdateFunction(float value)
-{
-	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, value));
-}
-
-void AProject_Relic_v2Character::CrouchTimelineFinishedFunction()
-{
-	//CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, value));
-
-	UE_LOG(LogTemp, Warning, TEXT("Finished Event Called."));
-
-}
-
 
 void AProject_Relic_v2Character::Move(const FInputActionValue& Value)
 {
@@ -171,25 +160,35 @@ void AProject_Relic_v2Character::DoJumpEnd()
 	StopJumping();
 }
 
-void AProject_Relic_v2Character::DoCrouchStart()
+void AProject_Relic_v2Character::DoCrouch()
 {
-	
-	GetCharacterMovement()->MaxWalkSpeed = 150.0f;
-
-
-	if(CrouchTimelineComp)
+	//Crouch
+	if(!bIsCrouching)
 	{
-		CrouchTimelineComp->Play();
+		GetCharacterMovement()->MaxWalkSpeed = 150.0f;
+		//// Play crouch animation
+		//if(CrouchTimeline)
+		//{
+		//	CrouchTimeline->Play();
+		//	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, CrouchTimeline->GetTimelineValue()));
+		//}
+		bIsCrouching = true;
+	}
+	// UnCrouch
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+		//// Play crouch animation
+		//if(CrouchTimeline)
+		//{
+		//	CrouchTimeline->Reverse();
+		//	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, CrouchTimeline->GetTimelineValue()));
+		//}
+		bIsCrouching = false;
 	}
 }
 
-
-void AProject_Relic_v2Character::DoCrouchEnd()
+bool AProject_Relic_v2Character::GetIsCrouching()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
-
-	if(CrouchTimelineComp)
-	{
-		CrouchTimelineComp->Reverse();
-	}
+	return bIsCrouching;
 }

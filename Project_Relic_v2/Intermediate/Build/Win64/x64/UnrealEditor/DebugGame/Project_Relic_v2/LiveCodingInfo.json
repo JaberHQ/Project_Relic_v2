@@ -24,6 +24,8 @@
 			"CombatStateTreeUtility.gen.cpp.obj"
 		],
 		"Module.Project_Relic_v2.2.cpp.obj": [
+			"CrouchTimelineActor.gen.cpp.obj",
+			"CrouchTimelineComponent.gen.cpp.obj",
 			"EnvQueryContext_Player.gen.cpp.obj",
 			"PlatformingCharacter.gen.cpp.obj",
 			"PlatformingGameMode.gen.cpp.obj",
@@ -46,6 +48,8 @@
 			"SideScrollingStateTreeUtility.gen.cpp.obj",
 			"SideScrollingUI.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
+			"CrouchTimelineActor.cpp.obj",
+			"CrouchTimelineComponent.cpp.obj",
 			"Project_Relic_v2.cpp.obj",
 			"Project_Relic_v2Character.cpp.obj",
 			"Project_Relic_v2GameMode.cpp.obj",
@@ -53,7 +57,9 @@
 			"CombatAIController.cpp.obj",
 			"CombatEnemy.cpp.obj",
 			"CombatEnemySpawner.cpp.obj",
-			"CombatStateTreeUtility.cpp.obj",
+			"CombatStateTreeUtility.cpp.obj"
+		],
+		"Module.Project_Relic_v2.3.cpp.obj": [
 			"EnvQueryContext_Player.cpp.obj",
 			"AnimNotify_CheckChargedAttack.cpp.obj",
 			"AnimNotify_CheckCombo.cpp.obj",
@@ -63,9 +69,7 @@
 			"CombatPlayerController.cpp.obj",
 			"CombatActivationVolume.cpp.obj",
 			"CombatCheckpointVolume.cpp.obj",
-			"CombatDamageableBox.cpp.obj"
-		],
-		"Module.Project_Relic_v2.3.cpp.obj": [
+			"CombatDamageableBox.cpp.obj",
 			"CombatDummy.cpp.obj",
 			"CombatLavaFloor.cpp.obj",
 			"CombatActivatable.cpp.obj",
