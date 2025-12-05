@@ -18,7 +18,11 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Class AProject_Relic_v2Character ***********************************************
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execGetIsAiming); \
+	DECLARE_FUNCTION(execSetIsAiming); \
 	DECLARE_FUNCTION(execGetIsCrouching); \
+	DECLARE_FUNCTION(execSetIsCrouching); \
+	DECLARE_FUNCTION(execDoAim); \
 	DECLARE_FUNCTION(execDoCrouch); \
 	DECLARE_FUNCTION(execDoJumpEnd); \
 	DECLARE_FUNCTION(execDoJumpStart); \

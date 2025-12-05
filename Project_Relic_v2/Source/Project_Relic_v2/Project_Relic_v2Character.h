@@ -63,6 +63,14 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* CrouchAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* AimAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* ShootAction;
+
+
+
 protected:
 	
 
@@ -113,7 +121,20 @@ public:
 	virtual void DoCrouchEnd();*/
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	bool GetIsCrouching();
+	virtual void DoAim();
+
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void SetIsCrouching(bool isCrouching);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	bool GetIsCrouching() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void SetIsAiming(bool isAiming);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	bool GetIsAiming() const;
 public:
 
 	/** Returns CameraBoom subobject **/
@@ -124,5 +145,7 @@ public:
 
 private:
 	bool bIsCrouching;
+
+	bool bIsAiming;
 };
 

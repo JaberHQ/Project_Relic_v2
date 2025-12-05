@@ -83,6 +83,9 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 
 		// Crouching
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoCrouch);
+		
+		// Aiming
+		EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoAim);
 	}
 	else
 	{
@@ -188,7 +191,39 @@ void AProject_Relic_v2Character::DoCrouch()
 	}
 }
 
-bool AProject_Relic_v2Character::GetIsCrouching()
+void AProject_Relic_v2Character::DoAim()
+{
+	// Aim
+	if (!bIsAiming)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 150.0f;
+		bIsAiming = true;
+	}
+
+	// Stop Aiming
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+		bIsAiming = false;
+	}
+}
+
+void AProject_Relic_v2Character::SetIsCrouching(bool isCrouching)
+{
+	bIsCrouching = isCrouching;
+}
+
+bool AProject_Relic_v2Character::GetIsCrouching() const
 {
 	return bIsCrouching;
+}
+
+void AProject_Relic_v2Character::SetIsAiming(bool isAiming)
+{
+	bIsAiming = isAiming;
+}
+
+bool AProject_Relic_v2Character::GetIsAiming() const
+{
+	return bIsAiming;
 }
