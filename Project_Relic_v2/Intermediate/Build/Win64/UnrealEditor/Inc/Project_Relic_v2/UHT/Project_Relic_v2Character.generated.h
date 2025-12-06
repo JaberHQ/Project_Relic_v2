@@ -17,7 +17,8 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Class AProject_Relic_v2Character ***********************************************
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execCrouchTimelineProgress); \
 	DECLARE_FUNCTION(execGetIsAiming); \
 	DECLARE_FUNCTION(execSetIsAiming); \
 	DECLARE_FUNCTION(execGetIsCrouching); \
@@ -32,7 +33,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character_NoRegister();
 
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_INCLASS_NO_PURE_DECLS \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAProject_Relic_v2Character(); \
 	friend struct Z_Construct_UClass_AProject_Relic_v2Character_Statics; \
@@ -43,7 +44,7 @@ public: \
 	DECLARE_SERIALIZER(AProject_Relic_v2Character)
 
 
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_ENHANCED_CONSTRUCTORS \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	AProject_Relic_v2Character(AProject_Relic_v2Character&&) = delete; \
 	AProject_Relic_v2Character(const AProject_Relic_v2Character&) = delete; \
@@ -53,13 +54,13 @@ public: \
 	NO_API virtual ~AProject_Relic_v2Character();
 
 
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_25_PROLOG
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_GENERATED_BODY \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_25_PROLOG
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_INCLASS_NO_PURE_DECLS \
-	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_ENHANCED_CONSTRUCTORS \
+	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_INCLASS_NO_PURE_DECLS \
+	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h_28_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -69,6 +70,6 @@ class AProject_Relic_v2Character;
 // ********** End Class AProject_Relic_v2Character *************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h
+#define CURRENT_FILE_ID FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

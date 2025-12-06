@@ -17,7 +17,7 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Class ACombatCharacter *********************************************************
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execDoChargedAttackEnd); \
 	DECLARE_FUNCTION(execDoChargedAttackStart); \
 	DECLARE_FUNCTION(execDoComboAttackEnd); \
@@ -26,10 +26,10 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	DECLARE_FUNCTION(execDoMove);
 
 
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_CALLBACK_WRAPPERS
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_CALLBACK_WRAPPERS
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_ACombatCharacter_NoRegister();
 
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_INCLASS_NO_PURE_DECLS \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesACombatCharacter(); \
 	friend struct Z_Construct_UClass_ACombatCharacter_Statics; \
@@ -41,7 +41,7 @@ public: \
 	virtual UObject* _getUObject() const override { return const_cast<ACombatCharacter*>(this); }
 
 
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_ENHANCED_CONSTRUCTORS \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	ACombatCharacter(ACombatCharacter&&) = delete; \
 	ACombatCharacter(const ACombatCharacter&) = delete; \
@@ -51,14 +51,14 @@ public: \
 	NO_API virtual ~ACombatCharacter();
 
 
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_29_PROLOG
-#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_GENERATED_BODY \
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_29_PROLOG
+#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_CALLBACK_WRAPPERS \
-	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_INCLASS_NO_PURE_DECLS \
-	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_ENHANCED_CONSTRUCTORS \
+	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_CALLBACK_WRAPPERS \
+	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_INCLASS_NO_PURE_DECLS \
+	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h_32_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -68,6 +68,6 @@ class ACombatCharacter;
 // ********** End Class ACombatCharacter ***********************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h
+#define CURRENT_FILE_ID FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_CombatCharacter_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

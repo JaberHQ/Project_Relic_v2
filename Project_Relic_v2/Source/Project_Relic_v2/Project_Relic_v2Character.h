@@ -7,7 +7,7 @@
 #include "Logging/LogMacros.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h" 
-#include "CrouchTimelineComponent.h"
+//#include "CrouchTimelineComponent.h"
 #include "Project_Relic_v2Character.generated.h"
 class USpringArmComponent;
 class UCameraComponent;
@@ -38,10 +38,6 @@ class AProject_Relic_v2Character : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* WeaponComponent;
 	
-	/* Put actor into character and use it */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UCrouchTimelineComponent* CrouchTimeline;
-	
 protected:
 
 	/** Jump Input Action */
@@ -69,18 +65,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* ShootAction;
 
-
-
-protected:
-	
-
 public:
-
 	/** Constructor */
 	AProject_Relic_v2Character();	
 
 protected:
-
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -89,7 +78,6 @@ protected:
 	virtual void BeginPlay() override;
 
 protected:
-
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
@@ -97,7 +85,6 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 public:
-
 	/** Handles move inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoMove(float Right, float Forward);
@@ -123,7 +110,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoAim();
 
-
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetIsCrouching(bool isCrouching);
 
@@ -135,14 +121,27 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	bool GetIsAiming() const;
-public:
 
+public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+private:
+	void InitCrouchTimeline();
+
+	UFUNCTION()
+	void CrouchTimelineProgress(float Value);
+
+protected:
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Curve Float")
+	UCurveFloat* CrouchCurveFloat;
+
+private:
+	UPROPERTY()
+	UTimelineComponent* CrouchTimelineComponent;
 private:
 	bool bIsCrouching;
 

@@ -2,6 +2,7 @@
 	"RemapUnityFiles": 
 	{
 		"Module.Project_Relic_v2.1.cpp.obj": [
+			"PerModuleInline.gen.cpp.obj",
 			"AnimNotify_CheckChargedAttack.gen.cpp.obj",
 			"AnimNotify_CheckCombo.gen.cpp.obj",
 			"AnimNotify_DoAttackTrace.gen.cpp.obj",
@@ -21,9 +22,9 @@
 			"CombatLavaFloor.gen.cpp.obj",
 			"CombatLifeBar.gen.cpp.obj",
 			"CombatPlayerController.gen.cpp.obj",
-			"CombatStateTreeUtility.gen.cpp.obj"
-		],
-		"Module.Project_Relic_v2.2.cpp.obj": [
+			"CombatStateTreeUtility.gen.cpp.obj",
+			"CrouchTimelineActor.gen.cpp.obj",
+			"CrouchTimelineComponent.gen.cpp.obj",
 			"EnvQueryContext_Player.gen.cpp.obj",
 			"PlatformingCharacter.gen.cpp.obj",
 			"PlatformingGameMode.gen.cpp.obj",
@@ -44,10 +45,12 @@
 			"SideScrollingPlayerController.gen.cpp.obj",
 			"SideScrollingSoftPlatform.gen.cpp.obj",
 			"SideScrollingStateTreeUtility.gen.cpp.obj",
-			"SideScrollingUI.gen.cpp.obj",
-			"PerModuleInline.gen.cpp.obj",
+			"SideScrollingUI.gen.cpp.obj"
+		],
+		"Module.Project_Relic_v2.2.cpp.obj": [
+			"CrouchTimelineActor.cpp.obj",
+			"CrouchTimelineComponent.cpp.obj",
 			"Project_Relic_v2.cpp.obj",
-			"Project_Relic_v2Character.cpp.obj",
 			"Project_Relic_v2GameMode.cpp.obj",
 			"Project_Relic_v2PlayerController.cpp.obj",
 			"CombatAIController.cpp.obj",
@@ -71,9 +74,7 @@
 			"CombatDamageable.cpp.obj",
 			"CombatLifeBar.cpp.obj",
 			"AnimNotify_EndDash.cpp.obj",
-			"PlatformingCharacter.cpp.obj"
-		],
-		"Module.Project_Relic_v2.3.cpp.obj": [
+			"PlatformingCharacter.cpp.obj",
 			"PlatformingGameMode.cpp.obj",
 			"PlatformingPlayerController.cpp.obj",
 			"SideScrollingAIController.cpp.obj",
@@ -88,7 +89,8 @@
 			"SideScrollingCharacter.cpp.obj",
 			"SideScrollingGameMode.cpp.obj",
 			"SideScrollingPlayerController.cpp.obj",
-			"SideScrollingUI.cpp.obj"
+			"SideScrollingUI.cpp.obj",
+			"Project_Relic_v2Character.cpp.obj"
 		]
 	}
 }

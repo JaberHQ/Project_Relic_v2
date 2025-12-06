@@ -55,9 +55,7 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	WeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
 	WeaponComponent->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 
-	// Create a timeline for crouching 
-	CrouchTimeline = CreateDefaultSubobject<UCrouchTimelineComponent>(TEXT("CrouchTimeline"));
-
+	
 	// Crouch
 	bIsCrouching = false;
 
@@ -101,6 +99,9 @@ void AProject_Relic_v2Character::Tick(float DeltaTime)
 void AProject_Relic_v2Character::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Create a timeline for crouching 
+	InitCrouchTimeline();
 }
 
 void AProject_Relic_v2Character::Move(const FInputActionValue& Value)
@@ -169,24 +170,21 @@ void AProject_Relic_v2Character::DoCrouch()
 	if(!bIsCrouching)
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 150.0f;
-		//// Play crouch animation
-		//if(CrouchTimeline)
-		//{
-		//	CrouchTimeline->Play();
-		//	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, CrouchTimeline->GetTimelineValue()));
-		//}
+
+		if(CrouchTimelineComponent)
+		{
+			CrouchTimelineComponent->Play();
+		}
 		bIsCrouching = true;
 	}
 	// UnCrouch
 	else
 	{
 		GetCharacterMovement()->MaxWalkSpeed = 500.0f;
-		//// Play crouch animation
-		//if(CrouchTimeline)
-		//{
-		//	CrouchTimeline->Reverse();
-		//	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, CrouchTimeline->GetTimelineValue()));
-		//}
+		if(CrouchTimelineComponent)
+		{
+			CrouchTimelineComponent->Reverse();
+		}
 		bIsCrouching = false;
 	}
 }
@@ -226,4 +224,48 @@ void AProject_Relic_v2Character::SetIsAiming(bool isAiming)
 bool AProject_Relic_v2Character::GetIsAiming() const
 {
 	return bIsAiming;
+}
+
+void AProject_Relic_v2Character::InitCrouchTimeline()
+{
+	if (CrouchCurveFloat)
+	{
+		// Create curve timeline
+		CrouchTimelineComponent = NewObject<UTimelineComponent>(this, FName("CrouchTimelineAnimation"));
+		CrouchTimelineComponent->CreationMethod = EComponentCreationMethod::SimpleConstructionScript;
+		BlueprintCreatedComponents.Add(CrouchTimelineComponent);
+
+		// Bind crouch function to timeline
+		FOnTimelineFloat onTimelineCallback;
+		onTimelineCallback.BindUFunction(this, FName(TEXT("CrouchTimelineProgress")));
+		CrouchTimelineComponent->AddInterpFloat(CrouchCurveFloat, onTimelineCallback);
+		CrouchTimelineComponent->SetLooping(false);
+		CrouchTimelineComponent->RegisterComponent();
+
+	}
+	///* ADS Timeline */
+	//if( ADSCurveFloat )
+	//{
+	//	/* Create ADS curve timeline */
+	//	ADSCurveTimeline = NewObject<UTimelineComponent>( this, FName( "ADSTimelineAnimation" ) );
+	//	ADSCurveTimeline->CreationMethod = EComponentCreationMethod::SimpleConstructionScript;
+	//	Character->BlueprintCreatedComponents.Add( ADSCurveTimeline );
+
+	//	/* Bind the ADS function to the timeline */
+	//	FOnTimelineFloat onTimelineCallback;
+	//	onTimelineCallback.BindUFunction( this, FName( TEXT( "AimInTimelineProgress" ) ) );
+	//	ADSCurveTimeline->AddInterpFloat( ADSCurveFloat, onTimelineCallback );
+	//	ADSCurveTimeline->SetLooping( false );
+	//	ADSCurveTimeline->RegisterComponent();
+
+	//	/* ADS variable defaults */
+	//	m_weaponPlacementLocation = Character->GetWeaponPlacementComponent()->GetRelativeLocation();
+	//	m_meshPlacementLocation = Character->GetMesh1P()->GetRelativeLocation();
+	//	m_fOV = Character->GetFirstPersonCameraComponent()->FieldOfView;
+	//}
+}
+
+void AProject_Relic_v2Character::CrouchTimelineProgress(float Value)
+{
+	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, Value));
 }
