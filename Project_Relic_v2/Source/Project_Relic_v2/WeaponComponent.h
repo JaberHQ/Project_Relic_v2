@@ -50,7 +50,11 @@ private:
 	void InitADSTimeline();
 
 	UFUNCTION()
-	void AimInTimelineProgress(float CameraOffsetX, float FOV);
+	void ADSCameraOffsetProgress(float CameraOffsetX);
+
+	UFUNCTION()
+	void ADSFieldOfViewProgress(float FOV);
+
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")

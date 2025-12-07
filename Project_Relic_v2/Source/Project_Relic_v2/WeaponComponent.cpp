@@ -57,6 +57,8 @@ void UWeaponComponent::BeginPlay()
 		}
 	}
 
+	InitADSTimeline();
+
 }
 
 
@@ -87,22 +89,28 @@ void UWeaponComponent::InitADSTimeline()
 		Character->BlueprintCreatedComponents.Add(ADSCurveTimeline);
 
 		/* Bind the ADS function to the timeline */
-		FOnTimelineFloat onTimelineCallback;
-		onTimelineCallback.BindUFunction(this, FName(TEXT("AimInTimelineProgress")));
-		ADSCurveTimeline->AddInterpFloat(ADSCameraOffsetCurveFloat, onTimelineCallback);
-		ADSCurveTimeline->AddInterpFloat(ADSFieldOfViewCurveFloat, onTimelineCallback);
+		FOnTimelineFloat cameraOffsetCallback;
+		cameraOffsetCallback.BindUFunction(this, FName(TEXT("ADSCameraOffsetProgress")));
+		ADSCurveTimeline->AddInterpFloat(ADSCameraOffsetCurveFloat, cameraOffsetCallback);
+
+		FOnTimelineFloat fOVCallback;
+		fOVCallback.BindUFunction(this, FName(TEXT("ADSFieldOfViewProgress")));
+		ADSCurveTimeline->AddInterpFloat(ADSFieldOfViewCurveFloat, fOVCallback);
+		
 		ADSCurveTimeline->SetLooping(false);
 		ADSCurveTimeline->RegisterComponent();
 	}
 }
 
-void UWeaponComponent::AimInTimelineProgress(float CameraOffsetX, float FOV)
+void UWeaponComponent::ADSCameraOffsetProgress(float CameraOffsetX)
 {
-
 	FVector cameraOffset = Character->GetCameraSocketOffset();
 	FVector offset = FVector(CameraOffsetX, cameraOffset.Y, cameraOffset.Z);
 	Character->SetCameraSocketOffset(offset);
+}
 
+void UWeaponComponent::ADSFieldOfViewProgress(float FOV)
+{
 	Character->SetFOV(FOV);
 }
 

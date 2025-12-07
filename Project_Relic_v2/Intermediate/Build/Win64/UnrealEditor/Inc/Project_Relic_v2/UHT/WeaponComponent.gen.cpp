@@ -23,13 +23,12 @@ PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UWeaponComponent_NoRegister();
 UPackage* Z_Construct_UPackage__Script_Project_Relic_v2();
 // ********** End Cross Module References **********************************************************
 
-// ********** Begin Class UWeaponComponent Function AimInTimelineProgress **************************
-struct Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics
+// ********** Begin Class UWeaponComponent Function ADSCameraOffsetProgress ************************
+struct Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics
 {
-	struct WeaponComponent_eventAimInTimelineProgress_Parms
+	struct WeaponComponent_eventADSCameraOffsetProgress_Parms
 	{
 		float CameraOffsetX;
-		float FOV;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
@@ -37,38 +36,76 @@ struct Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraOffsetX;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_FOV;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::NewProp_CameraOffsetX = { "CameraOffsetX", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WeaponComponent_eventAimInTimelineProgress_Parms, CameraOffsetX), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::NewProp_FOV = { "FOV", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WeaponComponent_eventAimInTimelineProgress_Parms, FOV), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::NewProp_CameraOffsetX,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::NewProp_FOV,
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::NewProp_CameraOffsetX = { "CameraOffsetX", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WeaponComponent_eventADSCameraOffsetProgress_Parms, CameraOffsetX), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::NewProp_CameraOffsetX,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "AimInTimelineProgress", Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::PropPointers), sizeof(Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::WeaponComponent_eventAimInTimelineProgress_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::Function_MetaDataParams)},  };
-static_assert(sizeof(Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::WeaponComponent_eventAimInTimelineProgress_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "ADSCameraOffsetProgress", Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::PropPointers), sizeof(Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::WeaponComponent_eventADSCameraOffsetProgress_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::WeaponComponent_eventADSCameraOffsetProgress_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UWeaponComponent::execAimInTimelineProgress)
+DEFINE_FUNCTION(UWeaponComponent::execADSCameraOffsetProgress)
 {
 	P_GET_PROPERTY(FFloatProperty,Z_Param_CameraOffsetX);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->ADSCameraOffsetProgress(Z_Param_CameraOffsetX);
+	P_NATIVE_END;
+}
+// ********** End Class UWeaponComponent Function ADSCameraOffsetProgress **************************
+
+// ********** Begin Class UWeaponComponent Function ADSFieldOfViewProgress *************************
+struct Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics
+{
+	struct WeaponComponent_eventADSFieldOfViewProgress_Parms
+	{
+		float FOV;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "WeaponComponent.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_FOV;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::NewProp_FOV = { "FOV", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WeaponComponent_eventADSFieldOfViewProgress_Parms, FOV), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::NewProp_FOV,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "ADSFieldOfViewProgress", Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::PropPointers), sizeof(Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::WeaponComponent_eventADSFieldOfViewProgress_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::WeaponComponent_eventADSFieldOfViewProgress_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UWeaponComponent::execADSFieldOfViewProgress)
+{
 	P_GET_PROPERTY(FFloatProperty,Z_Param_FOV);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->AimInTimelineProgress(Z_Param_CameraOffsetX,Z_Param_FOV);
+	P_THIS->ADSFieldOfViewProgress(Z_Param_FOV);
 	P_NATIVE_END;
 }
-// ********** End Class UWeaponComponent Function AimInTimelineProgress ****************************
+// ********** End Class UWeaponComponent Function ADSFieldOfViewProgress ***************************
 
 // ********** Begin Class UWeaponComponent Function DoAim ******************************************
 struct Z_Construct_UFunction_UWeaponComponent_DoAim_Statics
@@ -200,7 +237,8 @@ void UWeaponComponent::StaticRegisterNativesUWeaponComponent()
 {
 	UClass* Class = UWeaponComponent::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
-		{ "AimInTimelineProgress", &UWeaponComponent::execAimInTimelineProgress },
+		{ "ADSCameraOffsetProgress", &UWeaponComponent::execADSCameraOffsetProgress },
+		{ "ADSFieldOfViewProgress", &UWeaponComponent::execADSFieldOfViewProgress },
 		{ "DoAim", &UWeaponComponent::execDoAim },
 		{ "GetIsAiming", &UWeaponComponent::execGetIsAiming },
 		{ "SetIsAiming", &UWeaponComponent::execSetIsAiming },
@@ -286,7 +324,8 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UWeaponComponent_AimInTimelineProgress, "AimInTimelineProgress" }, // 2459818103
+		{ &Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress, "ADSCameraOffsetProgress" }, // 1991742677
+		{ &Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress, "ADSFieldOfViewProgress" }, // 992585735
 		{ &Z_Construct_UFunction_UWeaponComponent_DoAim, "DoAim" }, // 162737349
 		{ &Z_Construct_UFunction_UWeaponComponent_GetIsAiming, "GetIsAiming" }, // 3759279808
 		{ &Z_Construct_UFunction_UWeaponComponent_SetIsAiming, "SetIsAiming" }, // 416651007
@@ -350,10 +389,10 @@ UWeaponComponent::~UWeaponComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 2404524297U) },
+		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 3290158901U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_3382889675(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_601170647(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

@@ -18,7 +18,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Class UWeaponComponent *********************************************************
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execAimInTimelineProgress); \
+	DECLARE_FUNCTION(execADSFieldOfViewProgress); \
+	DECLARE_FUNCTION(execADSCameraOffsetProgress); \
 	DECLARE_FUNCTION(execGetIsAiming); \
 	DECLARE_FUNCTION(execSetIsAiming); \
 	DECLARE_FUNCTION(execDoAim);
