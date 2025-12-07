@@ -7,8 +7,10 @@
 #include "Logging/LogMacros.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h" 
+#include "WeaponComponent.h"
 //#include "CrouchTimelineComponent.h"
 #include "Project_Relic_v2Character.generated.h"
+
 class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
@@ -36,7 +38,7 @@ class AProject_Relic_v2Character : public ACharacter
 	UCameraComponent* FollowCamera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	USkeletalMeshComponent* WeaponComponent;
+	UWeaponComponent* WeaponComponent;
 	
 protected:
 
@@ -58,12 +60,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* CrouchAction;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputAction* AimAction;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputAction* ShootAction;
 
 public:
 	/** Constructor */
@@ -104,23 +100,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoCrouch();
 
-	/*UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void DoCrouchEnd();*/
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void DoAim();
-
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetIsCrouching(bool isCrouching);
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	bool GetIsCrouching() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetIsAiming(bool isAiming);
+	void SetMaxWalkSpeed(float MaxWalkSpeed);
+	
+	FVector GetCameraSocketOffset() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	bool GetIsAiming() const;
+	void SetCameraSocketOffset(FVector offset);
+
+	void SetFOV(float FOV);
 
 public:
 	/** Returns CameraBoom subobject **/
@@ -145,6 +137,5 @@ private:
 private:
 	bool bIsCrouching;
 
-	bool bIsAiming;
 };
 

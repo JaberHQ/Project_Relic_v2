@@ -218,14 +218,14 @@ ACombatCheckpointVolume::~ACombatCheckpointVolume() {}
 // ********** End Class ACombatCheckpointVolume ****************************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_Statics
+struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
 		{ Z_Construct_UClass_ACombatCheckpointVolume, ACombatCheckpointVolume::StaticClass, TEXT("ACombatCheckpointVolume"), &Z_Registration_Info_UClass_ACombatCheckpointVolume, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ACombatCheckpointVolume), 2558815578U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_1671314810(TEXT("/Script/Project_Relic_v2"),
-	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_1671314810(TEXT("/Script/Project_Relic_v2"),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Gameplay_CombatCheckpointVolume_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // ********** End Registration *********************************************************************

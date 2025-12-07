@@ -33,10 +33,16 @@
     <Filter Include="Source\Project_Relic_v2">
       <UniqueIdentifier>{C16AB064-9819-39AE-AC2D-5AC558CB8798}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\Project_Relic_v2\CrouchTimelineComponent.cpp">
+    <ClCompile Include="..\..\Source\Project_Relic_v2\AutomaticRifle.cpp">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\Project_Relic_v2\CrouchTimelineComponent.h">
+    <ClInclude Include="..\..\Source\Project_Relic_v2\AutomaticRifle.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BaseWeapon.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BaseWeapon.h">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClInclude>
     <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs">
@@ -64,6 +70,12 @@
       <Filter>Source\Project_Relic_v2</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Project_Relic_v2\Project_Relic_v2PlayerController.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\WeaponComponent.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\WeaponComponent.h">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClInclude>
     <Filter Include="Source\Project_Relic_v2\Variant_Combat">

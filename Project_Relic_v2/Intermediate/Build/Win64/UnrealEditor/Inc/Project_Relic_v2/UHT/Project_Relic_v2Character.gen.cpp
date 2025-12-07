@@ -15,12 +15,12 @@ void EmptyLinkFunctionForGeneratedCodeProject_Relic_v2Character() {}
 ENGINE_API UClass* Z_Construct_UClass_ACharacter();
 ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_UCurveFloat_NoRegister();
-ENGINE_API UClass* Z_Construct_UClass_USkeletalMeshComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_UTimelineComponent_NoRegister();
 ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputAction_NoRegister();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character_NoRegister();
+PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UWeaponComponent_NoRegister();
 UPackage* Z_Construct_UPackage__Script_Project_Relic_v2();
 // ********** End Cross Module References **********************************************************
 
@@ -65,42 +65,6 @@ DEFINE_FUNCTION(AProject_Relic_v2Character::execCrouchTimelineProgress)
 	P_NATIVE_END;
 }
 // ********** End Class AProject_Relic_v2Character Function CrouchTimelineProgress *****************
-
-// ********** Begin Class AProject_Relic_v2Character Function DoAim ********************************
-struct Z_Construct_UFunction_AProject_Relic_v2Character_DoAim_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Input" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "/*UFUNCTION(BlueprintCallable, Category = \"Input\")\n\x09virtual void DoCrouchEnd();*/" },
-#endif
-		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "UFUNCTION(BlueprintCallable, Category = \"Input\")\n       virtual void DoCrouchEnd();" },
-#endif
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_DoAim_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "DoAim", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_DoAim_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_DoAim_Statics::Function_MetaDataParams)},  };
-UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_DoAim()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_DoAim_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AProject_Relic_v2Character::execDoAim)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->DoAim();
-	P_NATIVE_END;
-}
-// ********** End Class AProject_Relic_v2Character Function DoAim **********************************
 
 // ********** Begin Class AProject_Relic_v2Character Function DoCrouch *****************************
 struct Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouch_Statics
@@ -312,53 +276,6 @@ DEFINE_FUNCTION(AProject_Relic_v2Character::execDoMove)
 }
 // ********** End Class AProject_Relic_v2Character Function DoMove *********************************
 
-// ********** Begin Class AProject_Relic_v2Character Function GetIsAiming **************************
-struct Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics
-{
-	struct Project_Relic_v2Character_eventGetIsAiming_Parms
-	{
-		bool ReturnValue;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Input" },
-		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
-	};
-#endif // WITH_METADATA
-	static void NewProp_ReturnValue_SetBit(void* Obj);
-	static const UECodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-void Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::NewProp_ReturnValue_SetBit(void* Obj)
-{
-	((Project_Relic_v2Character_eventGetIsAiming_Parms*)Obj)->ReturnValue = 1;
-}
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(Project_Relic_v2Character_eventGetIsAiming_Parms), &Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::NewProp_ReturnValue,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "GetIsAiming", Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::PropPointers), sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::Project_Relic_v2Character_eventGetIsAiming_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::Function_MetaDataParams)},  };
-static_assert(sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::Project_Relic_v2Character_eventGetIsAiming_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AProject_Relic_v2Character::execGetIsAiming)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	*(bool*)Z_Param__Result=P_THIS->GetIsAiming();
-	P_NATIVE_END;
-}
-// ********** End Class AProject_Relic_v2Character Function GetIsAiming ****************************
-
 // ********** Begin Class AProject_Relic_v2Character Function GetIsCrouching ***********************
 struct Z_Construct_UFunction_AProject_Relic_v2Character_GetIsCrouching_Statics
 {
@@ -405,54 +322,6 @@ DEFINE_FUNCTION(AProject_Relic_v2Character::execGetIsCrouching)
 	P_NATIVE_END;
 }
 // ********** End Class AProject_Relic_v2Character Function GetIsCrouching *************************
-
-// ********** Begin Class AProject_Relic_v2Character Function SetIsAiming **************************
-struct Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics
-{
-	struct Project_Relic_v2Character_eventSetIsAiming_Parms
-	{
-		bool isAiming;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Input" },
-		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
-	};
-#endif // WITH_METADATA
-	static void NewProp_isAiming_SetBit(void* Obj);
-	static const UECodeGen_Private::FBoolPropertyParams NewProp_isAiming;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-void Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::NewProp_isAiming_SetBit(void* Obj)
-{
-	((Project_Relic_v2Character_eventSetIsAiming_Parms*)Obj)->isAiming = 1;
-}
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::NewProp_isAiming = { "isAiming", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(Project_Relic_v2Character_eventSetIsAiming_Parms), &Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::NewProp_isAiming_SetBit, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::NewProp_isAiming,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "SetIsAiming", Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::PropPointers), sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::Project_Relic_v2Character_eventSetIsAiming_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::Function_MetaDataParams)},  };
-static_assert(sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::Project_Relic_v2Character_eventSetIsAiming_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AProject_Relic_v2Character::execSetIsAiming)
-{
-	P_GET_UBOOL(Z_Param_isAiming);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->SetIsAiming(Z_Param_isAiming);
-	P_NATIVE_END;
-}
-// ********** End Class AProject_Relic_v2Character Function SetIsAiming ****************************
 
 // ********** Begin Class AProject_Relic_v2Character Function SetIsCrouching ***********************
 struct Z_Construct_UFunction_AProject_Relic_v2Character_SetIsCrouching_Statics
@@ -508,15 +377,12 @@ void AProject_Relic_v2Character::StaticRegisterNativesAProject_Relic_v2Character
 	UClass* Class = AProject_Relic_v2Character::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
 		{ "CrouchTimelineProgress", &AProject_Relic_v2Character::execCrouchTimelineProgress },
-		{ "DoAim", &AProject_Relic_v2Character::execDoAim },
 		{ "DoCrouch", &AProject_Relic_v2Character::execDoCrouch },
 		{ "DoJumpEnd", &AProject_Relic_v2Character::execDoJumpEnd },
 		{ "DoJumpStart", &AProject_Relic_v2Character::execDoJumpStart },
 		{ "DoLook", &AProject_Relic_v2Character::execDoLook },
 		{ "DoMove", &AProject_Relic_v2Character::execDoMove },
-		{ "GetIsAiming", &AProject_Relic_v2Character::execGetIsAiming },
 		{ "GetIsCrouching", &AProject_Relic_v2Character::execGetIsCrouching },
-		{ "SetIsAiming", &AProject_Relic_v2Character::execSetIsAiming },
 		{ "SetIsCrouching", &AProject_Relic_v2Character::execSetIsCrouching },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -638,14 +504,6 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 		{ "Category", "Input" },
 		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_AimAction_MetaData[] = {
-		{ "Category", "Input" },
-		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ShootAction_MetaData[] = {
-		{ "Category", "Input" },
-		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
-	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CrouchCurveFloat_MetaData[] = {
 		{ "Category", "Curve Float" },
 		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
@@ -663,23 +521,18 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_LookAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_MouseLookAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CrouchAction;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_AimAction;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_ShootAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CrouchCurveFloat;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CrouchTimelineComponent;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_CrouchTimelineProgress, "CrouchTimelineProgress" }, // 2095114815
-		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoAim, "DoAim" }, // 2733482596
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoCrouch, "DoCrouch" }, // 2842541560
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoJumpEnd, "DoJumpEnd" }, // 3753467309
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoJumpStart, "DoJumpStart" }, // 2364487555
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoLook, "DoLook" }, // 222299045
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoMove, "DoMove" }, // 1709244830
-		{ &Z_Construct_UFunction_AProject_Relic_v2Character_GetIsAiming, "GetIsAiming" }, // 3035103232
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_GetIsCrouching, "GetIsCrouching" }, // 3199809099
-		{ &Z_Construct_UFunction_AProject_Relic_v2Character_SetIsAiming, "SetIsAiming" }, // 286519365
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_SetIsCrouching, "SetIsCrouching" }, // 850095847
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -690,14 +543,12 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CameraBoom = { "CameraBoom", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CameraBoom), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraBoom_MetaData), NewProp_CameraBoom_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_FollowCamera = { "FollowCamera", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, FollowCamera), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FollowCamera_MetaData), NewProp_FollowCamera_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_WeaponComponent = { "WeaponComponent", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, WeaponComponent), Z_Construct_UClass_USkeletalMeshComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WeaponComponent_MetaData), NewProp_WeaponComponent_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_WeaponComponent = { "WeaponComponent", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, WeaponComponent), Z_Construct_UClass_UWeaponComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WeaponComponent_MetaData), NewProp_WeaponComponent_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_JumpAction = { "JumpAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, JumpAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_JumpAction_MetaData), NewProp_JumpAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_MoveAction = { "MoveAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, MoveAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MoveAction_MetaData), NewProp_MoveAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_LookAction = { "LookAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, LookAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LookAction_MetaData), NewProp_LookAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_MouseLookAction = { "MouseLookAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, MouseLookAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MouseLookAction_MetaData), NewProp_MouseLookAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchAction = { "CrouchAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CrouchAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CrouchAction_MetaData), NewProp_CrouchAction_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_AimAction = { "AimAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, AimAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_AimAction_MetaData), NewProp_AimAction_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_ShootAction = { "ShootAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, ShootAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ShootAction_MetaData), NewProp_ShootAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchCurveFloat = { "CrouchCurveFloat", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CrouchCurveFloat), Z_Construct_UClass_UCurveFloat_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CrouchCurveFloat_MetaData), NewProp_CrouchCurveFloat_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchTimelineComponent = { "CrouchTimelineComponent", nullptr, (EPropertyFlags)0x0040000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CrouchTimelineComponent), Z_Construct_UClass_UTimelineComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CrouchTimelineComponent_MetaData), NewProp_CrouchTimelineComponent_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AProject_Relic_v2Character_Statics::PropPointers[] = {
@@ -709,8 +560,6 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AProject_
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_LookAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_MouseLookAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchAction,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_AimAction,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_ShootAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchCurveFloat,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchTimelineComponent,
 };
@@ -748,14 +597,14 @@ AProject_Relic_v2Character::~AProject_Relic_v2Character() {}
 // ********** End Class AProject_Relic_v2Character *************************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics
+struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 4193525791U) },
+		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 2304855820U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_1685317889(TEXT("/Script/Project_Relic_v2"),
-	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_1099167460(TEXT("/Script/Project_Relic_v2"),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // ********** End Registration *********************************************************************

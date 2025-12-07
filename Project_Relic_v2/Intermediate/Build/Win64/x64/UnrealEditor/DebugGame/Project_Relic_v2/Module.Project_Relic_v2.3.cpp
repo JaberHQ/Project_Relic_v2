@@ -32,3 +32,4 @@
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/Variant_SideScrolling/SideScrollingGameMode.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/Variant_SideScrolling/SideScrollingPlayerController.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/Variant_SideScrolling/UI/SideScrollingUI.cpp"
+#include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/WeaponComponent.cpp"

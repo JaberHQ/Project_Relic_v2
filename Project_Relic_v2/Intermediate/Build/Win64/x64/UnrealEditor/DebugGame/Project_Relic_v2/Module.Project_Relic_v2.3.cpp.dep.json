@@ -370,7 +370,16 @@
             "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_sidescrolling\\sidescrollingplayercontroller.cpp",
             "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_sidescrolling\\sidescrollingplayercontroller.h",
             "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\sidescrollingplayercontroller.generated.h",
-            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_sidescrolling\\ui\\sidescrollingui.cpp"
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_sidescrolling\\ui\\sidescrollingui.cpp",
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\weaponcomponent.cpp",
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\weaponcomponent.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\components\\timelinecomponent.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\timelinecomponent.generated.h",
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\baseweapon.h",
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\baseweapon.generated.h",
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\weaponcomponent.generated.h",
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\project_relic_v2character.h",
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\project_relic_v2character.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

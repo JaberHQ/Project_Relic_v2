@@ -106,14 +106,14 @@ UAnimNotify_CheckCombo::~UAnimNotify_CheckCombo() {}
 // ********** End Class UAnimNotify_CheckCombo *****************************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_Statics
+struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
 		{ Z_Construct_UClass_UAnimNotify_CheckCombo, UAnimNotify_CheckCombo::StaticClass, TEXT("UAnimNotify_CheckCombo"), &Z_Registration_Info_UClass_UAnimNotify_CheckCombo, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAnimNotify_CheckCombo), 1007074936U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_3711053698(TEXT("/Script/Project_Relic_v2"),
-	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_3711053698(TEXT("/Script/Project_Relic_v2"),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_Combat_Animation_AnimNotify_CheckCombo_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // ********** End Registration *********************************************************************

@@ -6,6 +6,7 @@
 			"AnimNotify_CheckCombo.gen.cpp.obj",
 			"AnimNotify_DoAttackTrace.gen.cpp.obj",
 			"AnimNotify_EndDash.gen.cpp.obj",
+			"BaseWeapon.gen.cpp.obj",
 			"CombatActivatable.gen.cpp.obj",
 			"CombatActivationVolume.gen.cpp.obj",
 			"CombatAIController.gen.cpp.obj",
@@ -24,8 +25,6 @@
 			"CombatStateTreeUtility.gen.cpp.obj"
 		],
 		"Module.Project_Relic_v2.2.cpp.obj": [
-			"CrouchTimelineActor.gen.cpp.obj",
-			"CrouchTimelineComponent.gen.cpp.obj",
 			"EnvQueryContext_Player.gen.cpp.obj",
 			"PlatformingCharacter.gen.cpp.obj",
 			"PlatformingGameMode.gen.cpp.obj",
@@ -47,9 +46,9 @@
 			"SideScrollingSoftPlatform.gen.cpp.obj",
 			"SideScrollingStateTreeUtility.gen.cpp.obj",
 			"SideScrollingUI.gen.cpp.obj",
+			"WeaponComponent.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
-			"CrouchTimelineActor.cpp.obj",
-			"CrouchTimelineComponent.cpp.obj",
+			"BaseWeapon.cpp.obj",
 			"Project_Relic_v2.cpp.obj",
 			"Project_Relic_v2Character.cpp.obj",
 			"Project_Relic_v2GameMode.cpp.obj",
@@ -57,14 +56,14 @@
 			"CombatAIController.cpp.obj",
 			"CombatEnemy.cpp.obj",
 			"CombatEnemySpawner.cpp.obj",
-			"CombatStateTreeUtility.cpp.obj",
+			"CombatStateTreeUtility.cpp.obj"
+		],
+		"Module.Project_Relic_v2.3.cpp.obj": [
 			"EnvQueryContext_Player.cpp.obj",
 			"AnimNotify_CheckChargedAttack.cpp.obj",
 			"AnimNotify_CheckCombo.cpp.obj",
 			"AnimNotify_DoAttackTrace.cpp.obj",
-			"CombatCharacter.cpp.obj"
-		],
-		"Module.Project_Relic_v2.3.cpp.obj": [
+			"CombatCharacter.cpp.obj",
 			"CombatGameMode.cpp.obj",
 			"CombatPlayerController.cpp.obj",
 			"CombatActivationVolume.cpp.obj",
@@ -92,7 +91,8 @@
 			"SideScrollingCharacter.cpp.obj",
 			"SideScrollingGameMode.cpp.obj",
 			"SideScrollingPlayerController.cpp.obj",
-			"SideScrollingUI.cpp.obj"
+			"SideScrollingUI.cpp.obj",
+			"WeaponComponent.cpp.obj"
 		]
 	}
 }
