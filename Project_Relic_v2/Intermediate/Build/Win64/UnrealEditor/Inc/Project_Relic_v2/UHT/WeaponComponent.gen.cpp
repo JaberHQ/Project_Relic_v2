@@ -23,6 +23,36 @@ PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UWeaponComponent_NoRegister();
 UPackage* Z_Construct_UPackage__Script_Project_Relic_v2();
 // ********** End Cross Module References **********************************************************
 
+// ********** Begin Class UWeaponComponent Function ADS ********************************************
+struct Z_Construct_UFunction_UWeaponComponent_ADS_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Input" },
+		{ "ModuleRelativePath", "WeaponComponent.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_ADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "ADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_ADS_Statics::Function_MetaDataParams)},  };
+UFunction* Z_Construct_UFunction_UWeaponComponent_ADS()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWeaponComponent_ADS_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UWeaponComponent::execADS)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->ADS();
+	P_NATIVE_END;
+}
+// ********** End Class UWeaponComponent Function ADS **********************************************
+
 // ********** Begin Class UWeaponComponent Function ADSCameraOffsetProgress ************************
 struct Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress_Statics
 {
@@ -106,36 +136,6 @@ DEFINE_FUNCTION(UWeaponComponent::execADSFieldOfViewProgress)
 	P_NATIVE_END;
 }
 // ********** End Class UWeaponComponent Function ADSFieldOfViewProgress ***************************
-
-// ********** Begin Class UWeaponComponent Function DoAim ******************************************
-struct Z_Construct_UFunction_UWeaponComponent_DoAim_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Input" },
-		{ "ModuleRelativePath", "WeaponComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_DoAim_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "DoAim", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_DoAim_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_DoAim_Statics::Function_MetaDataParams)},  };
-UFunction* Z_Construct_UFunction_UWeaponComponent_DoAim()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWeaponComponent_DoAim_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(UWeaponComponent::execDoAim)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->DoAim();
-	P_NATIVE_END;
-}
-// ********** End Class UWeaponComponent Function DoAim ********************************************
 
 // ********** Begin Class UWeaponComponent Function GetIsAiming ************************************
 struct Z_Construct_UFunction_UWeaponComponent_GetIsAiming_Statics
@@ -232,16 +232,47 @@ DEFINE_FUNCTION(UWeaponComponent::execSetIsAiming)
 }
 // ********** End Class UWeaponComponent Function SetIsAiming **************************************
 
+// ********** Begin Class UWeaponComponent Function StopADS ****************************************
+struct Z_Construct_UFunction_UWeaponComponent_StopADS_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Input" },
+		{ "ModuleRelativePath", "WeaponComponent.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "StopADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams)},  };
+UFunction* Z_Construct_UFunction_UWeaponComponent_StopADS()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UWeaponComponent::execStopADS)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->StopADS();
+	P_NATIVE_END;
+}
+// ********** End Class UWeaponComponent Function StopADS ******************************************
+
 // ********** Begin Class UWeaponComponent *********************************************************
 void UWeaponComponent::StaticRegisterNativesUWeaponComponent()
 {
 	UClass* Class = UWeaponComponent::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
+		{ "ADS", &UWeaponComponent::execADS },
 		{ "ADSCameraOffsetProgress", &UWeaponComponent::execADSCameraOffsetProgress },
 		{ "ADSFieldOfViewProgress", &UWeaponComponent::execADSFieldOfViewProgress },
-		{ "DoAim", &UWeaponComponent::execDoAim },
 		{ "GetIsAiming", &UWeaponComponent::execGetIsAiming },
 		{ "SetIsAiming", &UWeaponComponent::execSetIsAiming },
+		{ "StopADS", &UWeaponComponent::execStopADS },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -324,11 +355,12 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_UWeaponComponent_ADS, "ADS" }, // 3046456928
 		{ &Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress, "ADSCameraOffsetProgress" }, // 1991742677
 		{ &Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress, "ADSFieldOfViewProgress" }, // 992585735
-		{ &Z_Construct_UFunction_UWeaponComponent_DoAim, "DoAim" }, // 162737349
 		{ &Z_Construct_UFunction_UWeaponComponent_GetIsAiming, "GetIsAiming" }, // 3759279808
 		{ &Z_Construct_UFunction_UWeaponComponent_SetIsAiming, "SetIsAiming" }, // 416651007
+		{ &Z_Construct_UFunction_UWeaponComponent_StopADS, "StopADS" }, // 1611700245
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -389,10 +421,10 @@ UWeaponComponent::~UWeaponComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 3290158901U) },
+		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 1635809940U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_601170647(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_844950192(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

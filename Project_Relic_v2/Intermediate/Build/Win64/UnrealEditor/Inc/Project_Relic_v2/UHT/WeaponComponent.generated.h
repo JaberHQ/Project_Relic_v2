@@ -22,7 +22,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	DECLARE_FUNCTION(execADSCameraOffsetProgress); \
 	DECLARE_FUNCTION(execGetIsAiming); \
 	DECLARE_FUNCTION(execSetIsAiming); \
-	DECLARE_FUNCTION(execDoAim);
+	DECLARE_FUNCTION(execStopADS); \
+	DECLARE_FUNCTION(execADS);
 
 
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UWeaponComponent_NoRegister();

@@ -24,7 +24,10 @@ public:
 	UWeaponComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void DoAim();
+	virtual void ADS();
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void StopADS();
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetIsAiming(bool isAiming);
@@ -84,7 +87,4 @@ private:
 	bool bIsAiming;
 
 	TSubclassOf<ABaseWeapon> PrimaryWeaponRef;
-	
-	
-
 };

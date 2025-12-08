@@ -8,7 +8,7 @@ UWeaponComponent::UWeaponComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	/* Find the blueprint Primary Gun Class through reference */
 	
@@ -17,8 +17,6 @@ UWeaponComponent::UWeaponComponent()
 	{
 		PrimaryWeaponRef = PrimaryWeaponFinder.Class;
 	}
-
-	// ...
 }
 
 
@@ -52,7 +50,8 @@ void UWeaponComponent::BeginPlay()
 		}
 		if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
 		{
-			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::DoAim);
+			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::ADS);
+			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopADS);
 
 		}
 	}
@@ -124,7 +123,7 @@ bool UWeaponComponent::GetIsAiming() const
 	return bIsAiming;
 }
 
-void UWeaponComponent::DoAim()
+void UWeaponComponent::ADS()
 {
 	// Aim
 	if(!bIsAiming)
@@ -136,9 +135,11 @@ void UWeaponComponent::DoAim()
 
 		bIsAiming = true;
 	}
+}
 
-	// Stop Aiming
-	else
+void UWeaponComponent::StopADS()
+{
+	if(bIsAiming)
 	{
 		Character->SetMaxWalkSpeed(500.0f);
 
