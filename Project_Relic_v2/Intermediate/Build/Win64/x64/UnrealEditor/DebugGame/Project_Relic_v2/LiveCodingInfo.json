@@ -27,6 +27,7 @@
 		],
 		"Module.Project_Relic_v2.2.cpp.obj": [
 			"EnvQueryContext_Player.gen.cpp.obj",
+			"InventoryComponent.gen.cpp.obj",
 			"PlatformingCharacter.gen.cpp.obj",
 			"PlatformingGameMode.gen.cpp.obj",
 			"PlatformingPlayerController.gen.cpp.obj",
@@ -47,18 +48,21 @@
 			"SideScrollingSoftPlatform.gen.cpp.obj",
 			"SideScrollingStateTreeUtility.gen.cpp.obj",
 			"SideScrollingUI.gen.cpp.obj",
-			"WeaponComponent.gen.cpp.obj",
+			"SingleShotRifle.gen.cpp.obj",
+			"WeaponComponent.gen.cpp.obj"
+		],
+		"Module.Project_Relic_v2.3.cpp.obj": [
 			"PerModuleInline.gen.cpp.obj",
 			"AutomaticRifle.cpp.obj",
 			"BaseWeapon.cpp.obj",
+			"InventoryComponent.cpp.obj",
 			"Project_Relic_v2.cpp.obj",
 			"Project_Relic_v2Character.cpp.obj",
 			"Project_Relic_v2GameMode.cpp.obj",
 			"Project_Relic_v2PlayerController.cpp.obj",
+			"SingleShotRifle.cpp.obj",
 			"CombatAIController.cpp.obj",
-			"CombatEnemy.cpp.obj"
-		],
-		"Module.Project_Relic_v2.3.cpp.obj": [
+			"CombatEnemy.cpp.obj",
 			"CombatEnemySpawner.cpp.obj",
 			"CombatStateTreeUtility.cpp.obj",
 			"EnvQueryContext_Player.cpp.obj",

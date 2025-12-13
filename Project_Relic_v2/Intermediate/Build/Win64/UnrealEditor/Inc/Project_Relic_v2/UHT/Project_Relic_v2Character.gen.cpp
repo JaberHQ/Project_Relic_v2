@@ -20,6 +20,7 @@ ENGINE_API UClass* Z_Construct_UClass_UTimelineComponent_NoRegister();
 ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputAction_NoRegister();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character_NoRegister();
+PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UInventoryComponent_NoRegister();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UWeaponComponent_NoRegister();
 UPackage* Z_Construct_UPackage__Script_Project_Relic_v2();
 // ********** End Cross Module References **********************************************************
@@ -490,6 +491,18 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 		{ "ToolTip", "Weapon Component" },
 #endif
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InventoryComponent_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Components" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** Inventory Component */" },
+#endif
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Inventory Component" },
+#endif
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_JumpAction_MetaData[] = {
 		{ "Category", "Input" },
 #if !UE_BUILD_SHIPPING
@@ -552,6 +565,7 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CameraBoom;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_FollowCamera;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_WeaponComponent;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InventoryComponent;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_JumpAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_MoveAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_LookAction;
@@ -580,6 +594,7 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CameraBoom = { "CameraBoom", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CameraBoom), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraBoom_MetaData), NewProp_CameraBoom_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_FollowCamera = { "FollowCamera", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, FollowCamera), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FollowCamera_MetaData), NewProp_FollowCamera_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_WeaponComponent = { "WeaponComponent", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, WeaponComponent), Z_Construct_UClass_UWeaponComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WeaponComponent_MetaData), NewProp_WeaponComponent_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_InventoryComponent = { "InventoryComponent", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, InventoryComponent), Z_Construct_UClass_UInventoryComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InventoryComponent_MetaData), NewProp_InventoryComponent_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_JumpAction = { "JumpAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, JumpAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_JumpAction_MetaData), NewProp_JumpAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_MoveAction = { "MoveAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, MoveAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MoveAction_MetaData), NewProp_MoveAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_LookAction = { "LookAction", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, LookAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LookAction_MetaData), NewProp_LookAction_MetaData) };
@@ -591,6 +606,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AProject_
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CameraBoom,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_FollowCamera,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_WeaponComponent,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_InventoryComponent,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_JumpAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_MoveAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_LookAction,
@@ -636,10 +652,10 @@ AProject_Relic_v2Character::~AProject_Relic_v2Character() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 438502092U) },
+		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 2963796540U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_1867223722(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_4043261683(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

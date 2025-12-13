@@ -2,9 +2,20 @@
 
 
 #include "WeaponComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include <Kismet/KismetMathLibrary.h>
 #include "Project_Relic_v2Character.h"
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
+	:TimeBetweenShots(0.15f)
+	, ShootingDistance(2000.0f)
+	, WeaponIndex(0)
+	, CurrentWeapon(EAmmunitionType::AE_Primary)
+	, bCanShoot(true)
+	, bIsShooting(false)
+	, bIsReloading(false)
+	, bIsAiming(false)
+	, ReloadTime(2.25f)
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -17,6 +28,13 @@ UWeaponComponent::UWeaponComponent()
 	{
 		PrimaryWeaponRef = PrimaryWeaponFinder.Class;
 	}
+
+	/* Find the blueprint Secondary Gun Class through reference */
+	static ConstructorHelpers::FClassFinder<ABaseWeapon> SecondaryWeaponFinder(TEXT("/Game/Blueprints/Weapon/BP_SingleShotRifle"));
+	if(SecondaryWeaponFinder.Class)
+	{
+		SecondaryWeaponRef = SecondaryWeaponFinder.Class;
+	}
 }
 
 
@@ -27,7 +45,7 @@ void UWeaponComponent::BeginPlay()
 
 	Character = Cast<AProject_Relic_v2Character>(GetOwner());
 
-	if(PrimaryWeaponRef)
+	/*if(PrimaryWeaponRef)
 	{
 		FVector weaponPlacementLocation(20.0f, 20.0f, -20.0f);
 		FRotator weaponPlacementRotator(0.0f, 0.0f, 0.0f);
@@ -40,7 +58,7 @@ void UWeaponComponent::BeginPlay()
 	{
 		const FAttachmentTransformRules attachmentRules(EAttachmentRule::SnapToTarget, true);
 		PrimaryWeapon->AttachToComponent(Character->GetMesh(), attachmentRules, FName(TEXT("hand_rSocket")));
-	}
+	}*/
 
 	if(APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
 	{
@@ -54,11 +72,38 @@ void UWeaponComponent::BeginPlay()
 				As the aim button should be held and not toggled, two actions are bound */
 			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::ADS);
 			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopADS);
+
+			/* Shooting input actions */
+			EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &UWeaponComponent::StartShooting);
+			EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopShooting);
+
+			EnhancedInputComponent->BindAction(SwitchWeaponsAction, ETriggerEvent::Triggered, this, &UWeaponComponent::SwitchWeapons);
+			EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &UWeaponComponent::StartReloadWeaponTimer);
 		}
 	}
 
-	InitADSTimeline();
+	if(Character)
+	{
+		InventoryComponent = Character->GetInventoryComponent();
+		InitWeapons();
+		InitADSTimeline();
+	}
+}
 
+void UWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if(Character == nullptr)
+	{
+		return;
+	}
+
+	if(APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
+	{
+		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			Subsystem->RemoveMappingContext(FireMappingContext);
+		}
+	}
 }
 
 
@@ -102,6 +147,41 @@ void UWeaponComponent::InitADSTimeline()
 	}
 }
 
+void UWeaponComponent::InitWeapons()
+{
+	/* Spawn guns */
+	FVector weaponPlacementLocation(20.0f, 20.0f, -20.0f);
+	FRotator weaponPlacementRotator(0.0f, 0.0f, 0.0f);
+
+	const FActorSpawnParameters spawnInfo;
+	PrimaryWeapon = SpawnWeapon(PrimaryWeaponRef, weaponPlacementLocation, weaponPlacementRotator, spawnInfo);
+	SecondaryWeapon = SpawnWeapon(SecondaryWeaponRef, weaponPlacementLocation, weaponPlacementRotator, spawnInfo);
+
+	/* Set primary gun defaults */
+	if(PrimaryWeapon)
+	{
+		WeaponArray.Add(PrimaryWeapon);
+		bIsWeaponActiveMap.Add(EAmmunitionType::AE_Primary, false);
+		bIsAutomaticMap.Add(EAmmunitionType::AE_Primary, true);
+	}
+
+	/* Set secondary gun defaults */
+	if(SecondaryWeapon)
+	{
+		WeaponArray.Add(SecondaryWeapon);
+		bIsWeaponActiveMap.Add(EAmmunitionType::AE_Secondary, false);
+		bIsAutomaticMap.Add(EAmmunitionType::AE_Secondary, false);
+	}
+
+	AttachWeapon();
+
+	if(!WeaponArray.IsEmpty())
+	{
+		/* Set current weapon as active */
+		bIsWeaponActiveMap[CurrentWeapon] = true;
+	}
+}
+
 void UWeaponComponent::ADSCameraOffsetProgress(float CameraOffsetX)
 {
 	// Get the current camera offset from the player character
@@ -117,14 +197,270 @@ void UWeaponComponent::ADSFieldOfViewProgress(float FOV)
 	Character->SetFOV(FOV);
 }
 
+void UWeaponComponent::StartShooting()
+{
+	Shoot();
+
+	if(bIsAutomaticMap[CurrentWeapon])
+		// Automatic shooting timer 
+		Character->GetWorldTimerManager().SetTimer(HandleRefire, this, &UWeaponComponent::Shoot, TimeBetweenShots, true);
+}
+
+void UWeaponComponent::StopShooting()
+{
+	Character->GetWorldTimerManager().ClearTimer(HandleRefire);
+	bIsShooting = false;
+}
+
+void UWeaponComponent::Shoot()
+{
+	if(Character == nullptr || Character->GetController() == nullptr)
+	{
+		return;
+	}
+	
+	if(InventoryComponent)
+	{
+		// If the player has ammunition and can shoot
+		if(GetCurrentAmmoOfCurrentWeapon() != 0 && bCanShoot)
+		{
+			bIsShooting = true;
+
+			// Decrement ammunition counter of current weapon
+			InventoryComponent->ConsumeAmmo(CurrentWeapon);
+
+			// Shoot raycast line
+			RaycastShot();
+
+			// Try and play the sound if specified
+			PlayGunShotSFX();
+		}
+
+		// If the player has no ammunition in magazine
+		if(GetCurrentAmmoOfCurrentWeapon() == 0 && bCanShoot)
+		{
+			if(ShouldPlayerReload())
+			{
+				StartReloadWeaponTimer();
+			}
+			else
+			{
+				StopShooting();
+			}
+		}
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Ammo Count: ") + FString::FromInt(GetCurrentAmmoOfCurrentWeapon()));
+
+}
+
+void UWeaponComponent::AttachWeapon()
+{
+	/* Setup weapon attachment */
+	const FAttachmentTransformRules attachmentRules(EAttachmentRule::SnapToTarget, true);
+	for(int i = 0; i < WeaponArray.Num(); i++)
+	{
+		WeaponArray[i]->GetWeaponSkeletalMeshComponent()->
+			AttachToComponent(Character->GetMesh(), attachmentRules, FName(TEXT("hand_rSocket")));
+	}
+
+	// Switch bHasRifle so the animation blueprint can switch to another animation set
+	//Character->SetHasRifle(true);
+
+	//// Set up action bindings
+	//if(APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
+	//{
+	//	if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+	//	{
+	//		// Set the priority of the mapping to 1, so that it overrides the Jump action with the Fire action when using touch input
+	//		Subsystem->AddMappingContext(FireMappingContext, 1);
+	//	}
+
+	//	if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
+	//	{
+	//		// Fire
+	//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &UTP_WeaponComponent::StartFire);
+	//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &UTP_WeaponComponent::StopFire);
+	//		EnhancedInputComponent->BindAction(SwitchWeaponsAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::SwitchWeapons);
+	//		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::StartReloadWeaponTimer);
+	//		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Started, this, &UTP_WeaponComponent::AimInSight);
+	//		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Completed, this, &UTP_WeaponComponent::AimOutSight);
+	//	}
+	//}
+	SwitchToNextWeapon();
+}
+
+void UWeaponComponent::SwitchWeapons(const FInputActionValue& index)
+{
+	/* Calculate correct weapon index to switch to */
+	const float tempIndex = index.Get<float>();
+	const int tempValue = UKismetMathLibrary::FTrunc(tempIndex);
+	const int tempWeaponIndex = tempValue + WeaponIndex;
+
+	// Set weapon index
+	if(WeaponArray.IsValidIndex(tempWeaponIndex))
+	{
+		WeaponIndex = tempWeaponIndex;
+	}
+
+	// Otherwise go to the top or the bottom of the array depedning on the direction of the mouse scroll
+	else
+	{
+		WeaponIndex < 0 ? WeaponIndex = WeaponArray.Num() - 1 : WeaponIndex = 0;
+	}
+
+	SwitchToNextWeapon();
+	StopShooting();
+	ClearReloadWeaponTimer();
+
+	// Automatic reload
+	if(GetReserveAmmoOfCurrentWeapon() == 0)
+	{
+		StartReloadWeaponTimer();
+	}
+	else
+	{
+		bCanShoot = true;
+	}
+
+	//GetReserveAmmoOfCurrentWeapon() == 0 ? StartReloadWeaponTimer() : bCanShoot = true; 
+	/*if(bIsAiming)
+	{
+		StopADS();
+	}*/
+}
+
+void UWeaponComponent::RaycastShot()
+{
+	FVector location;
+	FRotator rotaton;
+	FHitResult hit;
+
+	Character->GetController()->GetPlayerViewPoint(location, rotaton); // This has to be changed to camera ----
+
+	FVector start = location;
+	FVector end = start + (rotaton.Vector() * ShootingDistance);
+
+	// Send line trace from players pov
+	FCollisionQueryParams traceParams;
+	bool bHit = GetWorld()->LineTraceSingleByChannel(hit, start, end, ECC_Visibility, traceParams);
+
+	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 2.0f); // DEBUG -----------------------
+
+	// If line trace has hit an object
+	if(bHit)
+	{
+		/* --------------------------------------- TO DO AI --------------------------------------- */
+		/* If AI has been hit */
+		//AEnemyAIManager* enemyManager = Cast<AEnemyAIManager>(hit.GetActor());
+		//if(enemyManager)
+		//{
+		//	enemyManager->GetHealthComponent()->TakeDamage();
+		//	//DrawDebugBox(GetWorld(), hit.ImpactPoint, FVector(5, 5, 5), FColor::Blue, false, 2.0f); // DEBUG -----------------------
+		//}
+	}
+}
+
+void UWeaponComponent::SwitchToNextWeapon()
+{
+	/* Set gun actors as invisible */
+	for(int i = 0; i < WeaponArray.Num(); i++)
+	{
+		WeaponArray[i]->SetActorHiddenInGame(true);
+	}
+
+	/* Set all gun as inactive */
+	for(TPair<EAmmunitionType, bool>& pair : bIsWeaponActiveMap)
+	{
+		pair.Value = false;
+	}
+
+	switch(WeaponIndex)
+	{
+		/* Primary Weapon */
+	case 0:
+
+		CurrentWeapon = EAmmunitionType::AE_Primary;
+		break;
+
+		/* Secondary Weapon*/
+	case 1:
+
+		CurrentWeapon = EAmmunitionType::AE_Secondary;
+		break;
+
+	default:
+		break;
+	}
+
+	// Set current weapon to be visible and active
+	WeaponArray[WeaponIndex]->SetActorHiddenInGame(false);
+	bIsWeaponActiveMap[CurrentWeapon] = true;
+}
+
+void UWeaponComponent::ReloadWeapon()
+{
+	// Calculate the ammunition counter of the weapon after reload
+	InventoryComponent->ReloadWeapon(CurrentWeapon);
+
+	ClearReloadWeaponTimer();
+
+	bIsReloading = false;
+
+	// Allow the player to shoot again
+	bCanShoot = true;
+}
+
+void UWeaponComponent::StartReloadWeaponTimer()
+{
+	if(ShouldPlayerReload() && bCanShoot)
+	{
+		bCanShoot = false; // Stop the player from shooting
+
+		bIsReloading = true;
+
+		StopADS();
+
+		Character->GetWorldTimerManager().SetTimer(HandleReload, this, &UWeaponComponent::ReloadWeapon, ReloadTime, true);
+	}
+}
+
+void UWeaponComponent::ClearReloadWeaponTimer()
+{
+	Character->GetWorldTimerManager().ClearTimer(HandleReload);
+}
+
+bool UWeaponComponent::ShouldPlayerReload() const
+{
+	if(GetReserveAmmoOfCurrentWeapon() != 0)
+		return GetCurrentAmmoOfCurrentWeapon() < GetMaxAmmoCatridgeOfCurrentWeapon() ? true : false;
+
+	return false;
+}
+
+void UWeaponComponent::PlayGunShotSFX()
+{
+	/*if(WeaponArray[WeaponIndex]->FireSound != nullptr)
+		UGameplayStatics::PlaySoundAtLocation(this, WeaponArray[WeaponIndex]->FireSound, Character->GetActorLocation());*/
+}
+
+int32 UWeaponComponent::GetMaxAmmoCatridgeOfCurrentWeapon() const
+{
+	return InventoryComponent->GetMaxAmmoInCatridgeCount(CurrentWeapon);
+}
+
+int32 UWeaponComponent::GetCurrentAmmoOfCurrentWeapon() const
+{
+	return InventoryComponent->GetCurrentAmmoCount(CurrentWeapon);
+}
+
+int32 UWeaponComponent::GetReserveAmmoOfCurrentWeapon() const
+{
+	return InventoryComponent->GetReserveAmmoCount(CurrentWeapon);
+}
+
 void UWeaponComponent::SetIsAiming(bool isAiming)
 {
 	bIsAiming = isAiming;
-}
-
-bool UWeaponComponent::GetIsAiming() const
-{
-	return bIsAiming;
 }
 
 void UWeaponComponent::ADS()

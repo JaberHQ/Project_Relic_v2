@@ -7,8 +7,8 @@
 #include "Logging/LogMacros.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h" 
+#include "InventoryComponent.h"
 #include "WeaponComponent.h"
-//#include "CrouchTimelineComponent.h"
 #include "Project_Relic_v2Character.generated.h"
 
 class USpringArmComponent;
@@ -41,6 +41,10 @@ class AProject_Relic_v2Character : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UWeaponComponent* WeaponComponent;
 	
+	/** Inventory Component */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UInventoryComponent* InventoryComponent;
+
 protected:
 
 	/** Jump Input Action */
@@ -135,6 +139,9 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	/** Returns Inventory Component **/
+	FORCEINLINE class UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 
 	/** Get the characters slow moving speed */
 	float GetSlowMoveSpeed() const { return SlowMoveSpeed; }

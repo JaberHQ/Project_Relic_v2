@@ -45,6 +45,12 @@
     <ClInclude Include="..\..\Source\Project_Relic_v2\BaseWeapon.h">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\InventoryComponent.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\InventoryComponent.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
     <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs">
       <Filter>Source\Project_Relic_v2</Filter>
     </None>
@@ -70,6 +76,12 @@
       <Filter>Source\Project_Relic_v2</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Project_Relic_v2\Project_Relic_v2PlayerController.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\SingleShotRifle.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\SingleShotRifle.h">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Project_Relic_v2\WeaponComponent.cpp">
