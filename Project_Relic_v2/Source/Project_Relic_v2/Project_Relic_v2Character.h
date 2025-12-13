@@ -37,6 +37,7 @@ class AProject_Relic_v2Character : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
 
+	/** Weapon Component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UWeaponComponent* WeaponComponent;
 	
@@ -58,6 +59,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
+	/** Crouch Input Action */
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* CrouchAction;
 
@@ -69,8 +71,10 @@ protected:
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	/** Called every frame */
 	virtual void Tick(float DeltaTime) override;
 
+	/** Called when the game starts */
 	virtual void BeginPlay() override;
 
 protected:
@@ -80,7 +84,6 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
-public:
 	/** Handles move inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoMove(float Right, float Forward);
@@ -97,33 +100,53 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
 
+	/** Handles crouch inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoCrouch();
 
+public:
+	/** Set the boolean for crouching that tells if player is crouching or not */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetIsCrouching(bool isCrouching);
 
+	/** Get the boolean for crouching that tells if player is crouching or not */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	bool GetIsCrouching() const;
 
+	/** Set the character movement's maximum walking speed */
 	void SetMaxWalkSpeed(float MaxWalkSpeed);
 	
-	FVector GetCameraSocketOffset() const;
+	/* Set the characters movement to slow*/
+	void SetMaxWalkSpeedToSlow();
 
+	void SetMaxWalkSpeedToDefault();
+
+	/** Set the camera socket offset */
 	void SetCameraSocketOffset(FVector offset);
 
+	/** Get the camera socket offset */
+	FVector GetCameraSocketOffset() const;
+
+	/** Set the camera's field of view */
 	void SetFOV(float FOV);
 
-public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+	/** Get the characters slow moving speed */
+	float GetSlowMoveSpeed() const { return SlowMoveSpeed; }
+
+	/** Get the characters default moving speed */
+	float GetDefaultMoveSpeed() const { return DefaultMoveSpeed; }
+
 private:
+	/** Initialise the crouch timeline component */
 	void InitCrouchTimeline();
 
+	/** The Crouch Timeline Component's update function */
 	UFUNCTION()
 	void CrouchTimelineProgress(float Value);
 
@@ -134,8 +157,10 @@ protected:
 private:
 	UPROPERTY()
 	UTimelineComponent* CrouchTimelineComponent;
-private:
-	bool bIsCrouching;
 
+private:
+	bool bIsCrouching; // If character is crouching
+	float SlowMoveSpeed; // Characters slow moving speed
+	float DefaultMoveSpeed; // Characters default moving speed
 };
 

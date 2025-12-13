@@ -24,12 +24,6 @@ public:
 	UWeaponComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void ADS();
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void StopADS();
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetIsAiming(bool isAiming);
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
@@ -38,6 +32,14 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	/** Handles the Aim down sights (ADS) actions */
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void ADS();
+
+	/** Handles the actions after the Aim Down Sights (ADS) input is complete */
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void StopADS();
 
 public:	
 	// Called every frame
@@ -50,6 +52,7 @@ private:
 	/* Spawn weapon using location, rotation and reference */
 	ABaseWeapon* SpawnWeapon(const TSubclassOf<ABaseWeapon> WeaponRef, const FVector Location, const FRotator Rotator, const FActorSpawnParameters SpawnInfo);
 
+	/** Initialise the ADS timeline component */
 	void InitADSTimeline();
 
 	UFUNCTION()
@@ -57,7 +60,6 @@ private:
 
 	UFUNCTION()
 	void ADSFieldOfViewProgress(float FOV);
-
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")

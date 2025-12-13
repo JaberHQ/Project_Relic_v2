@@ -56,10 +56,10 @@
 			"Project_Relic_v2GameMode.cpp.obj",
 			"Project_Relic_v2PlayerController.cpp.obj",
 			"CombatAIController.cpp.obj",
-			"CombatEnemy.cpp.obj",
-			"CombatEnemySpawner.cpp.obj"
+			"CombatEnemy.cpp.obj"
 		],
 		"Module.Project_Relic_v2.3.cpp.obj": [
+			"CombatEnemySpawner.cpp.obj",
 			"CombatStateTreeUtility.cpp.obj",
 			"EnvQueryContext_Player.cpp.obj",
 			"AnimNotify_CheckChargedAttack.cpp.obj",

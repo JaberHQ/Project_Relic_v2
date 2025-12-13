@@ -50,9 +50,10 @@ void UWeaponComponent::BeginPlay()
 		}
 		if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
 		{
+			/* ADS (Aim Down Sights) input actions 
+				As the aim button should be held and not toggled, two actions are bound */
 			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::ADS);
 			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopADS);
-
 		}
 	}
 
@@ -103,7 +104,10 @@ void UWeaponComponent::InitADSTimeline()
 
 void UWeaponComponent::ADSCameraOffsetProgress(float CameraOffsetX)
 {
+	// Get the current camera offset from the player character
 	FVector cameraOffset = Character->GetCameraSocketOffset();
+
+	// Set the new socket offset
 	FVector offset = FVector(CameraOffsetX, cameraOffset.Y, cameraOffset.Z);
 	Character->SetCameraSocketOffset(offset);
 }
@@ -128,7 +132,7 @@ void UWeaponComponent::ADS()
 	// Aim
 	if(!bIsAiming)
 	{
-		Character->SetMaxWalkSpeed(150.0f);
+		Character->SetMaxWalkSpeedToSlow(); 
 
 		if(ADSCurveTimeline)
 			ADSCurveTimeline->Play();
@@ -141,7 +145,9 @@ void UWeaponComponent::StopADS()
 {
 	if(bIsAiming)
 	{
-		Character->SetMaxWalkSpeed(500.0f);
+		bool isCrouching = Character->GetIsCrouching();
+		if(!isCrouching)
+			Character->SetMaxWalkSpeedToDefault();
 
 		if(ADSCurveTimeline)
 			ADSCurveTimeline->Reverse();

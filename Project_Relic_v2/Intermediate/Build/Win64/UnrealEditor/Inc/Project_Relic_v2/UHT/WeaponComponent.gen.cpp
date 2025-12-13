@@ -29,12 +29,18 @@ struct Z_Construct_UFunction_UWeaponComponent_ADS_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "Input" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** Handles the Aim down sights (ADS) actions */" },
+#endif
 		{ "ModuleRelativePath", "WeaponComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Handles the Aim down sights (ADS) actions" },
+#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_ADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "ADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_ADS_Statics::Function_MetaDataParams)},  };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_ADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "ADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04080400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_ADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_ADS_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_UWeaponComponent_ADS()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -238,12 +244,18 @@ struct Z_Construct_UFunction_UWeaponComponent_StopADS_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "Input" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** Handles the actions after the Aim Down Sights (ADS) input is complete */" },
+#endif
 		{ "ModuleRelativePath", "WeaponComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Handles the actions after the Aim Down Sights (ADS) input is complete" },
+#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "StopADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams)},  };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "StopADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04080400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_UWeaponComponent_StopADS()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -355,12 +367,12 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UWeaponComponent_ADS, "ADS" }, // 3046456928
+		{ &Z_Construct_UFunction_UWeaponComponent_ADS, "ADS" }, // 3978412913
 		{ &Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress, "ADSCameraOffsetProgress" }, // 1991742677
 		{ &Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress, "ADSFieldOfViewProgress" }, // 992585735
 		{ &Z_Construct_UFunction_UWeaponComponent_GetIsAiming, "GetIsAiming" }, // 3759279808
 		{ &Z_Construct_UFunction_UWeaponComponent_SetIsAiming, "SetIsAiming" }, // 416651007
-		{ &Z_Construct_UFunction_UWeaponComponent_StopADS, "StopADS" }, // 1611700245
+		{ &Z_Construct_UFunction_UWeaponComponent_StopADS, "StopADS" }, // 4204165876
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -421,10 +433,10 @@ UWeaponComponent::~UWeaponComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 1635809940U) },
+		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 1957118730U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_844950192(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_1856451221(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

@@ -304,14 +304,7 @@
             "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\engine\\damageevents.h",
             "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\damageevents.generated.h",
             "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_combat\\ui\\combatlifebar.h",
-            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\combatlifebar.generated.h",
-            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_combat\\ai\\combatenemyspawner.cpp",
-            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_combat\\ai\\combatenemyspawner.h",
-            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\variant_combat\\interfaces\\combatactivatable.h",
-            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\combatactivatable.generated.h",
-            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\combatenemyspawner.generated.h",
-            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\components\\arrowcomponent.h",
-            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\arrowcomponent.generated.h"
+            "c:\\users\\jaber\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\combatlifebar.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

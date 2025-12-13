@@ -20,7 +20,7 @@ class USkeletalMeshComponent;
 
 // ********** Begin Class ABaseWeapon **************************************************************
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execGetGunSkeletalMeshComponent);
+	DECLARE_FUNCTION(execGetWeaponSkeletalMeshComponent);
 
 
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_ABaseWeapon_NoRegister();

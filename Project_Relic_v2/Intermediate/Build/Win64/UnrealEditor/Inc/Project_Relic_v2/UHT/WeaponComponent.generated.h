@@ -20,10 +20,10 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execADSFieldOfViewProgress); \
 	DECLARE_FUNCTION(execADSCameraOffsetProgress); \
-	DECLARE_FUNCTION(execGetIsAiming); \
-	DECLARE_FUNCTION(execSetIsAiming); \
 	DECLARE_FUNCTION(execStopADS); \
-	DECLARE_FUNCTION(execADS);
+	DECLARE_FUNCTION(execADS); \
+	DECLARE_FUNCTION(execGetIsAiming); \
+	DECLARE_FUNCTION(execSetIsAiming);
 
 
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UWeaponComponent_NoRegister();

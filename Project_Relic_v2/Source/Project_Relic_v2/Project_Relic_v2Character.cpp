@@ -14,6 +14,7 @@
 
 
 AProject_Relic_v2Character::AProject_Relic_v2Character()
+	:SlowMoveSpeed(150.0f), DefaultMoveSpeed(500.0f)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -51,10 +52,10 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
-	// Crouch
+	// Crouch defaults
 	bIsCrouching = false;
 
-	// Weapon 
+	// Weapon defaults
 	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
@@ -161,13 +162,15 @@ void AProject_Relic_v2Character::DoJumpEnd()
 
 void AProject_Relic_v2Character::DoCrouch()
 {
-	//Crouch
+	// Crouch
 	if(!bIsCrouching)
 	{
-		SetMaxWalkSpeed(150.0f);
+		// Slow down the player when crouching 
+		SetMaxWalkSpeed(SlowMoveSpeed);
 
 		if(CrouchTimelineComponent)
 		{
+			// This lowers the camera when crouching
 			CrouchTimelineComponent->Play();
 		}
 		bIsCrouching = true;
@@ -175,11 +178,17 @@ void AProject_Relic_v2Character::DoCrouch()
 	// UnCrouch
 	else
 	{
-		SetMaxWalkSpeed(500.0f);
+		/* Check if player is aiming
+			 Without this check, player can speed up incorrectly e.g move really fast while aiming */
+		bool isAiming = WeaponComponent->GetIsAiming();
+		if(!isAiming)
+			SetMaxWalkSpeed(DefaultMoveSpeed);
+
+		
 		if(CrouchTimelineComponent)
-		{
+			// This will raise the camera back to normal position
 			CrouchTimelineComponent->Reverse();
-		}
+
 		bIsCrouching = false;
 	}
 }
@@ -197,6 +206,17 @@ bool AProject_Relic_v2Character::GetIsCrouching() const
 void AProject_Relic_v2Character::SetMaxWalkSpeed(float MaxWalkSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
+}
+
+void AProject_Relic_v2Character::SetMaxWalkSpeedToSlow()
+{
+	GetCharacterMovement()->MaxWalkSpeed = SlowMoveSpeed;
+}
+
+void AProject_Relic_v2Character::SetMaxWalkSpeedToDefault()
+{
+	GetCharacterMovement()->MaxWalkSpeed = DefaultMoveSpeed;
+
 }
 
 FVector AProject_Relic_v2Character::GetCameraSocketOffset() const

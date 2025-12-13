@@ -31,4 +31,3 @@
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/Variant_Combat/AI/CombatAIController.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/Variant_Combat/AI/CombatEnemy.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/Variant_Combat/AI/CombatEnemySpawner.cpp"
-#include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/Variant_Combat/AI/CombatStateTreeUtility.cpp"

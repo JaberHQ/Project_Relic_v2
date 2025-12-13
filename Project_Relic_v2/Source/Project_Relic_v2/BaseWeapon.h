@@ -15,8 +15,9 @@ public:
 	// Sets default values for this actor's properties
 	ABaseWeapon();
 
+	/** Returns the skeletal mesh component of the weapon */
 	UFUNCTION(BlueprintCallable)
-	USkeletalMeshComponent* GetGunSkeletalMeshComponent() const;
+	USkeletalMeshComponent* GetWeaponSkeletalMeshComponent() const;
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,6 +30,6 @@ public:
 protected:
 	/** Skeletal mesh of weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	USkeletalMeshComponent* GunSkeletalMeshComponent;
+	USkeletalMeshComponent* WeaponSkeletalMeshComponent;
 
 };
