@@ -16,7 +16,6 @@ void EmptyLinkFunctionForGeneratedCodeWeaponComponent() {}
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 ENGINE_API UClass* Z_Construct_UClass_UCurveFloat_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_UTimelineComponent_NoRegister();
-ENGINE_API UEnum* Z_Construct_UEnum_Engine_EEndPlayReason();
 ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputAction_NoRegister();
 ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputMappingContext_NoRegister();
 ENHANCEDINPUT_API UScriptStruct* Z_Construct_UScriptStruct_FInputActionValue();
@@ -181,51 +180,6 @@ DEFINE_FUNCTION(UWeaponComponent::execAttachWeapon)
 	P_NATIVE_END;
 }
 // ********** End Class UWeaponComponent Function AttachWeapon *************************************
-
-// ********** Begin Class UWeaponComponent Function EndPlay ****************************************
-struct Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics
-{
-	struct WeaponComponent_eventEndPlay_Parms
-	{
-		TEnumAsByte<EEndPlayReason::Type> EndPlayReason;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "WeaponComponent.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_EndPlayReason_MetaData[] = {
-		{ "NativeConst", "" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FBytePropertyParams NewProp_EndPlayReason;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::NewProp_EndPlayReason = { "EndPlayReason", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WeaponComponent_eventEndPlay_Parms, EndPlayReason), Z_Construct_UEnum_Engine_EEndPlayReason, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_EndPlayReason_MetaData), NewProp_EndPlayReason_MetaData) }; // 2448981352
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::NewProp_EndPlayReason,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "EndPlay", Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::PropPointers), sizeof(Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::WeaponComponent_eventEndPlay_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00080400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::Function_MetaDataParams)},  };
-static_assert(sizeof(Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::WeaponComponent_eventEndPlay_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UWeaponComponent_EndPlay()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWeaponComponent_EndPlay_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(UWeaponComponent::execEndPlay)
-{
-	P_GET_PROPERTY(FByteProperty,Z_Param_EndPlayReason);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->EndPlay(EEndPlayReason::Type(Z_Param_EndPlayReason));
-	P_NATIVE_END;
-}
-// ********** End Class UWeaponComponent Function EndPlay ******************************************
 
 // ********** Begin Class UWeaponComponent Function GetCurrentAmmoOfCurrentWeapon ******************
 struct Z_Construct_UFunction_UWeaponComponent_GetCurrentAmmoOfCurrentWeapon_Statics
@@ -616,7 +570,6 @@ void UWeaponComponent::StaticRegisterNativesUWeaponComponent()
 		{ "ADSCameraOffsetProgress", &UWeaponComponent::execADSCameraOffsetProgress },
 		{ "ADSFieldOfViewProgress", &UWeaponComponent::execADSFieldOfViewProgress },
 		{ "AttachWeapon", &UWeaponComponent::execAttachWeapon },
-		{ "EndPlay", &UWeaponComponent::execEndPlay },
 		{ "GetCurrentAmmoOfCurrentWeapon", &UWeaponComponent::execGetCurrentAmmoOfCurrentWeapon },
 		{ "GetIsAiming", &UWeaponComponent::execGetIsAiming },
 		{ "GetIsReloading", &UWeaponComponent::execGetIsReloading },
@@ -761,7 +714,6 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 		{ &Z_Construct_UFunction_UWeaponComponent_ADSCameraOffsetProgress, "ADSCameraOffsetProgress" }, // 1991742677
 		{ &Z_Construct_UFunction_UWeaponComponent_ADSFieldOfViewProgress, "ADSFieldOfViewProgress" }, // 992585735
 		{ &Z_Construct_UFunction_UWeaponComponent_AttachWeapon, "AttachWeapon" }, // 1281466438
-		{ &Z_Construct_UFunction_UWeaponComponent_EndPlay, "EndPlay" }, // 3952791301
 		{ &Z_Construct_UFunction_UWeaponComponent_GetCurrentAmmoOfCurrentWeapon, "GetCurrentAmmoOfCurrentWeapon" }, // 2710833412
 		{ &Z_Construct_UFunction_UWeaponComponent_GetIsAiming, "GetIsAiming" }, // 3759279808
 		{ &Z_Construct_UFunction_UWeaponComponent_GetIsReloading, "GetIsReloading" }, // 822242970
@@ -837,14 +789,14 @@ UWeaponComponent::~UWeaponComponent() {}
 // ********** End Class UWeaponComponent ***********************************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics
+struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 1455835722U) },
+		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 63209654U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_4281037163(TEXT("/Script/Project_Relic_v2"),
-	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_233730969(TEXT("/Script/Project_Relic_v2"),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // ********** End Registration *********************************************************************

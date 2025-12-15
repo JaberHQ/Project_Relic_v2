@@ -67,6 +67,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* CrouchAction;
 
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* SprintAction;
+
 public:
 	/** Constructor */
 	AProject_Relic_v2Character();	
@@ -107,6 +111,11 @@ protected:
 	/** Handles crouch inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoCrouch();
+
+
+	/** Handles Sprint inputs from either controls or UI interfaces */
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoSprint();
 
 public:
 	/** Set the boolean for crouching that tells if player is crouching or not */

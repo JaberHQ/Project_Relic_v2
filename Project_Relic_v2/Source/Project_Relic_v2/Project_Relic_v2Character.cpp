@@ -14,7 +14,7 @@
 
 
 AProject_Relic_v2Character::AProject_Relic_v2Character()
-	:SlowMoveSpeed(150.0f), DefaultMoveSpeed(500.0f)
+	:SlowMoveSpeed(150.0f), DefaultMoveSpeed(300.0f)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -34,7 +34,7 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 500.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MaxWalkSpeed = DefaultMoveSpeed;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
@@ -83,6 +83,10 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 
 		// Crouching
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoCrouch);
+
+		// Sprint
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoSprint);
+
 	}
 	else
 	{
@@ -194,6 +198,15 @@ void AProject_Relic_v2Character::DoCrouch()
 
 		bIsCrouching = false;
 	}
+}
+
+void AProject_Relic_v2Character::DoSprint()
+{
+	if (!bIsCrouching)
+	// Create timeline for how long sprinting is
+		SetMaxWalkSpeed(500.0f);
+
+	// After time, set max walk speed back
 }
 
 void AProject_Relic_v2Character::SetIsCrouching(bool isCrouching)

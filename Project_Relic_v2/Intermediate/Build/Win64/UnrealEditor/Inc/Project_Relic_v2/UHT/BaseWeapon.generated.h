@@ -19,13 +19,13 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 class USkeletalMeshComponent;
 
 // ********** Begin Class ABaseWeapon **************************************************************
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execGetWeaponSkeletalMeshComponent);
 
 
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_ABaseWeapon_NoRegister();
 
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_INCLASS_NO_PURE_DECLS \
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesABaseWeapon(); \
 	friend struct Z_Construct_UClass_ABaseWeapon_Statics; \
@@ -36,7 +36,7 @@ public: \
 	DECLARE_SERIALIZER(ABaseWeapon)
 
 
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_ENHANCED_CONSTRUCTORS \
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	ABaseWeapon(ABaseWeapon&&) = delete; \
 	ABaseWeapon(const ABaseWeapon&) = delete; \
@@ -46,13 +46,13 @@ public: \
 	NO_API virtual ~ABaseWeapon();
 
 
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_9_PROLOG
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_GENERATED_BODY \
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_9_PROLOG
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_INCLASS_NO_PURE_DECLS \
-	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_ENHANCED_CONSTRUCTORS \
+	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_INCLASS_NO_PURE_DECLS \
+	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h_12_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -62,6 +62,6 @@ class ABaseWeapon;
 // ********** End Class ABaseWeapon ****************************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h
+#define CURRENT_FILE_ID FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BaseWeapon_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

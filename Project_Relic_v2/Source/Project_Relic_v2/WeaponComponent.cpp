@@ -55,21 +55,21 @@ void UWeaponComponent::BeginPlay()
 	}
 }
 
-void UWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-	if(Character == nullptr)
-	{
-		return;
-	}
-
-	if(APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
-	{
-		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			Subsystem->RemoveMappingContext(FireMappingContext);
-		}
-	}
-}
+//void UWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+//{
+//	if(Character == nullptr)
+//	{
+//		return;
+//	}
+//
+//	if(APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
+//	{
+//		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+//		{
+//			Subsystem->RemoveMappingContext(FireMappingContext);
+//		}
+//	}
+//}
 
 
 // Called every frame

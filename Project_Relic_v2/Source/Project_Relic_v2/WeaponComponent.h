@@ -50,8 +50,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	/*UFUNCTION()
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;*/
 
 	/** Handles the Aim down sights (ADS) actions */
 	UFUNCTION(BlueprintCallable, Category = "Input")
