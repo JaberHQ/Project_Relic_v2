@@ -25,7 +25,7 @@ public:
 	UWeaponComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetIsAiming(bool isAiming);
+	void SetIsAiming(bool IsAiming);
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	bool GetIsAiming() const { return bIsAiming; }
@@ -77,6 +77,9 @@ private:
 
 	/* Set weapon defaults */
 	void InitWeapons();
+
+	/* Initialise weapon enhanced input */
+	void InitInputs();
 
 	UFUNCTION()
 	void ADSCameraOffsetProgress(float CameraOffsetX);

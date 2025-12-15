@@ -3,6 +3,8 @@
 #include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/AnimNotify_CheckCombo.gen.cpp"
 #include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/AnimNotify_DoAttackTrace.gen.cpp"
 #include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/AnimNotify_EndDash.gen.cpp"
+#include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/AutomaticRifle.gen.cpp"
+#include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/BaseWeapon.gen.cpp"
 #include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/CombatActivatable.gen.cpp"
 #include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/CombatActivationVolume.gen.cpp"
 #include "C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/CombatAIController.gen.cpp"

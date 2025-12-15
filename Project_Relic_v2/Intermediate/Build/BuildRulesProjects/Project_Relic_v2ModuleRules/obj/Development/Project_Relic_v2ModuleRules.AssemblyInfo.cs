@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Project_Relic_v2ModuleRules")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Development")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de75aac2b19b09f10b4507864f6bb7c902153692")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61bc77774518218c4d5080c60d88745d3f902e70")]
 [assembly: System.Reflection.AssemblyProductAttribute("Project_Relic_v2ModuleRules")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Project_Relic_v2ModuleRules")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

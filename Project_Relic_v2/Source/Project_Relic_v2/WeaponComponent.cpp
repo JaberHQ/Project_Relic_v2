@@ -45,45 +45,10 @@ void UWeaponComponent::BeginPlay()
 
 	Character = Cast<AProject_Relic_v2Character>(GetOwner());
 
-	/*if(PrimaryWeaponRef)
-	{
-		FVector weaponPlacementLocation(20.0f, 20.0f, -20.0f);
-		FRotator weaponPlacementRotator(0.0f, 0.0f, 0.0f);
-
-		const FActorSpawnParameters spawnInfo;
-		PrimaryWeapon = SpawnWeapon(PrimaryWeaponRef, weaponPlacementLocation, weaponPlacementRotator, spawnInfo);
-	}
-
-	if(PrimaryWeapon)
-	{
-		const FAttachmentTransformRules attachmentRules(EAttachmentRule::SnapToTarget, true);
-		PrimaryWeapon->AttachToComponent(Character->GetMesh(), attachmentRules, FName(TEXT("hand_rSocket")));
-	}*/
-
-	if(APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
-	{
-		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			Subsystem->AddMappingContext(FireMappingContext, 1);
-		}
-		if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
-		{
-			/* ADS (Aim Down Sights) input actions 
-				As the aim button should be held and not toggled, two actions are bound */
-			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::ADS);
-			EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopADS);
-
-			/* Shooting input actions */
-			EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &UWeaponComponent::StartShooting);
-			EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopShooting);
-
-			EnhancedInputComponent->BindAction(SwitchWeaponsAction, ETriggerEvent::Triggered, this, &UWeaponComponent::SwitchWeapons);
-			EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &UWeaponComponent::StartReloadWeaponTimer);
-		}
-	}
 
 	if(Character)
 	{
+		InitInputs();
 		InventoryComponent = Character->GetInventoryComponent();
 		InitWeapons();
 		InitADSTimeline();
@@ -179,6 +144,33 @@ void UWeaponComponent::InitWeapons()
 	{
 		/* Set current weapon as active */
 		bIsWeaponActiveMap[CurrentWeapon] = true;
+	}
+}
+
+void UWeaponComponent::InitInputs()
+{
+
+	if( APlayerController* PlayerController = Cast<APlayerController>( Character->GetController() ) )
+	{
+		if( UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>( PlayerController->GetLocalPlayer() ) )
+		{
+			Subsystem->AddMappingContext( FireMappingContext, 1 );
+		}
+		if( UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>( PlayerController->InputComponent ) )
+		{
+			/* ADS (Aim Down Sights) input actions
+				As the aim button should be held and not toggled, two actions are bound */
+			EnhancedInputComponent->BindAction( AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::ADS );
+			EnhancedInputComponent->BindAction( AimAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopADS );
+
+			/* Shooting input actions */
+			EnhancedInputComponent->BindAction( ShootAction, ETriggerEvent::Started, this, &UWeaponComponent::StartShooting );
+			EnhancedInputComponent->BindAction( ShootAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopShooting );
+
+			/* Weapon input actions */
+			EnhancedInputComponent->BindAction( SwitchWeaponsAction, ETriggerEvent::Triggered, this, &UWeaponComponent::SwitchWeapons );
+			EnhancedInputComponent->BindAction( ReloadAction, ETriggerEvent::Triggered, this, &UWeaponComponent::StartReloadWeaponTimer );
+		}
 	}
 }
 
@@ -458,9 +450,9 @@ int32 UWeaponComponent::GetReserveAmmoOfCurrentWeapon() const
 	return InventoryComponent->GetReserveAmmoCount(CurrentWeapon);
 }
 
-void UWeaponComponent::SetIsAiming(bool isAiming)
+void UWeaponComponent::SetIsAiming(bool IsAiming)
 {
-	bIsAiming = isAiming;
+	bIsAiming = IsAiming;
 }
 
 void UWeaponComponent::ADS()
@@ -481,8 +473,8 @@ void UWeaponComponent::StopADS()
 {
 	if(bIsAiming)
 	{
-		bool isCrouching = Character->GetIsCrouching();
-		if(!isCrouching)
+		bool bIsCrouching = Character->GetIsCrouching();
+		if(!bIsCrouching)
 			Character->SetMaxWalkSpeedToDefault();
 
 		if(ADSCurveTimeline)

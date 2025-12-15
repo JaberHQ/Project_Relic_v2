@@ -157,14 +157,14 @@ DEFINE_VTABLE_PTR_HELPER_CTOR(USideScrollingInteractable);
 // ********** End Interface USideScrollingInteractable *********************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_Statics
+struct Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
 		{ Z_Construct_UClass_USideScrollingInteractable, USideScrollingInteractable::StaticClass, TEXT("USideScrollingInteractable"), &Z_Registration_Info_UClass_USideScrollingInteractable, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USideScrollingInteractable), 3324297303U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_2342377540(TEXT("/Script/Project_Relic_v2"),
-	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_2342377540(TEXT("/Script/Project_Relic_v2"),
+	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Variant_SideScrolling_Interfaces_SideScrollingInteractable_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // ********** End Registration *********************************************************************

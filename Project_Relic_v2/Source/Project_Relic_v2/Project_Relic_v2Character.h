@@ -120,9 +120,10 @@ public:
 	/** Set the character movement's maximum walking speed */
 	void SetMaxWalkSpeed(float MaxWalkSpeed);
 	
-	/* Set the characters movement to slow*/
+	/* Set the characters movement to slow speed */
 	void SetMaxWalkSpeedToSlow();
 
+	/* Set the characters movement to default speed */
 	void SetMaxWalkSpeedToDefault();
 
 	/** Set the camera socket offset */
