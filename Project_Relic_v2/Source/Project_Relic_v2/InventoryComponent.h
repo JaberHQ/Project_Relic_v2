@@ -27,8 +27,8 @@
 UENUM(BlueprintType)
 enum class EAmmunitionType : uint8
 {
-	AE_Primary UMETA(DisplayName = "PrimaryAmmunition"),
-	AE_Secondary UMETA(DisplayName = "AE_SecondaryAmmunition"),
+	Primary UMETA(DisplayName = "Primary Ammunition"),
+	Secondary UMETA(DisplayName = "Secondary Ammunition"),
 };
 
 /*****************************************************************************************************
@@ -54,7 +54,6 @@ struct FAmmunition
 {
 	GENERATED_BODY()
 
-public:
 	UPROPERTY()
 	int8 DefaultMaxPrimaryAmmunition = 30; // Default maximum ammunition in primary weapon
 
@@ -87,31 +86,31 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	/* Consume ammunition by decrementing count */
-	void ConsumeAmmo(EAmmunitionType ammo);
+	void ConsumeAmmo(EAmmunitionType Ammo);
 
 	/* Return the current ammunition count */
-	int32 GetCurrentAmmoCount(EAmmunitionType ammo) const;
+	int32 GetCurrentAmmoCount(EAmmunitionType Ammo) const;
 
 	/* Return the total ammunition count */
-	int32 GetReserveAmmoCount(EAmmunitionType ammo) const;
+	int32 GetReserveAmmoCount(EAmmunitionType Ammo) const;
 
 	/* Get the maximum ammunition count of the weapon */
-	int32 GetMaxAmmoInCatridgeCount(EAmmunitionType ammo) const;
+	int32 GetMaxAmmoInCatridgeCount(EAmmunitionType Ammo) const;
 
 	/* Reloads the weapon by resetting the count back to it's max ammunition */
-	void ReloadWeapon(EAmmunitionType ammo);
+	void ReloadWeapon(EAmmunitionType Ammo);
 	
 private:
 	// Hash map for ammunition count of each weapon
-	TMap<EAmmunitionType, int8> CurrentAmmunitionCount;
+	TMap<EAmmunitionType, int8> CurrentAmmunitionCountMap;
 
 	// Hash map for the max amount of ammunition (before gun has to reload the catridge) of each weapon
 	// This is the maximum ammount of bullets that the player can shoot before they have to reload
-	TMap<EAmmunitionType, int8> MaxAmmunitionInCatridge;
+	TMap<EAmmunitionType, int8> MaxAmmunitionInCatridgeMap;
 
 	// Hash map for the reserve ammunition
 	// This is the total amount of ammunition the player has 
-	TMap<EAmmunitionType, int8> ReserveAmmunitionCount;
+	TMap<EAmmunitionType, int8> ReserveAmmunitionCountMap;
 
 
 };

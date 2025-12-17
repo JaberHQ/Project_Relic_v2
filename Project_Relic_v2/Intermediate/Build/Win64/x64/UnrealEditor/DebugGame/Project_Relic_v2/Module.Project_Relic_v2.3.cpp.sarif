@@ -19,7 +19,7 @@
                                     "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/WeaponComponent.cpp"
                                 },
                                 "region": {
-                                    "startLine": 16,
+                                    "startLine": 17,
                                     "startColumn": 4,
                                     "snippet": {
                                         "text": "\t, bIsReloading(false)"

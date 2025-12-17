@@ -13,17 +13,36 @@ UInventoryComponent::UInventoryComponent()
 	// Reference to struct that holds the ammunitions default variables 
 	const FAmmunition ammunitionSettings;
 
-	// Set max ammunition of each weapon
-	MaxAmmunitionInCatridge.Add(EAmmunitionType::AE_Primary, ammunitionSettings.DefaultMaxPrimaryAmmunition);
-	MaxAmmunitionInCatridge.Add(EAmmunitionType::AE_Secondary, ammunitionSettings.DefaultMaxSecondaryAmmunition);
+	/* Initalise Ammo defaults */
+	MaxAmmunitionInCatridgeMap =
+	{
+		{ EAmmunitionType::Primary,   ammunitionSettings.DefaultMaxPrimaryAmmunition   },
+		{ EAmmunitionType::Secondary, ammunitionSettings.DefaultMaxSecondaryAmmunition }
+	};
+
+	CurrentAmmunitionCountMap =
+	{
+		{ EAmmunitionType::Primary,   MaxAmmunitionInCatridgeMap[EAmmunitionType::Primary]   },
+		{ EAmmunitionType::Secondary, MaxAmmunitionInCatridgeMap[EAmmunitionType::Secondary] }
+	};
+
+	ReserveAmmunitionCountMap =
+	{
+		{ EAmmunitionType::Primary,   ammunitionSettings.DefaultTotalPrimaryAmmunition },
+		{ EAmmunitionType::Secondary, ammunitionSettings.DefaultTotalSecondaryAmmunition }
+	};
+
+	//// Set max ammunition of each weapon
+	//MaxAmmunitionInCatridgeMap.Add(EAmmunitionType::Primary, ammunitionSettings.DefaultMaxPrimaryAmmunition);
+	//MaxAmmunitionInCatridgeMap.Add(EAmmunitionType::Secondary, ammunitionSettings.DefaultMaxSecondaryAmmunition);
+
+	//// Set ammunition count of each weapon
+	//CurrentAmmunitionCountMap.Add(EAmmunitionType::Primary, MaxAmmunitionInCatridgeMap[EAmmunitionType::Primary]);
+	//CurrentAmmunitionCountMap.Add(EAmmunitionType::Secondary, MaxAmmunitionInCatridgeMap[EAmmunitionType::Secondary]);
 
 	// Set ammunition count of each weapon
-	CurrentAmmunitionCount.Add(EAmmunitionType::AE_Primary, MaxAmmunitionInCatridge[EAmmunitionType::AE_Primary]);
-	CurrentAmmunitionCount.Add(EAmmunitionType::AE_Secondary, MaxAmmunitionInCatridge[EAmmunitionType::AE_Secondary]);
-
-	// Set ammunition count of each weapon
-	ReserveAmmunitionCount.Add(EAmmunitionType::AE_Primary, ammunitionSettings.DefaultTotalPrimaryAmmunition);
-	ReserveAmmunitionCount.Add(EAmmunitionType::AE_Secondary, ammunitionSettings.DefaultTotalSecondaryAmmunition);
+	/*ReserveAmmunitionCountMap.Add(EAmmunitionType::Primary, ammunitionSettings.DefaultTotalPrimaryAmmunition);
+	ReserveAmmunitionCountMap.Add(EAmmunitionType::Secondary, ammunitionSettings.DefaultTotalSecondaryAmmunition);*/
 }
 
 
@@ -45,53 +64,53 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
-void UInventoryComponent::ReloadWeapon(EAmmunitionType ammo)
+void UInventoryComponent::ReloadWeapon(EAmmunitionType Ammo)
 {
 	/* If there is enough reserve ammunition to refill a full magazine */
-	if(ReserveAmmunitionCount[ammo] >= MaxAmmunitionInCatridge[ammo])
+	if(ReserveAmmunitionCountMap[Ammo] >= MaxAmmunitionInCatridgeMap[Ammo])
 	{
-		ReserveAmmunitionCount[ammo] -= (MaxAmmunitionInCatridge[ammo] - CurrentAmmunitionCount[ammo]);
-		CurrentAmmunitionCount[ammo] = MaxAmmunitionInCatridge[ammo];
+		ReserveAmmunitionCountMap[Ammo] -= (MaxAmmunitionInCatridgeMap[Ammo] - CurrentAmmunitionCountMap[Ammo]);
+		CurrentAmmunitionCountMap[Ammo] = MaxAmmunitionInCatridgeMap[Ammo];
 	}
 
-	else if(ReserveAmmunitionCount[ammo] < MaxAmmunitionInCatridge[ammo] && ReserveAmmunitionCount[ammo] > 0)
+	else if(ReserveAmmunitionCountMap[Ammo] < MaxAmmunitionInCatridgeMap[Ammo] && ReserveAmmunitionCountMap[Ammo] > 0)
 	{
 		/* If there isn't enough reserve for a full magazine */
-		if(ReserveAmmunitionCount[ammo] < (MaxAmmunitionInCatridge[ammo] - CurrentAmmunitionCount[ammo]))
+		if(ReserveAmmunitionCountMap[Ammo] < (MaxAmmunitionInCatridgeMap[Ammo] - CurrentAmmunitionCountMap[Ammo]))
 		{
-			CurrentAmmunitionCount[ammo] += ReserveAmmunitionCount[ammo];
-			ReserveAmmunitionCount[ammo] = 0;
+			CurrentAmmunitionCountMap[Ammo] += ReserveAmmunitionCountMap[Ammo];
+			ReserveAmmunitionCountMap[Ammo] = 0;
 		}
 		/* If there is enough reserve for a full clip */
 		else
 		{
-			ReserveAmmunitionCount[ammo] -= (MaxAmmunitionInCatridge[ammo] - CurrentAmmunitionCount[ammo]);
-			CurrentAmmunitionCount[ammo] = MaxAmmunitionInCatridge[ammo];
+			ReserveAmmunitionCountMap[Ammo] -= (MaxAmmunitionInCatridgeMap[Ammo] - CurrentAmmunitionCountMap[Ammo]);
+			CurrentAmmunitionCountMap[Ammo] = MaxAmmunitionInCatridgeMap[Ammo];
 		}
 	}
 
 	else
 	{
-		ReserveAmmunitionCount[ammo] = 0; // Just for safety incase ammunition does go below zero
+		ReserveAmmunitionCountMap[Ammo] = 0; // Just for safety incase ammunition does go below zero
 	}
 }
 
-void UInventoryComponent::ConsumeAmmo(EAmmunitionType ammo)
+void UInventoryComponent::ConsumeAmmo(EAmmunitionType Ammo)
 {
-	CurrentAmmunitionCount[ammo]--;
+	CurrentAmmunitionCountMap[Ammo]--;
 }
 
-int32 UInventoryComponent::GetCurrentAmmoCount(EAmmunitionType ammo) const
+int32 UInventoryComponent::GetCurrentAmmoCount(EAmmunitionType Ammo) const
 {
-	return CurrentAmmunitionCount[ammo];
+	return CurrentAmmunitionCountMap[Ammo];
 }
 
-int32 UInventoryComponent::GetReserveAmmoCount(EAmmunitionType ammo) const
+int32 UInventoryComponent::GetReserveAmmoCount(EAmmunitionType Ammo) const
 {
-	return ReserveAmmunitionCount[ammo];
+	return ReserveAmmunitionCountMap[Ammo];
 }
 
-int32 UInventoryComponent::GetMaxAmmoInCatridgeCount(EAmmunitionType ammo) const
+int32 UInventoryComponent::GetMaxAmmoInCatridgeCount(EAmmunitionType Ammo) const
 {
-	return MaxAmmunitionInCatridge[ammo];
+	return MaxAmmunitionInCatridgeMap[Ammo];
 }

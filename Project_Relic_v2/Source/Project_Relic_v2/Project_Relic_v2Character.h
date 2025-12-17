@@ -20,6 +20,28 @@ struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
+UENUM(BlueprintType)
+enum class ECharacterMoveSpeed : uint8
+{
+	Slow UMETA(DisplayName = "Slow"),
+	Default UMETA(DisplayName = "Default"),
+	Fast UMETA(DisplayName = "Fast")
+};
+
+USTRUCT(BlueprintType)
+struct FCharacterMoveSpeed
+{
+	GENERATED_BODY()
+
+	float Slow	   = 150.0f; // Slow moving speed
+	
+	float Default  = 300.0f; // Default Moving speed
+
+	float Fast     = 600.0f; // Fast Moving Speed
+};
+
+
+
 /**
  *  A simple player-controllable third person character
  *  Implements a controllable orbiting camera
@@ -112,10 +134,13 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoCrouch();
 
-
 	/** Handles Sprint inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoSprint();
+
+	/** Handles Sprint inputs from either controls or UI interfaces */
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void StopSprint();
 
 public:
 	/** Set the boolean for crouching that tells if player is crouching or not */
@@ -127,13 +152,7 @@ public:
 	bool GetIsCrouching() const;
 
 	/** Set the character movement's maximum walking speed */
-	void SetMaxWalkSpeed(float MaxWalkSpeed);
-	
-	/* Set the characters movement to slow speed */
-	void SetMaxWalkSpeedToSlow();
-
-	/* Set the characters movement to default speed */
-	void SetMaxWalkSpeedToDefault();
+	void SetMaxWalkSpeed(ECharacterMoveSpeed MoveSpeed);
 
 	/** Set the camera socket offset */
 	void SetCameraSocketOffset(FVector offset);
@@ -153,12 +172,6 @@ public:
 	/** Returns Inventory Component **/
 	FORCEINLINE class UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 
-	/** Get the characters slow moving speed */
-	float GetSlowMoveSpeed() const { return SlowMoveSpeed; }
-
-	/** Get the characters default moving speed */
-	float GetDefaultMoveSpeed() const { return DefaultMoveSpeed; }
-
 private:
 	/** Initialise the crouch timeline component */
 	void InitCrouchTimeline();
@@ -177,7 +190,7 @@ private:
 
 private:
 	bool bIsCrouching; // If character is crouching
-	float SlowMoveSpeed; // Characters slow moving speed
-	float DefaultMoveSpeed; // Characters default moving speed
+	TMap<ECharacterMoveSpeed, float> MoveSpeedMap;
+	ECharacterMoveSpeed CurrentMoveSpeed;
 };
 

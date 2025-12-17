@@ -38,23 +38,23 @@ struct Z_Construct_UEnum_Project_Relic_v2_EAmmunitionType_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
-		{ "AE_Primary.DisplayName", "PrimaryAmmunition" },
-		{ "AE_Primary.Name", "EAmmunitionType::AE_Primary" },
-		{ "AE_Secondary.DisplayName", "AE_SecondaryAmmunition" },
-		{ "AE_Secondary.Name", "EAmmunitionType::AE_Secondary" },
 		{ "BlueprintType", "true" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "/*****************************************************************************************************\n * Type: Enum class\n *\n * Name: EAmmunitionType\n *\n * Author: Jaber A\n *\n * Purpose: Enum for every weapon type\n *\n * References: N/A\n *\n * See Also: WeaponComponent.cpp\n *\n * Change Log:\n * Date          Initials    Version     Comments\n * 28/09/2023    JA          V1.0        N/A\n * 13/12/2025    JA\x09\x09\x09 v2.0\x09\x09 N/A\n*****************************************************************************************************/" },
 #endif
 		{ "ModuleRelativePath", "InventoryComponent.h" },
+		{ "Primary.DisplayName", "Primary Ammunition" },
+		{ "Primary.Name", "EAmmunitionType::Primary" },
+		{ "Secondary.DisplayName", "Secondary Ammunition" },
+		{ "Secondary.Name", "EAmmunitionType::Secondary" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Type: Enum class\n\nName: EAmmunitionType\n\nAuthor: Jaber A\n\nPurpose: Enum for every weapon type\n\nReferences: N/A\n\nSee Also: WeaponComponent.cpp\n\nChange Log:\nDate          Initials    Version     Comments\n28/09/2023    JA          V1.0        N/A\n13/12/2025    JA                     v2.0            N/A" },
 #endif
 	};
 #endif // WITH_METADATA
 	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
-		{ "EAmmunitionType::AE_Primary", (int64)EAmmunitionType::AE_Primary },
-		{ "EAmmunitionType::AE_Secondary", (int64)EAmmunitionType::AE_Secondary },
+		{ "EAmmunitionType::Primary", (int64)EAmmunitionType::Primary },
+		{ "EAmmunitionType::Secondary", (int64)EAmmunitionType::Secondary },
 	};
 	static const UECodeGen_Private::FEnumParams EnumParams;
 };
@@ -240,7 +240,7 @@ UInventoryComponent::~UInventoryComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
-		{ EAmmunitionType_StaticEnum, TEXT("EAmmunitionType"), &Z_Registration_Info_UEnum_EAmmunitionType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 310549749U) },
+		{ EAmmunitionType_StaticEnum, TEXT("EAmmunitionType"), &Z_Registration_Info_UEnum_EAmmunitionType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 754121883U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
 		{ FAmmunition::StaticStruct, Z_Construct_UScriptStruct_FAmmunition_Statics::NewStructOps, TEXT("Ammunition"), &Z_Registration_Info_UScriptStruct_FAmmunition, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FAmmunition), 508775050U) },
@@ -249,7 +249,7 @@ struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_P
 		{ Z_Construct_UClass_UInventoryComponent, UInventoryComponent::StaticClass, TEXT("UInventoryComponent"), &Z_Registration_Info_UClass_UInventoryComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInventoryComponent), 3230481902U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_1712578145(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_1613018047(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::EnumInfo));

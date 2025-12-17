@@ -5,12 +5,13 @@
 #include "Kismet/GameplayStatics.h"
 #include <Kismet/KismetMathLibrary.h>
 #include "Project_Relic_v2Character.h"
+
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
 	:TimeBetweenShots(0.15f)
 	, ShootingDistance(2000.0f)
 	, WeaponIndex(0)
-	, CurrentWeapon(EAmmunitionType::AE_Primary)
+	, CurrentWeapon(EAmmunitionType::Primary)
 	, bCanShoot(true)
 	, bIsShooting(false)
 	, bIsReloading(false)
@@ -126,16 +127,16 @@ void UWeaponComponent::InitWeapons()
 	if(PrimaryWeapon)
 	{
 		WeaponArray.Add(PrimaryWeapon);
-		bIsWeaponActiveMap.Add(EAmmunitionType::AE_Primary, false);
-		bIsAutomaticMap.Add(EAmmunitionType::AE_Primary, true);
+		bIsWeaponActiveMap.Add(EAmmunitionType::Primary, false);
+		bIsAutomaticMap.Add(EAmmunitionType::Primary, true);
 	}
 
 	/* Set secondary gun defaults */
 	if(SecondaryWeapon)
 	{
 		WeaponArray.Add(SecondaryWeapon);
-		bIsWeaponActiveMap.Add(EAmmunitionType::AE_Secondary, false);
-		bIsAutomaticMap.Add(EAmmunitionType::AE_Secondary, false);
+		bIsWeaponActiveMap.Add(EAmmunitionType::Secondary, false);
+		bIsAutomaticMap.Add(EAmmunitionType::Secondary, false);
 	}
 
 	AttachWeapon();
@@ -254,30 +255,6 @@ void UWeaponComponent::AttachWeapon()
 		WeaponArray[i]->GetWeaponSkeletalMeshComponent()->
 			AttachToComponent(Character->GetMesh(), attachmentRules, FName(TEXT("hand_rSocket")));
 	}
-
-	// Switch bHasRifle so the animation blueprint can switch to another animation set
-	//Character->SetHasRifle(true);
-
-	//// Set up action bindings
-	//if(APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
-	//{
-	//	if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-	//	{
-	//		// Set the priority of the mapping to 1, so that it overrides the Jump action with the Fire action when using touch input
-	//		Subsystem->AddMappingContext(FireMappingContext, 1);
-	//	}
-
-	//	if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
-	//	{
-	//		// Fire
-	//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &UTP_WeaponComponent::StartFire);
-	//		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &UTP_WeaponComponent::StopFire);
-	//		EnhancedInputComponent->BindAction(SwitchWeaponsAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::SwitchWeapons);
-	//		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::StartReloadWeaponTimer);
-	//		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Started, this, &UTP_WeaponComponent::AimInSight);
-	//		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Completed, this, &UTP_WeaponComponent::AimOutSight);
-	//	}
-	//}
 	SwitchToNextWeapon();
 }
 
@@ -294,7 +271,7 @@ void UWeaponComponent::SwitchWeapons(const FInputActionValue& index)
 		WeaponIndex = tempWeaponIndex;
 	}
 
-	// Otherwise go to the top or the bottom of the array depedning on the direction of the mouse scroll
+	// Otherwise go to the top or the bottom of the array depending on the direction of the mouse scroll
 	else
 	{
 		WeaponIndex < 0 ? WeaponIndex = WeaponArray.Num() - 1 : WeaponIndex = 0;
@@ -314,7 +291,6 @@ void UWeaponComponent::SwitchWeapons(const FInputActionValue& index)
 		bCanShoot = true;
 	}
 
-	//GetReserveAmmoOfCurrentWeapon() == 0 ? StartReloadWeaponTimer() : bCanShoot = true; 
 	/*if(bIsAiming)
 	{
 		StopADS();
@@ -327,7 +303,7 @@ void UWeaponComponent::RaycastShot()
 	FRotator rotaton;
 	FHitResult hit;
 
-	Character->GetController()->GetPlayerViewPoint(location, rotaton); // This has to be changed to camera ----
+	Character->GetController()->GetPlayerViewPoint(location, rotaton); // This can be changed to camera ----
 
 	FVector start = location;
 	FVector end = start + (rotaton.Vector() * ShootingDistance);
@@ -371,13 +347,13 @@ void UWeaponComponent::SwitchToNextWeapon()
 		/* Primary Weapon */
 	case 0:
 
-		CurrentWeapon = EAmmunitionType::AE_Primary;
+		CurrentWeapon = EAmmunitionType::Primary;
 		break;
 
 		/* Secondary Weapon*/
 	case 1:
 
-		CurrentWeapon = EAmmunitionType::AE_Secondary;
+		CurrentWeapon = EAmmunitionType::Secondary;
 		break;
 
 	default:
@@ -460,8 +436,9 @@ void UWeaponComponent::ADS()
 	// Aim
 	if(!bIsAiming)
 	{
-		Character->SetMaxWalkSpeedToSlow(); 
-
+		// Set character speed move to slow
+		Character->SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
+		
 		if(ADSCurveTimeline)
 			ADSCurveTimeline->Play();
 
@@ -475,7 +452,8 @@ void UWeaponComponent::StopADS()
 	{
 		bool bIsCrouching = Character->GetIsCrouching();
 		if(!bIsCrouching)
-			Character->SetMaxWalkSpeedToDefault();
+			// Set character speed move to default
+			Character->SetMaxWalkSpeed(ECharacterMoveSpeed::Default);
 
 		if(ADSCurveTimeline)
 			ADSCurveTimeline->Reverse();

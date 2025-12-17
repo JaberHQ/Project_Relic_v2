@@ -14,7 +14,6 @@
 
 
 AProject_Relic_v2Character::AProject_Relic_v2Character()
-	:SlowMoveSpeed(150.0f), DefaultMoveSpeed(300.0f)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -26,6 +25,18 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
 
+	// Initalise charatcer moving speed variable
+	const FCharacterMoveSpeed characterMoveSpeedDefaults;
+	MoveSpeedMap =
+	{
+		{   ECharacterMoveSpeed::Slow,      characterMoveSpeedDefaults.Slow    },
+		{   ECharacterMoveSpeed::Default,   characterMoveSpeedDefaults.Default },
+		{   ECharacterMoveSpeed::Fast,      characterMoveSpeedDefaults.Fast    }
+	};
+
+	// Set character move speed to default
+	CurrentMoveSpeed = ECharacterMoveSpeed::Default;
+
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
@@ -34,7 +45,7 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 500.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = DefaultMoveSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = MoveSpeedMap[CurrentMoveSpeed];
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
@@ -61,6 +72,8 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// Inventory defaults
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 
+	
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -85,7 +98,9 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoCrouch);
 
 		// Sprint
-		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AProject_Relic_v2Character::DoSprint);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &AProject_Relic_v2Character::DoSprint);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AProject_Relic_v2Character::StopSprint);
+
 
 	}
 	else
@@ -118,10 +133,10 @@ void AProject_Relic_v2Character::Move(const FInputActionValue& Value)
 
 void AProject_Relic_v2Character::Look(const FInputActionValue& Value)
 {
-	// input is a Vector2D
+	// Input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
-	// route the input
+	// Route the input
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
 }
 
@@ -129,17 +144,17 @@ void AProject_Relic_v2Character::DoMove(float Right, float Forward)
 {
 	if (GetController() != nullptr)
 	{
-		// find out which way is forward
+		// Find out which way is forward
 		const FRotator Rotation = GetController()->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		// get forward vector
+		// Get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-		// get right vector 
+		// Get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		// add movement 
+		// Add movement 
 		AddMovementInput(ForwardDirection, Forward);
 		AddMovementInput(RightDirection, Right);
 	}
@@ -149,7 +164,7 @@ void AProject_Relic_v2Character::DoLook(float Yaw, float Pitch)
 {
 	if (GetController() != nullptr)
 	{
-		// add yaw and pitch input to controller
+		// Add yaw and pitch input to controller
 		AddControllerYawInput(Yaw);
 		AddControllerPitchInput(Pitch);
 	}
@@ -157,7 +172,7 @@ void AProject_Relic_v2Character::DoLook(float Yaw, float Pitch)
 
 void AProject_Relic_v2Character::DoJumpStart()
 {
-	// signal the character to jump
+	// Signal the character to jump
 	Jump();
 }
 
@@ -172,8 +187,8 @@ void AProject_Relic_v2Character::DoCrouch()
 	// Crouch
 	if(!bIsCrouching)
 	{
+		SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
 		// Slow down the player when crouching 
-		SetMaxWalkSpeed(SlowMoveSpeed);
 
 		if(CrouchTimelineComponent)
 		{
@@ -189,9 +204,8 @@ void AProject_Relic_v2Character::DoCrouch()
 			 Without this check, player can speed up incorrectly e.g move really fast while aiming */
 		bool isAiming = WeaponComponent->GetIsAiming();
 		if(!isAiming)
-			SetMaxWalkSpeed(DefaultMoveSpeed);
+			SetMaxWalkSpeed(ECharacterMoveSpeed::Default);
 
-		
 		if(CrouchTimelineComponent)
 			// This will raise the camera back to normal position
 			CrouchTimelineComponent->Reverse();
@@ -202,11 +216,23 @@ void AProject_Relic_v2Character::DoCrouch()
 
 void AProject_Relic_v2Character::DoSprint()
 {
-	if (!bIsCrouching)
+	SetMaxWalkSpeed(ECharacterMoveSpeed::Fast);
 	// Create timeline for how long sprinting is
+	/*if(!bIsCrouching)
+	{
 		SetMaxWalkSpeed(500.0f);
+	}
+	else
+	{
+		SetMaxWalkSpeed(350.0f);
+	}*/
 
 	// After time, set max walk speed back
+}
+
+void AProject_Relic_v2Character::StopSprint()
+{
+	SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
 }
 
 void AProject_Relic_v2Character::SetIsCrouching(bool isCrouching)
@@ -219,20 +245,10 @@ bool AProject_Relic_v2Character::GetIsCrouching() const
 	return bIsCrouching;
 }
 
-void AProject_Relic_v2Character::SetMaxWalkSpeed(float MaxWalkSpeed)
+void AProject_Relic_v2Character::SetMaxWalkSpeed(ECharacterMoveSpeed MoveSpeed)
 {
-	GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
-}
-
-void AProject_Relic_v2Character::SetMaxWalkSpeedToSlow()
-{
-	GetCharacterMovement()->MaxWalkSpeed = SlowMoveSpeed;
-}
-
-void AProject_Relic_v2Character::SetMaxWalkSpeedToDefault()
-{
-	GetCharacterMovement()->MaxWalkSpeed = DefaultMoveSpeed;
-
+	CurrentMoveSpeed = MoveSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = MoveSpeedMap[CurrentMoveSpeed];
 }
 
 FVector AProject_Relic_v2Character::GetCameraSocketOffset() const

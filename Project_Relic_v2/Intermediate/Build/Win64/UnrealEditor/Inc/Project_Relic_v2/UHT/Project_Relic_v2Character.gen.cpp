@@ -22,8 +22,114 @@ PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AProject_Relic_v2Character_NoRegister();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UInventoryComponent_NoRegister();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_UWeaponComponent_NoRegister();
+PROJECT_RELIC_V2_API UEnum* Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed();
+PROJECT_RELIC_V2_API UScriptStruct* Z_Construct_UScriptStruct_FCharacterMoveSpeed();
 UPackage* Z_Construct_UPackage__Script_Project_Relic_v2();
 // ********** End Cross Module References **********************************************************
+
+// ********** Begin Enum ECharacterMoveSpeed *******************************************************
+static FEnumRegistrationInfo Z_Registration_Info_UEnum_ECharacterMoveSpeed;
+static UEnum* ECharacterMoveSpeed_StaticEnum()
+{
+	if (!Z_Registration_Info_UEnum_ECharacterMoveSpeed.OuterSingleton)
+	{
+		Z_Registration_Info_UEnum_ECharacterMoveSpeed.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed, (UObject*)Z_Construct_UPackage__Script_Project_Relic_v2(), TEXT("ECharacterMoveSpeed"));
+	}
+	return Z_Registration_Info_UEnum_ECharacterMoveSpeed.OuterSingleton;
+}
+template<> PROJECT_RELIC_V2_API UEnum* StaticEnum<ECharacterMoveSpeed>()
+{
+	return ECharacterMoveSpeed_StaticEnum();
+}
+struct Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "Default.DisplayName", "Default" },
+		{ "Default.Name", "ECharacterMoveSpeed::Default" },
+		{ "Fast.DisplayName", "Fast" },
+		{ "Fast.Name", "ECharacterMoveSpeed::Fast" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+		{ "Slow.DisplayName", "Slow" },
+		{ "Slow.Name", "ECharacterMoveSpeed::Slow" },
+	};
+#endif // WITH_METADATA
+	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
+		{ "ECharacterMoveSpeed::Slow", (int64)ECharacterMoveSpeed::Slow },
+		{ "ECharacterMoveSpeed::Default", (int64)ECharacterMoveSpeed::Default },
+		{ "ECharacterMoveSpeed::Fast", (int64)ECharacterMoveSpeed::Fast },
+	};
+	static const UECodeGen_Private::FEnumParams EnumParams;
+};
+const UECodeGen_Private::FEnumParams Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed_Statics::EnumParams = {
+	(UObject*(*)())Z_Construct_UPackage__Script_Project_Relic_v2,
+	nullptr,
+	"ECharacterMoveSpeed",
+	"ECharacterMoveSpeed",
+	Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed_Statics::Enumerators,
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	UE_ARRAY_COUNT(Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed_Statics::Enumerators),
+	EEnumFlags::None,
+	(uint8)UEnum::ECppForm::EnumClass,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed_Statics::Enum_MetaDataParams), Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed_Statics::Enum_MetaDataParams)
+};
+UEnum* Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed()
+{
+	if (!Z_Registration_Info_UEnum_ECharacterMoveSpeed.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_ECharacterMoveSpeed.InnerSingleton, Z_Construct_UEnum_Project_Relic_v2_ECharacterMoveSpeed_Statics::EnumParams);
+	}
+	return Z_Registration_Info_UEnum_ECharacterMoveSpeed.InnerSingleton;
+}
+// ********** End Enum ECharacterMoveSpeed *********************************************************
+
+// ********** Begin ScriptStruct FCharacterMoveSpeed ***********************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed;
+class UScriptStruct* FCharacterMoveSpeed::StaticStruct()
+{
+	if (!Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed.OuterSingleton)
+	{
+		Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FCharacterMoveSpeed, (UObject*)Z_Construct_UPackage__Script_Project_Relic_v2(), TEXT("CharacterMoveSpeed"));
+	}
+	return Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed.OuterSingleton;
+}
+struct Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+#endif // WITH_METADATA
+	static void* NewStructOps()
+	{
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FCharacterMoveSpeed>();
+	}
+	static const UECodeGen_Private::FStructParams StructParams;
+};
+const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::StructParams = {
+	(UObject* (*)())Z_Construct_UPackage__Script_Project_Relic_v2,
+	nullptr,
+	&NewStructOps,
+	"CharacterMoveSpeed",
+	nullptr,
+	0,
+	sizeof(FCharacterMoveSpeed),
+	alignof(FCharacterMoveSpeed),
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	EStructFlags(0x00000001),
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::Struct_MetaDataParams), Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::Struct_MetaDataParams)
+};
+UScriptStruct* Z_Construct_UScriptStruct_FCharacterMoveSpeed()
+{
+	if (!Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed.InnerSingleton, Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::StructParams);
+	}
+	return Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed.InnerSingleton;
+}
+// ********** End ScriptStruct FCharacterMoveSpeed *************************************************
 
 // ********** Begin Class AProject_Relic_v2Character Function CrouchTimelineProgress ***************
 struct Z_Construct_UFunction_AProject_Relic_v2Character_CrouchTimelineProgress_Statics
@@ -432,6 +538,42 @@ DEFINE_FUNCTION(AProject_Relic_v2Character::execSetIsCrouching)
 }
 // ********** End Class AProject_Relic_v2Character Function SetIsCrouching *************************
 
+// ********** Begin Class AProject_Relic_v2Character Function StopSprint ***************************
+struct Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Input" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** Handles Sprint inputs from either controls or UI interfaces */" },
+#endif
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Handles Sprint inputs from either controls or UI interfaces" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "StopSprint", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04080400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint_Statics::Function_MetaDataParams)},  };
+UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AProject_Relic_v2Character::execStopSprint)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->StopSprint();
+	P_NATIVE_END;
+}
+// ********** End Class AProject_Relic_v2Character Function StopSprint *****************************
+
 // ********** Begin Class AProject_Relic_v2Character ***********************************************
 void AProject_Relic_v2Character::StaticRegisterNativesAProject_Relic_v2Character()
 {
@@ -446,6 +588,7 @@ void AProject_Relic_v2Character::StaticRegisterNativesAProject_Relic_v2Character
 		{ "DoSprint", &AProject_Relic_v2Character::execDoSprint },
 		{ "GetIsCrouching", &AProject_Relic_v2Character::execGetIsCrouching },
 		{ "SetIsCrouching", &AProject_Relic_v2Character::execSetIsCrouching },
+		{ "StopSprint", &AProject_Relic_v2Character::execStopSprint },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -633,6 +776,7 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoSprint, "DoSprint" }, // 1290440243
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_GetIsCrouching, "GetIsCrouching" }, // 2117420837
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_SetIsCrouching, "SetIsCrouching" }, // 3177310341
+		{ &Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint, "StopSprint" }, // 760943341
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -702,14 +846,20 @@ AProject_Relic_v2Character::~AProject_Relic_v2Character() {}
 // ********** Begin Registration *******************************************************************
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics
 {
+	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
+		{ ECharacterMoveSpeed_StaticEnum, TEXT("ECharacterMoveSpeed"), &Z_Registration_Info_UEnum_ECharacterMoveSpeed, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 723475416U) },
+	};
+	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
+		{ FCharacterMoveSpeed::StaticStruct, Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewStructOps, TEXT("CharacterMoveSpeed"), &Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCharacterMoveSpeed), 2783937620U) },
+	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 2536980561U) },
+		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 2304178766U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_1234231134(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_2052864618(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo),
-	nullptr, 0,
-	nullptr, 0);
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::EnumInfo));
 // ********** End Registration *********************************************************************
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
