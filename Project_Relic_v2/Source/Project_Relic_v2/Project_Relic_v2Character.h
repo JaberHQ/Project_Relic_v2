@@ -9,6 +9,8 @@
 #include "Components/TimelineComponent.h" 
 #include "InventoryComponent.h"
 #include "WeaponComponent.h"
+#include "Blueprint/UserWidget.h"
+#include "HealthComponent.h"
 #include "Project_Relic_v2Character.generated.h"
 
 class USpringArmComponent;
@@ -23,9 +25,9 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 UENUM(BlueprintType)
 enum class ECharacterMoveSpeed : uint8
 {
-	Slow UMETA(DisplayName = "Slow"),
+	Slow    UMETA(DisplayName = "Slow"   ),
 	Default UMETA(DisplayName = "Default"),
-	Fast UMETA(DisplayName = "Fast")
+	Fast    UMETA(DisplayName = "Fast"   )
 };
 
 USTRUCT(BlueprintType)
@@ -39,8 +41,6 @@ struct FCharacterMoveSpeed
 
 	float Fast     = 600.0f; // Fast Moving Speed
 };
-
-
 
 /**
  *  A simple player-controllable third person character
@@ -67,6 +67,9 @@ class AProject_Relic_v2Character : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UInventoryComponent* InventoryComponent;
 
+	UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true") )
+	UHealthComponent* HealthComponent;
+
 protected:
 
 	/** Jump Input Action */
@@ -92,6 +95,9 @@ protected:
 	/** Sprint Input Action */
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* SprintAction;
+
+	UPROPERTY( EditAnywhere, Category = "Input" )
+	UUserWidget* CharacterHudWidgetBP;
 
 public:
 	/** Constructor */
@@ -192,5 +198,9 @@ private:
 	bool bIsCrouching; // If character is crouching
 	TMap<ECharacterMoveSpeed, float> MoveSpeedMap;
 	ECharacterMoveSpeed CurrentMoveSpeed;
+
+	UPROPERTY(EditDefaultsOnly, Category = UI)
+	TSubclassOf<UUserWidget> CharacterHUDWidgetClass;
+	UUserWidget* CharacterHUDWidget;
 };
 

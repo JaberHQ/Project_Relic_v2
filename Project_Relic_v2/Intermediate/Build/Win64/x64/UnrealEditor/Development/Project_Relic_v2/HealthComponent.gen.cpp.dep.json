@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\healthcomponent.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\x64\\project_relic_v2editor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\project_relic_v2\\definitions.project_relic_v2.h",
+            "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\source\\project_relic_v2\\healthcomponent.h",
+            "c:\\users\\jaber\\onedrive\\documents\\github\\project_relic_v2\\project_relic_v2\\intermediate\\build\\win64\\unrealeditor\\inc\\project_relic_v2\\uht\\healthcomponent.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

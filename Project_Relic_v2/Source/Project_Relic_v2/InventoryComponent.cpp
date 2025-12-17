@@ -73,6 +73,8 @@ void UInventoryComponent::ReloadWeapon(EAmmunitionType Ammo)
 		CurrentAmmunitionCountMap[Ammo] = MaxAmmunitionInCatridgeMap[Ammo];
 	}
 
+	/* If there isn't enough reserve ammunition to refill a full magazine 
+		but there is reserve ammo left */
 	else if(ReserveAmmunitionCountMap[Ammo] < MaxAmmunitionInCatridgeMap[Ammo] && ReserveAmmunitionCountMap[Ammo] > 0)
 	{
 		/* If there isn't enough reserve for a full magazine */

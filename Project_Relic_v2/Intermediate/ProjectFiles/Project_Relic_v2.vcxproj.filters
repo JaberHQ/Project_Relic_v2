@@ -45,6 +45,12 @@
     <ClInclude Include="..\..\Source\Project_Relic_v2\BaseWeapon.h">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\HealthComponent.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\HealthComponent.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Project_Relic_v2\InventoryComponent.cpp">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClCompile>

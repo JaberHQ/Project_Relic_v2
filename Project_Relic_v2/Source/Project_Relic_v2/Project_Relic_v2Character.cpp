@@ -72,7 +72,12 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// Inventory defaults
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 
-	
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	/*static ConstructorHelpers::FClassFinder<UUserWidget> CharacterHUDWidgetClassFinder(TEXT("/Game/UI/WBP_Player"));
+	if (CharacterHUDWidgetClassFinder.Class)
+	{
+		CharacterHUDWidgetClass = CharacterHUDWidgetClassFinder.Class;
+	}*/
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
@@ -120,6 +125,12 @@ void AProject_Relic_v2Character::BeginPlay()
 
 	// Create a timeline for crouching 
 	InitCrouchTimeline();
+
+	if (CharacterHUDWidgetClass)
+	{
+		CharacterHUDWidget = CreateWidget<UUserWidget>(GetWorld(), CharacterHUDWidgetClass);
+		CharacterHUDWidget->AddToViewport(0);
+	}
 }
 
 void AProject_Relic_v2Character::Move(const FInputActionValue& Value)

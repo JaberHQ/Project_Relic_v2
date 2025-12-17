@@ -26,6 +26,7 @@
 			"CombatPlayerController.gen.cpp.obj",
 			"CombatStateTreeUtility.gen.cpp.obj",
 			"EnvQueryContext_Player.gen.cpp.obj",
+			"HealthComponent.gen.cpp.obj",
 			"InventoryComponent.gen.cpp.obj",
 			"PlatformingCharacter.gen.cpp.obj",
 			"PlatformingGameMode.gen.cpp.obj",
@@ -53,7 +54,6 @@
 		"Module.Project_Relic_v2.2.cpp.obj": [
 			"AutomaticRifle.cpp.obj",
 			"BaseWeapon.cpp.obj",
-			"InventoryComponent.cpp.obj",
 			"Project_Relic_v2.cpp.obj",
 			"Project_Relic_v2GameMode.cpp.obj",
 			"Project_Relic_v2PlayerController.cpp.obj",
@@ -95,8 +95,10 @@
 			"SideScrollingGameMode.cpp.obj",
 			"SideScrollingPlayerController.cpp.obj",
 			"SideScrollingUI.cpp.obj",
-			"Project_Relic_v2Character.cpp.obj",
-			"WeaponComponent.cpp.obj"
+			"WeaponComponent.cpp.obj",
+			"HealthComponent.cpp.obj",
+			"InventoryComponent.cpp.obj",
+			"Project_Relic_v2Character.cpp.obj"
 		]
 	}
 }
