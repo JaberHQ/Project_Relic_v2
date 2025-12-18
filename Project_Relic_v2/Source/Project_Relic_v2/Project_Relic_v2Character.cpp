@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include <Kismet/KismetMathLibrary.h>
 #include "Project_Relic_v2.h"
 
 
@@ -26,12 +27,11 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	bUseControllerRotationRoll = false;
 
 	// Initalise charatcer moving speed variable
-	const FCharacterMoveSpeed characterMoveSpeedDefaults;
 	MoveSpeedMap =
 	{
-		{   ECharacterMoveSpeed::Slow,      characterMoveSpeedDefaults.Slow    },
-		{   ECharacterMoveSpeed::Default,   characterMoveSpeedDefaults.Default },
-		{   ECharacterMoveSpeed::Fast,      characterMoveSpeedDefaults.Fast    }
+		{   ECharacterMoveSpeed::Slow,      CharacterMoveSpeedDefaults.Slow    },
+		{   ECharacterMoveSpeed::Default,   CharacterMoveSpeedDefaults.Default },
+		{   ECharacterMoveSpeed::Fast,      CharacterMoveSpeedDefaults.Fast    }
 	};
 
 	// Set character move speed to default
@@ -72,13 +72,16 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// Inventory defaults
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 
+	// Health defaults
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-	/*static ConstructorHelpers::FClassFinder<UUserWidget> CharacterHUDWidgetClassFinder(TEXT("/Game/UI/WBP_Player"));
-	if (CharacterHUDWidgetClassFinder.Class)
-	{
-		CharacterHUDWidgetClass = CharacterHUDWidgetClassFinder.Class;
-	}*/
-
+	
+	// Stamina defaults
+	MaxStamina = 100.0f;
+	CurrentStamina = MaxStamina;
+	DecrementStamina = 1.0f;
+	IncrementStamina = 5.0f;
+	DrainStaminaTime = 1.0f;
+	RegenerateStaminaTime = 0.05f;
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -105,8 +108,6 @@ void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* Play
 		// Sprint
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &AProject_Relic_v2Character::DoSprint);
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AProject_Relic_v2Character::StopSprint);
-
-
 	}
 	else
 	{
@@ -228,6 +229,8 @@ void AProject_Relic_v2Character::DoCrouch()
 void AProject_Relic_v2Character::DoSprint()
 {
 	SetMaxWalkSpeed(ECharacterMoveSpeed::Fast);
+	bIsSprinting = true;
+	DrainStamina();
 	// Create timeline for how long sprinting is
 	/*if(!bIsCrouching)
 	{
@@ -244,6 +247,42 @@ void AProject_Relic_v2Character::DoSprint()
 void AProject_Relic_v2Character::StopSprint()
 {
 	SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
+	bIsSprinting = false;
+	RegenerateStamina();
+}
+
+void AProject_Relic_v2Character::DrainStamina()
+{
+	float tempValue = CurrentStamina - DecrementStamina;
+	CurrentStamina = UKismetMathLibrary::FClamp(tempValue, 0.0f, MaxStamina);
+
+	if(CurrentStamina == 0.0f)
+	{
+		StopSprint();
+	}
+	else
+	{
+		if(bIsSprinting)
+		{
+			
+
+			GetWorldTimerManager().SetTimer(SprintHandle, this, &AProject_Relic_v2Character::DrainStamina, DrainStaminaTime, false);
+		}
+	}
+}
+
+void AProject_Relic_v2Character::RegenerateStamina()
+{
+	float tempValue = CurrentStamina + IncrementStamina;
+	CurrentStamina = UKismetMathLibrary::FClamp(tempValue, 0.0f, MaxStamina);
+
+	if(CurrentStamina != MaxStamina)
+	{
+		if(!bIsSprinting)
+		{
+			GetWorldTimerManager().SetTimer(SprintHandle, this, &AProject_Relic_v2Character::RegenerateStamina, RegenerateStaminaTime, false);
+		}
+	}
 }
 
 void AProject_Relic_v2Character::SetIsCrouching(bool isCrouching)

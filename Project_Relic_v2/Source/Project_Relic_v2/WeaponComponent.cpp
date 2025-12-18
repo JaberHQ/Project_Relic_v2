@@ -242,7 +242,7 @@ void UWeaponComponent::Shoot()
 			}
 		}
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Ammo Count: ") + FString::FromInt(GetCurrentAmmoOfCurrentWeapon()));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Ammo Count: ") + FString::FromInt(GetCurrentAmmoOfCurrentWeapon()));
 
 }
 

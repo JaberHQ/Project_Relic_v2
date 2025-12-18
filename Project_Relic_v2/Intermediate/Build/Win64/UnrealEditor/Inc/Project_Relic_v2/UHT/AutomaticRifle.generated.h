@@ -19,7 +19,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 // ********** Begin Class AAutomaticRifle **********************************************************
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AAutomaticRifle_NoRegister();
 
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_INCLASS_NO_PURE_DECLS \
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAAutomaticRifle(); \
 	friend struct Z_Construct_UClass_AAutomaticRifle_Statics; \
@@ -30,7 +30,7 @@ public: \
 	DECLARE_SERIALIZER(AAutomaticRifle)
 
 
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_ENHANCED_CONSTRUCTORS \
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	AAutomaticRifle(AAutomaticRifle&&) = delete; \
 	AAutomaticRifle(const AAutomaticRifle&) = delete; \
@@ -40,12 +40,12 @@ public: \
 	NO_API virtual ~AAutomaticRifle();
 
 
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_12_PROLOG
-#define FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_GENERATED_BODY \
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_12_PROLOG
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_INCLASS_NO_PURE_DECLS \
-	FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_ENHANCED_CONSTRUCTORS \
+	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_INCLASS_NO_PURE_DECLS \
+	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h_15_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -55,6 +55,6 @@ class AAutomaticRifle;
 // ********** End Class AAutomaticRifle ************************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h
+#define CURRENT_FILE_ID FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_AutomaticRifle_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

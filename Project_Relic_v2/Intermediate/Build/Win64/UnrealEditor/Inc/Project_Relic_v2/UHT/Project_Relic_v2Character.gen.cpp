@@ -104,20 +104,57 @@ struct Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics
 		{ "BlueprintType", "true" },
 		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Slow_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Default_MetaData[] = {
+		{ "Category", "Movement" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Slow moving speed\n" },
+#endif
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Slow moving speed" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Fast_MetaData[] = {
+		{ "Category", "Movement" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Default Moving speed\n" },
+#endif
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Default Moving speed" },
+#endif
+	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Slow;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Default;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Fast;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static void* NewStructOps()
 	{
 		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FCharacterMoveSpeed>();
 	}
 	static const UECodeGen_Private::FStructParams StructParams;
 };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewProp_Slow = { "Slow", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FCharacterMoveSpeed, Slow), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Slow_MetaData), NewProp_Slow_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewProp_Default = { "Default", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FCharacterMoveSpeed, Default), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Default_MetaData), NewProp_Default_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewProp_Fast = { "Fast", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FCharacterMoveSpeed, Fast), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Fast_MetaData), NewProp_Fast_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewProp_Slow,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewProp_Default,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewProp_Fast,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::PropPointers) < 2048);
 const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::StructParams = {
 	(UObject* (*)())Z_Construct_UPackage__Script_Project_Relic_v2,
 	nullptr,
 	&NewStructOps,
 	"CharacterMoveSpeed",
-	nullptr,
-	0,
+	Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::PropPointers,
+	UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::PropPointers),
 	sizeof(FCharacterMoveSpeed),
 	alignof(FCharacterMoveSpeed),
 	RF_Public|RF_Transient|RF_MarkAsNative,
@@ -434,6 +471,47 @@ DEFINE_FUNCTION(AProject_Relic_v2Character::execDoSprint)
 }
 // ********** End Class AProject_Relic_v2Character Function DoSprint *******************************
 
+// ********** Begin Class AProject_Relic_v2Character Function GetCurrentStamina ********************
+struct Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics
+{
+	struct Project_Relic_v2Character_eventGetCurrentStamina_Parms
+	{
+		float ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(Project_Relic_v2Character_eventGetCurrentStamina_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "GetCurrentStamina", Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::PropPointers), sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::Project_Relic_v2Character_eventGetCurrentStamina_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::Project_Relic_v2Character_eventGetCurrentStamina_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AProject_Relic_v2Character::execGetCurrentStamina)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(float*)Z_Param__Result=P_THIS->GetCurrentStamina();
+	P_NATIVE_END;
+}
+// ********** End Class AProject_Relic_v2Character Function GetCurrentStamina **********************
+
 // ********** Begin Class AProject_Relic_v2Character Function GetIsCrouching ***********************
 struct Z_Construct_UFunction_AProject_Relic_v2Character_GetIsCrouching_Statics
 {
@@ -486,6 +564,47 @@ DEFINE_FUNCTION(AProject_Relic_v2Character::execGetIsCrouching)
 	P_NATIVE_END;
 }
 // ********** End Class AProject_Relic_v2Character Function GetIsCrouching *************************
+
+// ********** Begin Class AProject_Relic_v2Character Function GetMaxStamina ************************
+struct Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics
+{
+	struct Project_Relic_v2Character_eventGetMaxStamina_Parms
+	{
+		float ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(Project_Relic_v2Character_eventGetMaxStamina_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AProject_Relic_v2Character, nullptr, "GetMaxStamina", Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::PropPointers), sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::Project_Relic_v2Character_eventGetMaxStamina_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::Function_MetaDataParams), Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::Project_Relic_v2Character_eventGetMaxStamina_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AProject_Relic_v2Character::execGetMaxStamina)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(float*)Z_Param__Result=P_THIS->GetMaxStamina();
+	P_NATIVE_END;
+}
+// ********** End Class AProject_Relic_v2Character Function GetMaxStamina **************************
 
 // ********** Begin Class AProject_Relic_v2Character Function SetIsCrouching ***********************
 struct Z_Construct_UFunction_AProject_Relic_v2Character_SetIsCrouching_Statics
@@ -589,7 +708,9 @@ void AProject_Relic_v2Character::StaticRegisterNativesAProject_Relic_v2Character
 		{ "DoLook", &AProject_Relic_v2Character::execDoLook },
 		{ "DoMove", &AProject_Relic_v2Character::execDoMove },
 		{ "DoSprint", &AProject_Relic_v2Character::execDoSprint },
+		{ "GetCurrentStamina", &AProject_Relic_v2Character::execGetCurrentStamina },
 		{ "GetIsCrouching", &AProject_Relic_v2Character::execGetIsCrouching },
+		{ "GetMaxStamina", &AProject_Relic_v2Character::execGetMaxStamina },
 		{ "SetIsCrouching", &AProject_Relic_v2Character::execSetIsCrouching },
 		{ "StopSprint", &AProject_Relic_v2Character::execStopSprint },
 	};
@@ -769,6 +890,34 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 		{ "Category", "UI" },
 		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentStamina_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MaxStamina_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DecrementStamina_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_IncrementStamina_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DrainStaminaTime_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_RegenerateStaminaTime_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CharacterMoveSpeedDefaults_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "ModuleRelativePath", "Project_Relic_v2Character.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CameraBoom;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_FollowCamera;
@@ -785,6 +934,13 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CrouchCurveFloat;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CrouchTimelineComponent;
 	static const UECodeGen_Private::FClassPropertyParams NewProp_CharacterHUDWidgetClass;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_CurrentStamina;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_MaxStamina;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_DecrementStamina;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_IncrementStamina;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_DrainStaminaTime;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_RegenerateStaminaTime;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_CharacterMoveSpeedDefaults;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
@@ -795,7 +951,9 @@ struct Z_Construct_UClass_AProject_Relic_v2Character_Statics
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoLook, "DoLook" }, // 3707561641
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoMove, "DoMove" }, // 401367295
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_DoSprint, "DoSprint" }, // 1290440243
+		{ &Z_Construct_UFunction_AProject_Relic_v2Character_GetCurrentStamina, "GetCurrentStamina" }, // 500490219
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_GetIsCrouching, "GetIsCrouching" }, // 2117420837
+		{ &Z_Construct_UFunction_AProject_Relic_v2Character_GetMaxStamina, "GetMaxStamina" }, // 1836847061
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_SetIsCrouching, "SetIsCrouching" }, // 3177310341
 		{ &Z_Construct_UFunction_AProject_Relic_v2Character_StopSprint, "StopSprint" }, // 760943341
 	};
@@ -820,6 +978,13 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchCurveFloat = { "CrouchCurveFloat", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CrouchCurveFloat), Z_Construct_UClass_UCurveFloat_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CrouchCurveFloat_MetaData), NewProp_CrouchCurveFloat_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchTimelineComponent = { "CrouchTimelineComponent", nullptr, (EPropertyFlags)0x0040000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CrouchTimelineComponent), Z_Construct_UClass_UTimelineComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CrouchTimelineComponent_MetaData), NewProp_CrouchTimelineComponent_MetaData) };
 const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CharacterHUDWidgetClass = { "CharacterHUDWidgetClass", nullptr, (EPropertyFlags)0x0044000000010001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CharacterHUDWidgetClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CharacterHUDWidgetClass_MetaData), NewProp_CharacterHUDWidgetClass_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CurrentStamina = { "CurrentStamina", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CurrentStamina), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CurrentStamina_MetaData), NewProp_CurrentStamina_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_MaxStamina = { "MaxStamina", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, MaxStamina), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MaxStamina_MetaData), NewProp_MaxStamina_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_DecrementStamina = { "DecrementStamina", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, DecrementStamina), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_DecrementStamina_MetaData), NewProp_DecrementStamina_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_IncrementStamina = { "IncrementStamina", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, IncrementStamina), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncrementStamina_MetaData), NewProp_IncrementStamina_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_DrainStaminaTime = { "DrainStaminaTime", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, DrainStaminaTime), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_DrainStaminaTime_MetaData), NewProp_DrainStaminaTime_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_RegenerateStaminaTime = { "RegenerateStaminaTime", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, RegenerateStaminaTime), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_RegenerateStaminaTime_MetaData), NewProp_RegenerateStaminaTime_MetaData) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CharacterMoveSpeedDefaults = { "CharacterMoveSpeedDefaults", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AProject_Relic_v2Character, CharacterMoveSpeedDefaults), Z_Construct_UScriptStruct_FCharacterMoveSpeed, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CharacterMoveSpeedDefaults_MetaData), NewProp_CharacterMoveSpeedDefaults_MetaData) }; // 1554633136
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AProject_Relic_v2Character_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CameraBoom,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_FollowCamera,
@@ -836,6 +1001,13 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AProject_
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchCurveFloat,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CrouchTimelineComponent,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CharacterHUDWidgetClass,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CurrentStamina,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_MaxStamina,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_DecrementStamina,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_IncrementStamina,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_DrainStaminaTime,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_RegenerateStaminaTime,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AProject_Relic_v2Character_Statics::NewProp_CharacterMoveSpeedDefaults,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_AProject_Relic_v2Character_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_AProject_Relic_v2Character_Statics::DependentSingletons[])() = {
@@ -871,22 +1043,22 @@ AProject_Relic_v2Character::~AProject_Relic_v2Character() {}
 // ********** End Class AProject_Relic_v2Character *************************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics
+struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
 		{ ECharacterMoveSpeed_StaticEnum, TEXT("ECharacterMoveSpeed"), &Z_Registration_Info_UEnum_ECharacterMoveSpeed, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 723475416U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FCharacterMoveSpeed::StaticStruct, Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewStructOps, TEXT("CharacterMoveSpeed"), &Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCharacterMoveSpeed), 2783937620U) },
+		{ FCharacterMoveSpeed::StaticStruct, Z_Construct_UScriptStruct_FCharacterMoveSpeed_Statics::NewStructOps, TEXT("CharacterMoveSpeed"), &Z_Registration_Info_UScriptStruct_FCharacterMoveSpeed, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCharacterMoveSpeed), 1554633136U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 247869626U) },
+		{ Z_Construct_UClass_AProject_Relic_v2Character, AProject_Relic_v2Character::StaticClass, TEXT("AProject_Relic_v2Character"), &Z_Registration_Info_UClass_AProject_Relic_v2Character, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AProject_Relic_v2Character), 3097928699U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_2825361510(TEXT("/Script/Project_Relic_v2"),
-	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo),
-	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ScriptStructInfo),
-	Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_OneDrive_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::EnumInfo));
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_2582236251(TEXT("/Script/Project_Relic_v2"),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ClassInfo),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_Project_Relic_v2Character_h__Script_Project_Relic_v2_Statics::EnumInfo));
 // ********** End Registration *********************************************************************
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

@@ -35,11 +35,14 @@ struct FCharacterMoveSpeed
 {
 	GENERATED_BODY()
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float Slow	   = 150.0f; // Slow moving speed
 	
-	float Default  = 300.0f; // Default Moving speed
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float Default  = 400.0f; // Default Moving speed
 
-	float Fast     = 600.0f; // Fast Moving Speed
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float Fast     = 700.0f; // Fast Moving Speed
 };
 
 /**
@@ -148,6 +151,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void StopSprint();
 
+	void DrainStamina();
+
+	void RegenerateStamina();
 public:
 	/** Set the boolean for crouching that tells if player is crouching or not */
 	UFUNCTION(BlueprintCallable, Category = "Input")
@@ -178,6 +184,12 @@ public:
 	/** Returns Inventory Component **/
 	FORCEINLINE class UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 
+	UFUNCTION(BlueprintCallable)
+	float GetCurrentStamina() const { return CurrentStamina; }
+
+	UFUNCTION(BlueprintCallable)
+	float GetMaxStamina() const { return MaxStamina; }
+
 private:
 	/** Initialise the crouch timeline component */
 	void InitCrouchTimeline();
@@ -196,11 +208,36 @@ private:
 
 private:
 	bool bIsCrouching; // If character is crouching
+	bool bIsSprinting; // If character is sprinting
 	TMap<ECharacterMoveSpeed, float> MoveSpeedMap;
 	ECharacterMoveSpeed CurrentMoveSpeed;
 
-	UPROPERTY(EditDefaultsOnly, Category = UI)
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<UUserWidget> CharacterHUDWidgetClass;
 	UUserWidget* CharacterHUDWidget;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float CurrentStamina;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float MaxStamina;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float DecrementStamina;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float IncrementStamina;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float DrainStaminaTime;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float RegenerateStaminaTime;
+
+	FTimerHandle SprintHandle;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	FCharacterMoveSpeed CharacterMoveSpeedDefaults;
+
 };
 

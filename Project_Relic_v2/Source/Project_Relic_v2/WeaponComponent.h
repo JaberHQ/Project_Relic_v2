@@ -149,11 +149,11 @@ public:
 
 protected:
 	/* Seconds to wait between shots */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	float TimeBetweenShots;
 
 	/** Line trace distance (how far the player can shoot) */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	float ShootingDistance;
 
 private:
