@@ -48,7 +48,7 @@ public:
 
 	/** Handles the actions after the Aim Down Sights (ADS) input is complete */
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void StopADS();
+	virtual void StopAiming();
 
 protected:
 	// Called when the game starts
@@ -59,7 +59,7 @@ protected:
 
 	/** Handles the Aim down sights (ADS) actions */
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void ADS();
+	virtual void StartAiming();
 
 
 public:	
@@ -74,7 +74,7 @@ private:
 	ABaseWeapon* SpawnWeapon(const TSubclassOf<ABaseWeapon> WeaponRef, const FVector Location, const FRotator Rotator, const FActorSpawnParameters SpawnInfo);
 
 	/** Initialise the ADS timeline component */
-	void InitADSTimeline();
+	void InitAimingTimeline();
 
 	/* Set weapon defaults */
 	void InitWeapons();
@@ -83,10 +83,10 @@ private:
 	void InitInputs();
 
 	UFUNCTION()
-	void ADSCameraOffsetProgress(float CameraOffsetX);
+	void AimingCameraOffsetProgress(float CameraOffsetX);
 
 	UFUNCTION()
-	void ADSFieldOfViewProgress(float FOV);
+	void AimingFieldOfViewProgress(float FOV);
 
 	/* Start shooting
 	   Sets timer for automatic firing */
@@ -143,13 +143,10 @@ public:
 	class UInputAction* SwitchWeaponsAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
-	UCurveFloat* ADSCameraOffsetCurveFloat;
+	UCurveFloat* AimingCameraOffsetCurveFloat;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
-	UCurveFloat* ADSFieldOfViewCurveFloat;
-
-protected:
-	
+	UCurveFloat* AimingFieldOfViewCurveFloat;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -163,7 +160,7 @@ private:
 	ABaseWeapon* SecondaryWeapon;
 
 	UPROPERTY()
-	UTimelineComponent* ADSCurveTimeline;
+	UTimelineComponent* AimingCurveTimeline;
 
 	AProject_Relic_v2Character* Character;
 	

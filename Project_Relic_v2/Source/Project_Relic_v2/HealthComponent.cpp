@@ -34,7 +34,7 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UHealthComponent::TakeDamage()
 {
-	if(Health > 0)
+	if (Health > 0)
 	{
 		Health -= 20;
 	}

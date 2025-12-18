@@ -23,16 +23,15 @@ UWeaponComponent::UWeaponComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	/* Find the blueprint Primary Gun Class through reference */
-	
 	static ConstructorHelpers::FClassFinder<ABaseWeapon> PrimaryWeaponFinder(TEXT("/Game/Blueprints/Weapon/BP_AutomaticRifle"));
-	if(PrimaryWeaponFinder.Class)
+	if (PrimaryWeaponFinder.Class)
 	{
 		PrimaryWeaponRef = PrimaryWeaponFinder.Class;
 	}
 
 	/* Find the blueprint Secondary Gun Class through reference */
 	static ConstructorHelpers::FClassFinder<ABaseWeapon> SecondaryWeaponFinder(TEXT("/Game/Blueprints/Weapon/BP_SingleShotRifle"));
-	if(SecondaryWeaponFinder.Class)
+	if (SecondaryWeaponFinder.Class)
 	{
 		SecondaryWeaponRef = SecondaryWeaponFinder.Class;
 	}
@@ -44,15 +43,14 @@ void UWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Get player character reference
 	Character = Cast<AProject_Relic_v2Character>(GetOwner());
-
-
-	if(Character)
+	if (Character)
 	{
 		InitInputs();
 		InventoryComponent = Character->GetInventoryComponent();
 		InitWeapons();
-		InitADSTimeline();
+		InitAimingTimeline();
 	}
 }
 
@@ -72,7 +70,6 @@ void UWeaponComponent::BeginPlay()
 //	}
 //}
 
-
 // Called every frame
 void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -91,40 +88,42 @@ ABaseWeapon* UWeaponComponent::SpawnWeapon(const TSubclassOf<ABaseWeapon> weapon
 	return GetWorld()->SpawnActor<ABaseWeapon>(weaponRef, location, rotator, spawnInfo);
 }
 
-void UWeaponComponent::InitADSTimeline()
+void UWeaponComponent::InitAimingTimeline()
 {
-	if(ADSCameraOffsetCurveFloat && ADSFieldOfViewCurveFloat)
+	if (AimingCameraOffsetCurveFloat && AimingFieldOfViewCurveFloat)
 	{
-		ADSCurveTimeline = NewObject<UTimelineComponent>(this, FName("ADSTimelineAnimation"));
-		ADSCurveTimeline->CreationMethod = EComponentCreationMethod::SimpleConstructionScript;
-		Character->BlueprintCreatedComponents.Add(ADSCurveTimeline);
+		/* Initialise curve timeline */
+		AimingCurveTimeline = NewObject<UTimelineComponent>(this, FName("AimingTimelineAnimation"));
+		AimingCurveTimeline->CreationMethod = EComponentCreationMethod::SimpleConstructionScript;
+		Character->BlueprintCreatedComponents.Add(AimingCurveTimeline);
 
 		/* Bind the ADS function to the timeline */
-		FOnTimelineFloat cameraOffsetCallback;
-		cameraOffsetCallback.BindUFunction(this, FName(TEXT("ADSCameraOffsetProgress")));
-		ADSCurveTimeline->AddInterpFloat(ADSCameraOffsetCurveFloat, cameraOffsetCallback);
+		FOnTimelineFloat CameraOffsetCallback;
+		CameraOffsetCallback.BindUFunction(this, FName(TEXT("AimingCameraOffsetProgress")));
+		AimingCurveTimeline->AddInterpFloat(AimingCameraOffsetCurveFloat, CameraOffsetCallback);
 
-		FOnTimelineFloat fOVCallback;
-		fOVCallback.BindUFunction(this, FName(TEXT("ADSFieldOfViewProgress")));
-		ADSCurveTimeline->AddInterpFloat(ADSFieldOfViewCurveFloat, fOVCallback);
+		/* Bind the ADS function to the timeline */
+		FOnTimelineFloat FOVCallback;
+		FOVCallback.BindUFunction(this, FName(TEXT("AimingFieldOfViewProgress")));
+		AimingCurveTimeline->AddInterpFloat(AimingFieldOfViewCurveFloat, FOVCallback);
 		
-		ADSCurveTimeline->SetLooping(false);
-		ADSCurveTimeline->RegisterComponent();
+		AimingCurveTimeline->SetLooping(false);
+		AimingCurveTimeline->RegisterComponent();
 	}
 }
 
 void UWeaponComponent::InitWeapons()
 {
 	/* Spawn guns */
-	FVector weaponPlacementLocation(20.0f, 20.0f, -20.0f);
-	FRotator weaponPlacementRotator(0.0f, 0.0f, 0.0f);
+	const FVector WeaponPlacementLoc(20.0f, 20.0f, -20.0f);
+	const FRotator WeaponPlacementRot(0.0f, 0.0f, 0.0f);
 
-	const FActorSpawnParameters spawnInfo;
-	PrimaryWeapon = SpawnWeapon(PrimaryWeaponRef, weaponPlacementLocation, weaponPlacementRotator, spawnInfo);
-	SecondaryWeapon = SpawnWeapon(SecondaryWeaponRef, weaponPlacementLocation, weaponPlacementRotator, spawnInfo);
+	const FActorSpawnParameters SpawnInfo;
+	PrimaryWeapon = SpawnWeapon(PrimaryWeaponRef, WeaponPlacementLoc, WeaponPlacementRot, SpawnInfo);
+	SecondaryWeapon = SpawnWeapon(SecondaryWeaponRef, WeaponPlacementLoc, WeaponPlacementRot, SpawnInfo);
 
 	/* Set primary gun defaults */
-	if(PrimaryWeapon)
+	if (PrimaryWeapon)
 	{
 		WeaponArray.Add(PrimaryWeapon);
 		bIsWeaponActiveMap.Add(EAmmunitionType::Primary, false);
@@ -132,7 +131,7 @@ void UWeaponComponent::InitWeapons()
 	}
 
 	/* Set secondary gun defaults */
-	if(SecondaryWeapon)
+	if (SecondaryWeapon)
 	{
 		WeaponArray.Add(SecondaryWeapon);
 		bIsWeaponActiveMap.Add(EAmmunitionType::Secondary, false);
@@ -141,9 +140,9 @@ void UWeaponComponent::InitWeapons()
 
 	AttachWeapon();
 
-	if(!WeaponArray.IsEmpty())
+	if (!WeaponArray.IsEmpty())
 	{
-		/* Set current weapon as active */
+		// Set current weapon as active
 		bIsWeaponActiveMap[CurrentWeapon] = true;
 	}
 }
@@ -151,18 +150,18 @@ void UWeaponComponent::InitWeapons()
 void UWeaponComponent::InitInputs()
 {
 
-	if( APlayerController* PlayerController = Cast<APlayerController>( Character->GetController() ) )
+	if (APlayerController* PlayerController = Cast<APlayerController>( Character->GetController()))
 	{
-		if( UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>( PlayerController->GetLocalPlayer() ) )
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>( PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext( FireMappingContext, 1 );
 		}
-		if( UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>( PlayerController->InputComponent ) )
+		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>( PlayerController->InputComponent))
 		{
 			/* ADS (Aim Down Sights) input actions
 				As the aim button should be held and not toggled, two actions are bound */
-			EnhancedInputComponent->BindAction( AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::ADS );
-			EnhancedInputComponent->BindAction( AimAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopADS );
+			EnhancedInputComponent->BindAction( AimAction, ETriggerEvent::Triggered, this, &UWeaponComponent::StartAiming );
+			EnhancedInputComponent->BindAction( AimAction, ETriggerEvent::Completed, this, &UWeaponComponent::StopAiming );
 
 			/* Shooting input actions */
 			EnhancedInputComponent->BindAction( ShootAction, ETriggerEvent::Started, this, &UWeaponComponent::StartShooting );
@@ -175,17 +174,17 @@ void UWeaponComponent::InitInputs()
 	}
 }
 
-void UWeaponComponent::ADSCameraOffsetProgress(float CameraOffsetX)
+void UWeaponComponent::AimingCameraOffsetProgress(float CameraOffsetX)
 {
 	// Get the current camera offset from the player character
-	FVector cameraOffset = Character->GetCameraSocketOffset();
+	FVector CameraOffset = Character->GetCameraSocketOffset();
 
 	// Set the new socket offset
-	FVector offset = FVector(CameraOffsetX, cameraOffset.Y, cameraOffset.Z);
-	Character->SetCameraSocketOffset(offset);
+	FVector Offset = FVector(CameraOffsetX, CameraOffset.Y, CameraOffset.Z);
+	Character->SetCameraSocketOffset(Offset);
 }
 
-void UWeaponComponent::ADSFieldOfViewProgress(float FOV)
+void UWeaponComponent::AimingFieldOfViewProgress(float FOV)
 {
 	Character->SetFOV(FOV);
 }
@@ -193,10 +192,10 @@ void UWeaponComponent::ADSFieldOfViewProgress(float FOV)
 void UWeaponComponent::StartShooting()
 {
 	bool bIsSprinting = Character->GetIsSprinting();
-	if(!bIsSprinting)
+	if (!bIsSprinting)
 	{
 		Shoot();
-		if(bIsAutomaticMap[CurrentWeapon])
+		if (bIsAutomaticMap[CurrentWeapon])
 			// Automatic shooting timer 
 			Character->GetWorldTimerManager().SetTimer(HandleRefire, this, &UWeaponComponent::Shoot, TimeBetweenShots, true);
 	}
@@ -211,15 +210,15 @@ void UWeaponComponent::StopShooting()
 
 void UWeaponComponent::Shoot()
 {
-	if(Character == nullptr || Character->GetController() == nullptr)
+	if (Character == nullptr || Character->GetController() == nullptr)
 	{
 		return;
 	}
 	
-	if(InventoryComponent)
+	if (InventoryComponent)
 	{
 		// If the player has ammunition and can shoot
-		if(GetCurrentAmmoOfCurrentWeapon() != 0 && bCanShoot)
+		if (GetCurrentAmmoOfCurrentWeapon() != 0 && bCanShoot)
 		{
 			bIsShooting = true;
 
@@ -234,9 +233,9 @@ void UWeaponComponent::Shoot()
 		}
 
 		// If the player has no ammunition in magazine
-		if(GetCurrentAmmoOfCurrentWeapon() == 0 && bCanShoot)
+		if (GetCurrentAmmoOfCurrentWeapon() == 0 && bCanShoot)
 		{
-			if(ShouldPlayerReload())
+			if (ShouldPlayerReload())
 			{
 				StartReloadWeaponTimer();
 			}
@@ -251,11 +250,11 @@ void UWeaponComponent::Shoot()
 void UWeaponComponent::AttachWeapon()
 {
 	/* Setup weapon attachment */
-	const FAttachmentTransformRules attachmentRules(EAttachmentRule::SnapToTarget, true);
-	for(int i = 0; i < WeaponArray.Num(); i++)
+	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
+	for (int i = 0; i < WeaponArray.Num(); i++)
 	{
 		WeaponArray[i]->GetWeaponSkeletalMeshComponent()->
-			AttachToComponent(Character->GetMesh(), attachmentRules, FName(TEXT("hand_rSocket")));
+			AttachToComponent(Character->GetMesh(), AttachmentRules, FName(TEXT("hand_rSocket")));
 	}
 	SwitchToNextWeapon();
 }
@@ -263,14 +262,14 @@ void UWeaponComponent::AttachWeapon()
 void UWeaponComponent::SwitchWeapons(const FInputActionValue& index)
 {
 	/* Calculate correct weapon index to switch to */
-	const float tempIndex = index.Get<float>();
-	const int tempValue = UKismetMathLibrary::FTrunc(tempIndex);
-	const int tempWeaponIndex = tempValue + WeaponIndex;
+	const float TempIndex = index.Get<float>();
+	const int TempValue = UKismetMathLibrary::FTrunc(TempIndex);
+	const int TempWeaponIndex = TempValue + WeaponIndex;
 
 	// Set weapon index
-	if(WeaponArray.IsValidIndex(tempWeaponIndex))
+	if (WeaponArray.IsValidIndex(TempWeaponIndex))
 	{
-		WeaponIndex = tempWeaponIndex;
+		WeaponIndex = TempWeaponIndex;
 	}
 
 	// Otherwise go to the top or the bottom of the array depending on the direction of the mouse scroll
@@ -284,7 +283,7 @@ void UWeaponComponent::SwitchWeapons(const FInputActionValue& index)
 	ClearReloadWeaponTimer();
 
 	// Automatic reload
-	if(GetReserveAmmoOfCurrentWeapon() == 0)
+	if (GetReserveAmmoOfCurrentWeapon() == 0)
 	{
 		StartReloadWeaponTimer();
 	}
@@ -301,23 +300,23 @@ void UWeaponComponent::SwitchWeapons(const FInputActionValue& index)
 
 void UWeaponComponent::RaycastShot()
 {
-	FVector location;
-	FRotator rotaton;
-	FHitResult hit;
+	FVector Location;
+	FRotator Rotation;
+	FHitResult Hit;
 
-	Character->GetController()->GetPlayerViewPoint(location, rotaton); // This can be changed to camera ----
+	Character->GetController()->GetPlayerViewPoint(Location, Rotation); // This can be changed to camera ----
 
-	FVector start = location;
-	FVector end = start + (rotaton.Vector() * ShootingDistance);
+	FVector Start = Location;
+	FVector End = Start + (Rotation.Vector() * ShootingDistance);
 
 	// Send line trace from players pov
-	FCollisionQueryParams traceParams;
-	bool bHit = GetWorld()->LineTraceSingleByChannel(hit, start, end, ECC_Visibility, traceParams);
+	FCollisionQueryParams TraceParams;
+	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
 
-	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 2.0f); // DEBUG -----------------------
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 2.0f); // DEBUG -----------------------
 
 	// If line trace has hit an object
-	if(bHit)
+	if (bHit)
 	{
 		/* --------------------------------------- TO DO AI --------------------------------------- */
 		/* If AI has been hit */
@@ -333,18 +332,18 @@ void UWeaponComponent::RaycastShot()
 void UWeaponComponent::SwitchToNextWeapon()
 {
 	/* Set gun actors as invisible */
-	for(int i = 0; i < WeaponArray.Num(); i++)
+	for (int i = 0; i < WeaponArray.Num(); i++)
 	{
 		WeaponArray[i]->SetActorHiddenInGame(true);
 	}
 
 	/* Set all gun as inactive */
-	for(TPair<EAmmunitionType, bool>& pair : bIsWeaponActiveMap)
+	for (TPair<EAmmunitionType, bool>& Pair : bIsWeaponActiveMap)
 	{
-		pair.Value = false;
+		Pair.Value = false;
 	}
 
-	switch(WeaponIndex)
+	switch (WeaponIndex)
 	{
 		/* Primary Weapon */
 	case 0:
@@ -382,13 +381,13 @@ void UWeaponComponent::ReloadWeapon()
 
 void UWeaponComponent::StartReloadWeaponTimer()
 {
-	if(ShouldPlayerReload() && bCanShoot)
+	if (ShouldPlayerReload() && bCanShoot)
 	{
 		bCanShoot = false; // Stop the player from shooting
 
 		bIsReloading = true;
 
-		StopADS();
+		StopAiming();
 
 		Character->GetWorldTimerManager().SetTimer(HandleReload, this, &UWeaponComponent::ReloadWeapon, ReloadTime, true);
 	}
@@ -401,9 +400,14 @@ void UWeaponComponent::ClearReloadWeaponTimer()
 
 bool UWeaponComponent::ShouldPlayerReload() const
 {
-	if(GetReserveAmmoOfCurrentWeapon() != 0)
-		return GetCurrentAmmoOfCurrentWeapon() < GetMaxAmmoCatridgeOfCurrentWeapon() ? true : false;
-
+	// If there is reserve ammo left
+	if (GetReserveAmmoOfCurrentWeapon() != 0)
+	{
+		// If the current ammo is less than maximum ammo of catridge
+			// Ensures the owner needs to reload
+		if (GetCurrentAmmoOfCurrentWeapon() < GetMaxAmmoCatridgeOfCurrentWeapon())
+			return true;
+	}
 	return false;
 }
 
@@ -433,34 +437,34 @@ void UWeaponComponent::SetIsAiming(bool IsAiming)
 	bIsAiming = IsAiming;
 }
 
-void UWeaponComponent::ADS()
+void UWeaponComponent::StartAiming()
 {
 	bool bIsSprinting = Character->GetIsSprinting();
 
-	// Aim
-	if(!bIsAiming && !bIsReloading && !bIsSprinting)
+	// Aim 
+	if (!bIsAiming && !bIsReloading && !bIsSprinting)
 	{
 		// Set character speed move to slow
 		Character->SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
 		
-		if(ADSCurveTimeline)
-			ADSCurveTimeline->Play();
+		if(AimingCurveTimeline)
+			AimingCurveTimeline->Play();
 
 		bIsAiming = true;
 	}
 }
 
-void UWeaponComponent::StopADS()
+void UWeaponComponent::StopAiming()
 {
-	if(bIsAiming)
+	if (bIsAiming)
 	{
 		bool bIsCrouching = Character->GetIsCrouching();
-		if(!bIsCrouching)
+		if (!bIsCrouching)
 			// Set character speed move to default
 			Character->SetMaxWalkSpeed(ECharacterMoveSpeed::Default);
 
-		if(ADSCurveTimeline)
-			ADSCurveTimeline->Reverse();
+		if (AimingCurveTimeline)
+			AimingCurveTimeline->Reverse();
 
 		bIsAiming = false;
 	}

@@ -161,7 +161,7 @@ public:
 
 	/** Get the boolean for crouching that tells if player is crouching or not */
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	bool GetIsCrouching() const;
+	bool GetIsCrouching() const { return bIsCrouching; }
 
 	/** Set the character movement's maximum walking speed */
 	void SetMaxWalkSpeed(ECharacterMoveSpeed MoveSpeed);
