@@ -54,17 +54,17 @@ struct FAmmunition
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
-	int8 DefaultMaxPrimaryAmmunition = 30; // Default maximum ammunition in primary weapon
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ammunition")
+	int32 MaxPrimary = 30; // Default maximum ammunition in primary weapon
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ammunition")
+	int32 MaxSecondary = 30; // Default maximum ammunition in secondary weapon
 
-	//UPROPERTY()
-	int8 DefaultMaxSecondaryAmmunition = 30; // Default maximum ammunition in secondary weapon
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ammunition")
+	int32 TotalPrimary = 120; // Default reserve ammuntion in primary weapon
 
-	UPROPERTY()
-	int8 DefaultTotalPrimaryAmmunition = 120; // Default reserve ammuntion in primary weapon
-
-	//UPROPERTY()
-	int8 DefaultTotalSecondaryAmmunition = 80; // Defaul reserve ammunition in secondary weapon
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ammunition")
+	int32 TotalSecondary = 80; // Defaul reserve ammunition in secondary weapon
 };
 
 
@@ -102,15 +102,17 @@ public:
 	
 private:
 	// Hash map for ammunition count of each weapon
-	TMap<EAmmunitionType, int8> CurrentAmmunitionCountMap;
+	TMap<EAmmunitionType, int32> CurrentAmmunitionCountMap;
 
 	// Hash map for the max amount of ammunition (before gun has to reload the catridge) of each weapon
 	// This is the maximum ammount of bullets that the player can shoot before they have to reload
-	TMap<EAmmunitionType, int8> MaxAmmunitionInCatridgeMap;
+	TMap<EAmmunitionType, int32> MaxAmmunitionInCatridgeMap;
 
 	// Hash map for the reserve ammunition
 	// This is the total amount of ammunition the player has 
-	TMap<EAmmunitionType, int8> ReserveAmmunitionCountMap;
+	TMap<EAmmunitionType, int32> ReserveAmmunitionCountMap;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Ammunition")
+	FAmmunition AmmunitionSettings;
 
 };

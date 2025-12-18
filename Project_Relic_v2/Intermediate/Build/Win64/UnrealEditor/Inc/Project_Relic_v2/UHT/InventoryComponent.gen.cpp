@@ -103,10 +103,22 @@ struct Z_Construct_UScriptStruct_FAmmunition_Statics
 		{ "ToolTip", "Type: Struct\n\nName: FAmmunition\n\nAuthor: Jaber Ahmed\n\nPurpose: Handles all default settings for weapon\n\nReferences: N/A\n\nSee Also: N/A\n\nChange Log:\nDate          Initials    Version     Comments\n29/08/2023    JA          V1.0        N/A\n13/12/2025    JA                     V2.0            N/A" },
 #endif
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultMaxPrimaryAmmunition_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MaxPrimary_MetaData[] = {
+		{ "Category", "Ammunition" },
 		{ "ModuleRelativePath", "InventoryComponent.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultTotalPrimaryAmmunition_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MaxSecondary_MetaData[] = {
+		{ "Category", "Ammunition" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Default maximum ammunition in primary weapon\n" },
+#endif
+		{ "ModuleRelativePath", "InventoryComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Default maximum ammunition in primary weapon" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TotalPrimary_MetaData[] = {
+		{ "Category", "Ammunition" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Default maximum ammunition in secondary weapon\n" },
 #endif
@@ -115,9 +127,21 @@ struct Z_Construct_UScriptStruct_FAmmunition_Statics
 		{ "ToolTip", "Default maximum ammunition in secondary weapon" },
 #endif
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TotalSecondary_MetaData[] = {
+		{ "Category", "Ammunition" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Default reserve ammuntion in primary weapon\n" },
+#endif
+		{ "ModuleRelativePath", "InventoryComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Default reserve ammuntion in primary weapon" },
+#endif
+	};
 #endif // WITH_METADATA
-	static const UECodeGen_Private::FInt8PropertyParams NewProp_DefaultMaxPrimaryAmmunition;
-	static const UECodeGen_Private::FInt8PropertyParams NewProp_DefaultTotalPrimaryAmmunition;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_MaxPrimary;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_MaxSecondary;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_TotalPrimary;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_TotalSecondary;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static void* NewStructOps()
 	{
@@ -125,11 +149,15 @@ struct Z_Construct_UScriptStruct_FAmmunition_Statics
 	}
 	static const UECodeGen_Private::FStructParams StructParams;
 };
-const UECodeGen_Private::FInt8PropertyParams Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_DefaultMaxPrimaryAmmunition = { "DefaultMaxPrimaryAmmunition", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Int8, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FAmmunition, DefaultMaxPrimaryAmmunition), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_DefaultMaxPrimaryAmmunition_MetaData), NewProp_DefaultMaxPrimaryAmmunition_MetaData) };
-const UECodeGen_Private::FInt8PropertyParams Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_DefaultTotalPrimaryAmmunition = { "DefaultTotalPrimaryAmmunition", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Int8, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FAmmunition, DefaultTotalPrimaryAmmunition), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_DefaultTotalPrimaryAmmunition_MetaData), NewProp_DefaultTotalPrimaryAmmunition_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_MaxPrimary = { "MaxPrimary", nullptr, (EPropertyFlags)0x0010000000010005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FAmmunition, MaxPrimary), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MaxPrimary_MetaData), NewProp_MaxPrimary_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_MaxSecondary = { "MaxSecondary", nullptr, (EPropertyFlags)0x0010000000010005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FAmmunition, MaxSecondary), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MaxSecondary_MetaData), NewProp_MaxSecondary_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_TotalPrimary = { "TotalPrimary", nullptr, (EPropertyFlags)0x0010000000010005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FAmmunition, TotalPrimary), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TotalPrimary_MetaData), NewProp_TotalPrimary_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_TotalSecondary = { "TotalSecondary", nullptr, (EPropertyFlags)0x0010000000010005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FAmmunition, TotalSecondary), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TotalSecondary_MetaData), NewProp_TotalSecondary_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FAmmunition_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_DefaultMaxPrimaryAmmunition,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_DefaultTotalPrimaryAmmunition,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_MaxPrimary,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_MaxSecondary,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_TotalPrimary,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FAmmunition_Statics::NewProp_TotalSecondary,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FAmmunition_Statics::PropPointers) < 2048);
 const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FAmmunition_Statics::StructParams = {
@@ -197,13 +225,24 @@ struct Z_Construct_UClass_UInventoryComponent_Statics
 		{ "IncludePath", "InventoryComponent.h" },
 		{ "ModuleRelativePath", "InventoryComponent.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_AmmunitionSettings_MetaData[] = {
+		{ "Category", "Ammunition" },
+		{ "ModuleRelativePath", "InventoryComponent.h" },
+	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FStructPropertyParams NewProp_AmmunitionSettings;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UInventoryComponent>::IsAbstract,
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UInventoryComponent_Statics::NewProp_AmmunitionSettings = { "AmmunitionSettings", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInventoryComponent, AmmunitionSettings), Z_Construct_UScriptStruct_FAmmunition, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_AmmunitionSettings_MetaData), NewProp_AmmunitionSettings_MetaData) }; // 2327679135
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UInventoryComponent_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInventoryComponent_Statics::NewProp_AmmunitionSettings,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UInventoryComponent_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_UInventoryComponent_Statics::DependentSingletons[])() = {
 	(UObject* (*)())Z_Construct_UClass_UActorComponent,
 	(UObject* (*)())Z_Construct_UPackage__Script_Project_Relic_v2,
@@ -215,11 +254,11 @@ const UECodeGen_Private::FClassParams Z_Construct_UClass_UInventoryComponent_Sta
 	&StaticCppClassTypeInfo,
 	DependentSingletons,
 	nullptr,
-	nullptr,
+	Z_Construct_UClass_UInventoryComponent_Statics::PropPointers,
 	nullptr,
 	UE_ARRAY_COUNT(DependentSingletons),
 	0,
-	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_UInventoryComponent_Statics::PropPointers),
 	0,
 	0x00B000A4u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UInventoryComponent_Statics::Class_MetaDataParams), Z_Construct_UClass_UInventoryComponent_Statics::Class_MetaDataParams)
@@ -243,13 +282,13 @@ struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_P
 		{ EAmmunitionType_StaticEnum, TEXT("EAmmunitionType"), &Z_Registration_Info_UEnum_EAmmunitionType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 754121883U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FAmmunition::StaticStruct, Z_Construct_UScriptStruct_FAmmunition_Statics::NewStructOps, TEXT("Ammunition"), &Z_Registration_Info_UScriptStruct_FAmmunition, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FAmmunition), 508775050U) },
+		{ FAmmunition::StaticStruct, Z_Construct_UScriptStruct_FAmmunition_Statics::NewStructOps, TEXT("Ammunition"), &Z_Registration_Info_UScriptStruct_FAmmunition, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FAmmunition), 2327679135U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UInventoryComponent, UInventoryComponent::StaticClass, TEXT("UInventoryComponent"), &Z_Registration_Info_UClass_UInventoryComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInventoryComponent), 3230481902U) },
+		{ Z_Construct_UClass_UInventoryComponent, UInventoryComponent::StaticClass, TEXT("UInventoryComponent"), &Z_Registration_Info_UClass_UInventoryComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInventoryComponent), 4019795803U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_1613018047(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_169529636(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_InventoryComponent_h__Script_Project_Relic_v2_Statics::EnumInfo));

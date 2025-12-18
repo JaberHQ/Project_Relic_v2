@@ -46,6 +46,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool GetIsReloading() const{ return bIsReloading; }
 
+	/** Handles the actions after the Aim Down Sights (ADS) input is complete */
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void StopADS();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -57,9 +61,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void ADS();
 
-	/** Handles the actions after the Aim Down Sights (ADS) input is complete */
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void StopADS();
 
 public:	
 	// Called every frame
@@ -141,20 +142,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	class UInputAction* SwitchWeaponsAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Curve Float")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	UCurveFloat* ADSCameraOffsetCurveFloat;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Curve Float")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	UCurveFloat* ADSFieldOfViewCurveFloat;
 
 protected:
-	/* Seconds to wait between shots */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
-	float TimeBetweenShots;
-
-	/** Line trace distance (how far the player can shoot) */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
-	float ShootingDistance;
+	
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -196,7 +191,16 @@ private:
 	bool bIsShooting;
 	bool bIsReloading;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
 	float ReloadTime;
+
+	/* Seconds to wait between shots */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
+	float TimeBetweenShots;
+
+	/** Line trace distance (how far the player can shoot) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
+	float ShootingDistance;
 
 	FTimerHandle HandleReload;
 

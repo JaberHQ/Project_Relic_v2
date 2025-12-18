@@ -24,8 +24,8 @@ struct FInputActionValue;
 	DECLARE_FUNCTION(execAttachWeapon); \
 	DECLARE_FUNCTION(execADSFieldOfViewProgress); \
 	DECLARE_FUNCTION(execADSCameraOffsetProgress); \
-	DECLARE_FUNCTION(execStopADS); \
 	DECLARE_FUNCTION(execADS); \
+	DECLARE_FUNCTION(execStopADS); \
 	DECLARE_FUNCTION(execGetIsReloading); \
 	DECLARE_FUNCTION(execGetIsShooting); \
 	DECLARE_FUNCTION(execGetReserveAmmoOfCurrentWeapon); \

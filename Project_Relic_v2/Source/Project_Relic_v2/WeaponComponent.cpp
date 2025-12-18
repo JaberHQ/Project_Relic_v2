@@ -16,7 +16,7 @@ UWeaponComponent::UWeaponComponent()
 	, bIsShooting(false)
 	, bIsReloading(false)
 	, bIsAiming(false)
-	, ReloadTime(2.25f)
+	, ReloadTime(2.0f)
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -192,11 +192,15 @@ void UWeaponComponent::ADSFieldOfViewProgress(float FOV)
 
 void UWeaponComponent::StartShooting()
 {
-	Shoot();
+	bool bIsSprinting = Character->GetIsSprinting();
+	if(!bIsSprinting)
+	{
+		Shoot();
+		if(bIsAutomaticMap[CurrentWeapon])
+			// Automatic shooting timer 
+			Character->GetWorldTimerManager().SetTimer(HandleRefire, this, &UWeaponComponent::Shoot, TimeBetweenShots, true);
+	}
 
-	if(bIsAutomaticMap[CurrentWeapon])
-		// Automatic shooting timer 
-		Character->GetWorldTimerManager().SetTimer(HandleRefire, this, &UWeaponComponent::Shoot, TimeBetweenShots, true);
 }
 
 void UWeaponComponent::StopShooting()
@@ -242,8 +246,6 @@ void UWeaponComponent::Shoot()
 			}
 		}
 	}
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Ammo Count: ") + FString::FromInt(GetCurrentAmmoOfCurrentWeapon()));
-
 }
 
 void UWeaponComponent::AttachWeapon()
@@ -433,8 +435,10 @@ void UWeaponComponent::SetIsAiming(bool IsAiming)
 
 void UWeaponComponent::ADS()
 {
+	bool bIsSprinting = Character->GetIsSprinting();
+
 	// Aim
-	if(!bIsAiming)
+	if(!bIsAiming && !bIsReloading && !bIsSprinting)
 	{
 		// Set character speed move to slow
 		Character->SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);

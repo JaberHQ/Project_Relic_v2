@@ -35,13 +35,13 @@ struct FCharacterMoveSpeed
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
 	float Slow	   = 150.0f; // Slow moving speed
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
 	float Default  = 400.0f; // Default Moving speed
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
 	float Fast     = 700.0f; // Fast Moving Speed
 };
 
@@ -190,6 +190,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetMaxStamina() const { return MaxStamina; }
 
+	UFUNCTION(BlueprintCallable)
+	bool GetIsSprinting() const { return bIsSprinting; }
+
 private:
 	/** Initialise the crouch timeline component */
 	void InitCrouchTimeline();
@@ -216,27 +219,27 @@ private:
 	TSubclassOf<UUserWidget> CharacterHUDWidgetClass;
 	UUserWidget* CharacterHUDWidget;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float CurrentStamina;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float MaxStamina;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float DecrementStamina;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float IncrementStamina;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float DrainStaminaTime;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float RegenerateStaminaTime;
 
 	FTimerHandle SprintHandle;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	FCharacterMoveSpeed CharacterMoveSpeedDefaults;
 
 };

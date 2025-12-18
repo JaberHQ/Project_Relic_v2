@@ -491,7 +491,7 @@ struct Z_Construct_UFunction_UWeaponComponent_StopADS_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "StopADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04080400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams)},  };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UWeaponComponent, nullptr, "StopADS", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWeaponComponent_StopADS_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_UWeaponComponent_StopADS()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -642,32 +642,12 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ADSCameraOffsetCurveFloat_MetaData[] = {
-		{ "Category", "Curve Float" },
+		{ "Category", "Gameplay" },
 		{ "ModuleRelativePath", "WeaponComponent.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ADSFieldOfViewCurveFloat_MetaData[] = {
-		{ "Category", "Curve Float" },
-		{ "ModuleRelativePath", "WeaponComponent.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TimeBetweenShots_MetaData[] = {
 		{ "Category", "Gameplay" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "/* Seconds to wait between shots */" },
-#endif
 		{ "ModuleRelativePath", "WeaponComponent.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Seconds to wait between shots" },
-#endif
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ShootingDistance_MetaData[] = {
-		{ "Category", "Gameplay" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "/** Line trace distance (how far the player can shoot) */" },
-#endif
-		{ "ModuleRelativePath", "WeaponComponent.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Line trace distance (how far the player can shoot)" },
-#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FireMappingContext_MetaData[] = {
 		{ "AllowPrivateAccess", "true" },
@@ -694,6 +674,33 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "WeaponComponent.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ReloadTime_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Gameplay" },
+		{ "ModuleRelativePath", "WeaponComponent.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TimeBetweenShots_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Gameplay" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/* Seconds to wait between shots */" },
+#endif
+		{ "ModuleRelativePath", "WeaponComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Seconds to wait between shots" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ShootingDistance_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Gameplay" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** Line trace distance (how far the player can shoot) */" },
+#endif
+		{ "ModuleRelativePath", "WeaponComponent.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Line trace distance (how far the player can shoot)" },
+#endif
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_AimAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ShootAction;
@@ -701,12 +708,13 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_SwitchWeaponsAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ADSCameraOffsetCurveFloat;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ADSFieldOfViewCurveFloat;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_TimeBetweenShots;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_ShootingDistance;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_FireMappingContext;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_PrimaryWeapon;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_SecondaryWeapon;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ADSCurveTimeline;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_ReloadTime;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_TimeBetweenShots;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_ShootingDistance;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
@@ -720,7 +728,7 @@ struct Z_Construct_UClass_UWeaponComponent_Statics
 		{ &Z_Construct_UFunction_UWeaponComponent_GetIsShooting, "GetIsShooting" }, // 1763653920
 		{ &Z_Construct_UFunction_UWeaponComponent_GetReserveAmmoOfCurrentWeapon, "GetReserveAmmoOfCurrentWeapon" }, // 3087907869
 		{ &Z_Construct_UFunction_UWeaponComponent_SetIsAiming, "SetIsAiming" }, // 3343256913
-		{ &Z_Construct_UFunction_UWeaponComponent_StopADS, "StopADS" }, // 4204165876
+		{ &Z_Construct_UFunction_UWeaponComponent_StopADS, "StopADS" }, // 3724478063
 		{ &Z_Construct_UFunction_UWeaponComponent_SwitchWeapons, "SwitchWeapons" }, // 560802459
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -735,12 +743,13 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponCompone
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_SwitchWeaponsAction = { "SwitchWeaponsAction", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, SwitchWeaponsAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SwitchWeaponsAction_MetaData), NewProp_SwitchWeaponsAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ADSCameraOffsetCurveFloat = { "ADSCameraOffsetCurveFloat", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, ADSCameraOffsetCurveFloat), Z_Construct_UClass_UCurveFloat_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ADSCameraOffsetCurveFloat_MetaData), NewProp_ADSCameraOffsetCurveFloat_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ADSFieldOfViewCurveFloat = { "ADSFieldOfViewCurveFloat", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, ADSFieldOfViewCurveFloat), Z_Construct_UClass_UCurveFloat_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ADSFieldOfViewCurveFloat_MetaData), NewProp_ADSFieldOfViewCurveFloat_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_TimeBetweenShots = { "TimeBetweenShots", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, TimeBetweenShots), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TimeBetweenShots_MetaData), NewProp_TimeBetweenShots_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ShootingDistance = { "ShootingDistance", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, ShootingDistance), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ShootingDistance_MetaData), NewProp_ShootingDistance_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_FireMappingContext = { "FireMappingContext", nullptr, (EPropertyFlags)0x0040000000000015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, FireMappingContext), Z_Construct_UClass_UInputMappingContext_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FireMappingContext_MetaData), NewProp_FireMappingContext_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_PrimaryWeapon = { "PrimaryWeapon", nullptr, (EPropertyFlags)0x0040000000030005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, PrimaryWeapon), Z_Construct_UClass_ABaseWeapon_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PrimaryWeapon_MetaData), NewProp_PrimaryWeapon_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_SecondaryWeapon = { "SecondaryWeapon", nullptr, (EPropertyFlags)0x0040000000030005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, SecondaryWeapon), Z_Construct_UClass_ABaseWeapon_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SecondaryWeapon_MetaData), NewProp_SecondaryWeapon_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ADSCurveTimeline = { "ADSCurveTimeline", nullptr, (EPropertyFlags)0x0040000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, ADSCurveTimeline), Z_Construct_UClass_UTimelineComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ADSCurveTimeline_MetaData), NewProp_ADSCurveTimeline_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ReloadTime = { "ReloadTime", nullptr, (EPropertyFlags)0x0040000000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, ReloadTime), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ReloadTime_MetaData), NewProp_ReloadTime_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_TimeBetweenShots = { "TimeBetweenShots", nullptr, (EPropertyFlags)0x0040000000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, TimeBetweenShots), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TimeBetweenShots_MetaData), NewProp_TimeBetweenShots_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ShootingDistance = { "ShootingDistance", nullptr, (EPropertyFlags)0x0040000000010005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UWeaponComponent, ShootingDistance), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ShootingDistance_MetaData), NewProp_ShootingDistance_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UWeaponComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_AimAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ShootAction,
@@ -748,12 +757,13 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UWeaponCo
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_SwitchWeaponsAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ADSCameraOffsetCurveFloat,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ADSFieldOfViewCurveFloat,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_TimeBetweenShots,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ShootingDistance,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_FireMappingContext,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_PrimaryWeapon,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_SecondaryWeapon,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ADSCurveTimeline,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ReloadTime,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_TimeBetweenShots,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UWeaponComponent_Statics::NewProp_ShootingDistance,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UWeaponComponent_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_UWeaponComponent_Statics::DependentSingletons[])() = {
@@ -792,10 +802,10 @@ UWeaponComponent::~UWeaponComponent() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 63209654U) },
+		{ Z_Construct_UClass_UWeaponComponent, UWeaponComponent::StaticClass, TEXT("UWeaponComponent"), &Z_Registration_Info_UClass_UWeaponComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWeaponComponent), 199834152U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_233730969(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_1773921482(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

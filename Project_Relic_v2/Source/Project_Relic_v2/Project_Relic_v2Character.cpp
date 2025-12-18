@@ -228,33 +228,43 @@ void AProject_Relic_v2Character::DoCrouch()
 
 void AProject_Relic_v2Character::DoSprint()
 {
+	bool isAiming = WeaponComponent->GetIsAiming();
+
+	// If the character is crouching
+	if(bIsCrouching)
+		DoCrouch();
+
+	// If the character is aiming
+	if(isAiming)
+	{
+		WeaponComponent->StopADS();
+	}
 	SetMaxWalkSpeed(ECharacterMoveSpeed::Fast);
 	bIsSprinting = true;
 	DrainStamina();
-	// Create timeline for how long sprinting is
-	/*if(!bIsCrouching)
-	{
-		SetMaxWalkSpeed(500.0f);
-	}
-	else
-	{
-		SetMaxWalkSpeed(350.0f);
-	}*/
-
-	// After time, set max walk speed back
 }
 
 void AProject_Relic_v2Character::StopSprint()
 {
-	SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
+	// If the character is not crouching
+	if(!bIsCrouching)
+	{
+		SetMaxWalkSpeed(ECharacterMoveSpeed::Default);
+	}
+
+	// If the character is crouching
+	else
+	{
+		SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
+	}
 	bIsSprinting = false;
 	RegenerateStamina();
 }
 
 void AProject_Relic_v2Character::DrainStamina()
 {
-	float tempValue = CurrentStamina - DecrementStamina;
-	CurrentStamina = UKismetMathLibrary::FClamp(tempValue, 0.0f, MaxStamina);
+	float value = CurrentStamina - DecrementStamina;
+	CurrentStamina = UKismetMathLibrary::FClamp(value, 0.0f, MaxStamina);
 
 	if(CurrentStamina == 0.0f)
 	{
@@ -264,8 +274,6 @@ void AProject_Relic_v2Character::DrainStamina()
 	{
 		if(bIsSprinting)
 		{
-			
-
 			GetWorldTimerManager().SetTimer(SprintHandle, this, &AProject_Relic_v2Character::DrainStamina, DrainStaminaTime, false);
 		}
 	}
@@ -273,8 +281,8 @@ void AProject_Relic_v2Character::DrainStamina()
 
 void AProject_Relic_v2Character::RegenerateStamina()
 {
-	float tempValue = CurrentStamina + IncrementStamina;
-	CurrentStamina = UKismetMathLibrary::FClamp(tempValue, 0.0f, MaxStamina);
+	float value = CurrentStamina + IncrementStamina;
+	CurrentStamina = UKismetMathLibrary::FClamp(value, 0.0f, MaxStamina);
 
 	if(CurrentStamina != MaxStamina)
 	{

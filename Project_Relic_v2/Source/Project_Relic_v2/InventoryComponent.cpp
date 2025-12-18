@@ -11,13 +11,12 @@ UInventoryComponent::UInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	// Reference to struct that holds the ammunitions default variables 
-	const FAmmunition ammunitionSettings;
 
 	/* Initalise Ammo defaults */
 	MaxAmmunitionInCatridgeMap =
 	{
-		{ EAmmunitionType::Primary,   ammunitionSettings.DefaultMaxPrimaryAmmunition   },
-		{ EAmmunitionType::Secondary, ammunitionSettings.DefaultMaxSecondaryAmmunition }
+		{ EAmmunitionType::Primary,   AmmunitionSettings.MaxPrimary },
+		{ EAmmunitionType::Secondary, AmmunitionSettings.MaxSecondary }
 	};
 
 	CurrentAmmunitionCountMap =
@@ -28,21 +27,10 @@ UInventoryComponent::UInventoryComponent()
 
 	ReserveAmmunitionCountMap =
 	{
-		{ EAmmunitionType::Primary,   ammunitionSettings.DefaultTotalPrimaryAmmunition },
-		{ EAmmunitionType::Secondary, ammunitionSettings.DefaultTotalSecondaryAmmunition }
+		{ EAmmunitionType::Primary,   AmmunitionSettings.TotalPrimary },
+		{ EAmmunitionType::Secondary, AmmunitionSettings.TotalSecondary }
 	};
 
-	//// Set max ammunition of each weapon
-	//MaxAmmunitionInCatridgeMap.Add(EAmmunitionType::Primary, ammunitionSettings.DefaultMaxPrimaryAmmunition);
-	//MaxAmmunitionInCatridgeMap.Add(EAmmunitionType::Secondary, ammunitionSettings.DefaultMaxSecondaryAmmunition);
-
-	//// Set ammunition count of each weapon
-	//CurrentAmmunitionCountMap.Add(EAmmunitionType::Primary, MaxAmmunitionInCatridgeMap[EAmmunitionType::Primary]);
-	//CurrentAmmunitionCountMap.Add(EAmmunitionType::Secondary, MaxAmmunitionInCatridgeMap[EAmmunitionType::Secondary]);
-
-	// Set ammunition count of each weapon
-	/*ReserveAmmunitionCountMap.Add(EAmmunitionType::Primary, ammunitionSettings.DefaultTotalPrimaryAmmunition);
-	ReserveAmmunitionCountMap.Add(EAmmunitionType::Secondary, ammunitionSettings.DefaultTotalSecondaryAmmunition);*/
 }
 
 
