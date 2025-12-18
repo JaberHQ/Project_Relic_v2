@@ -78,9 +78,9 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// Stamina defaults
 	MaxStamina = 100.0f;
 	CurrentStamina = MaxStamina;
-	DecrementStamina = 1.0f;
+	DecrementStamina = 5.0f;
 	IncrementStamina = 5.0f;
-	DrainStaminaTime = 1.0f;
+	DrainStaminaTime = 0.05f;
 	RegenerateStaminaTime = 0.05f;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
