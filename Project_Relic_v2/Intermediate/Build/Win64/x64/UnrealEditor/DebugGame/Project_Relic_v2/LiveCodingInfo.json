@@ -26,6 +26,8 @@
 			"CombatStateTreeUtility.gen.cpp.obj"
 		],
 		"Module.Project_Relic_v2.2.cpp.obj": [
+			"EnemyCharacter.gen.cpp.obj",
+			"EnemyController.gen.cpp.obj",
 			"EnvQueryContext_Player.gen.cpp.obj",
 			"HealthComponent.gen.cpp.obj",
 			"InventoryComponent.gen.cpp.obj",
@@ -46,16 +48,18 @@
 			"SideScrollingNPC.gen.cpp.obj",
 			"SideScrollingPickup.gen.cpp.obj",
 			"SideScrollingPlayerController.gen.cpp.obj",
-			"SideScrollingSoftPlatform.gen.cpp.obj",
-			"SideScrollingStateTreeUtility.gen.cpp.obj"
+			"SideScrollingSoftPlatform.gen.cpp.obj"
 		],
 		"Module.Project_Relic_v2.3.cpp.obj": [
+			"SideScrollingStateTreeUtility.gen.cpp.obj",
 			"SideScrollingUI.gen.cpp.obj",
 			"SingleShotRifle.gen.cpp.obj",
 			"WeaponComponent.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
 			"AutomaticRifle.cpp.obj",
 			"BaseWeapon.cpp.obj",
+			"EnemyCharacter.cpp.obj",
+			"EnemyController.cpp.obj",
 			"HealthComponent.cpp.obj",
 			"InventoryComponent.cpp.obj",
 			"Project_Relic_v2.cpp.obj",

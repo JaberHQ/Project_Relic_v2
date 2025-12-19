@@ -19,7 +19,7 @@
                                     "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/WeaponComponent.cpp"
                                 },
                                 "region": {
-                                    "startLine": 12,
+                                    "startLine": 13,
                                     "startColumn": 4,
                                     "snippet": {
                                         "text": "\t, ShootingDistance(2000.0f)"
@@ -44,7 +44,7 @@
                                     "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/WeaponComponent.cpp"
                                 },
                                 "region": {
-                                    "startLine": 17,
+                                    "startLine": 18,
                                     "startColumn": 4,
                                     "snippet": {
                                         "text": "\t, bIsReloading(false)"

@@ -4,6 +4,7 @@
 #include "WeaponComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include <Kismet/KismetMathLibrary.h>
+#include "EnemyCharacter.h"
 #include "Project_Relic_v2Character.h"
 
 // Sets default values for this component's properties
@@ -192,7 +193,7 @@ void UWeaponComponent::AimingFieldOfViewProgress(float FOV)
 void UWeaponComponent::StartShooting()
 {
 	bool bIsSprinting = Character->GetIsSprinting();
-	if (!bIsSprinting)
+	if (!bIsSprinting && bIsAiming)
 	{
 		Shoot();
 		if (bIsAutomaticMap[CurrentWeapon])
@@ -318,14 +319,15 @@ void UWeaponComponent::RaycastShot()
 	// If line trace has hit an object
 	if (bHit)
 	{
-		/* --------------------------------------- TO DO AI --------------------------------------- */
 		/* If AI has been hit */
-		//AEnemyAIManager* enemyManager = Cast<AEnemyAIManager>(hit.GetActor());
-		//if(enemyManager)
-		//{
-		//	enemyManager->GetHealthComponent()->TakeDamage();
-		//	//DrawDebugBox(GetWorld(), hit.ImpactPoint, FVector(5, 5, 5), FColor::Blue, false, 2.0f); // DEBUG -----------------------
-		//}
+		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(Hit.GetActor());
+		if (EnemyCharacter)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy has been hit!")); // DEBUG -----------------------
+			DrawDebugBox(GetWorld(), Hit.ImpactPoint, FVector(5, 5, 5), FColor::Blue, false, 2.0f); // DEBUG -----------------------
+			
+			//EnemyCharacter->GetHealthComponent()->TakeDamage();
+		}
 	}
 }
 
