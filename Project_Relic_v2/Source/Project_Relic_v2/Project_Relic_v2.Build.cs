@@ -19,6 +19,7 @@ public class Project_Relic_v2 : ModuleRules
 			"GameplayStateTreeModule",
 			"UMG",
 			"Slate"
+			//"NavigationSystem"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });

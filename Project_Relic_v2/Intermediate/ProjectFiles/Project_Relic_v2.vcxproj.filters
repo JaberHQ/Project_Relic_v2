@@ -45,6 +45,18 @@
     <ClInclude Include="..\..\Source\Project_Relic_v2\BaseWeapon.h">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Project_Relic_v2\EnemyCharacter.cpp">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClCompile>

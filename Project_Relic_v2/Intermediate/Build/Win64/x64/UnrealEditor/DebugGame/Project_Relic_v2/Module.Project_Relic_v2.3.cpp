@@ -6,6 +6,8 @@
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/PerModuleInline.gen.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/AutomaticRifle.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/BaseWeapon.cpp"
+#include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/BTTChasePlayer.cpp"
+#include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/BTTFindRandomPatrol.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyController.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/HealthComponent.cpp"

@@ -274,6 +274,14 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClInclude Include="..\..\Source\Project_Relic_v2\BaseWeapon.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.h"/>
     <ClCompile Include="..\..\Source\Project_Relic_v2\EnemyCharacter.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

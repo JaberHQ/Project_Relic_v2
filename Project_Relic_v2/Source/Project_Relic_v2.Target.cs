@@ -11,5 +11,6 @@ public class Project_Relic_v2Target : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_6;
 		ExtraModuleNames.Add("Project_Relic_v2");
-	}
+
+    }
 }
