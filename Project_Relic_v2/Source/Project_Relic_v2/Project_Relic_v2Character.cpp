@@ -78,10 +78,11 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// Stamina defaults
 	MaxStamina = 100.0f;
 	CurrentStamina = MaxStamina;
-	DecrementStamina = 1.0f;
+	DecrementStamina = 5.0f;
 	IncrementStamina = 5.0f;
-	DrainStaminaTime = 1.0f;
+	DrainStaminaTime = 0.05f;
 	RegenerateStaminaTime = 0.05f;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -127,6 +128,7 @@ void AProject_Relic_v2Character::BeginPlay()
 	// Create a timeline for crouching 
 	InitCrouchTimeline();
 
+	// Add Player HUD UI to viewport 
 	if (CharacterHUDWidgetClass)
 	{
 		CharacterHUDWidget = CreateWidget<UUserWidget>(GetWorld(), CharacterHUDWidgetClass);
@@ -136,10 +138,10 @@ void AProject_Relic_v2Character::BeginPlay()
 
 void AProject_Relic_v2Character::Move(const FInputActionValue& Value)
 {
-	// input is a Vector2D
+	// Input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	// route the input
+	// Route the input
 	DoMove(MovementVector.X, MovementVector.Y);
 }
 
@@ -190,23 +192,24 @@ void AProject_Relic_v2Character::DoJumpStart()
 
 void AProject_Relic_v2Character::DoJumpEnd()
 {
-	// signal the character to stop jumping
+	// Signal the character to stop jumping
 	StopJumping();
 }
 
 void AProject_Relic_v2Character::DoCrouch()
 {
 	// Crouch
-	if(!bIsCrouching)
+	if (!bIsCrouching)
 	{
-		SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
 		// Slow down the player when crouching 
+		SetMaxWalkSpeed(ECharacterMoveSpeed::Slow);
 
+		// This lowers the camera when crouching
 		if(CrouchTimelineComponent)
 		{
-			// This lowers the camera when crouching
 			CrouchTimelineComponent->Play();
 		}
+
 		bIsCrouching = true;
 	}
 	// UnCrouch
@@ -215,11 +218,11 @@ void AProject_Relic_v2Character::DoCrouch()
 		/* Check if player is aiming
 			 Without this check, player can speed up incorrectly e.g move really fast while aiming */
 		bool isAiming = WeaponComponent->GetIsAiming();
-		if(!isAiming)
+		if (!isAiming)
 			SetMaxWalkSpeed(ECharacterMoveSpeed::Default);
 
-		if(CrouchTimelineComponent)
-			// This will raise the camera back to normal position
+		// This will raise the camera back to normal position
+		if (CrouchTimelineComponent)
 			CrouchTimelineComponent->Reverse();
 
 		bIsCrouching = false;
@@ -231,14 +234,16 @@ void AProject_Relic_v2Character::DoSprint()
 	bool isAiming = WeaponComponent->GetIsAiming();
 
 	// If the character is crouching
-	if(bIsCrouching)
+	if (bIsCrouching)
 		DoCrouch();
 
 	// If the character is aiming
-	if(isAiming)
+	if (isAiming)
 	{
-		WeaponComponent->StopADS();
+		WeaponComponent->StopAiming();
 	}
+
+	// Set character max walk speed to fast
 	SetMaxWalkSpeed(ECharacterMoveSpeed::Fast);
 	bIsSprinting = true;
 	DrainStamina();
@@ -247,7 +252,7 @@ void AProject_Relic_v2Character::DoSprint()
 void AProject_Relic_v2Character::StopSprint()
 {
 	// If the character is not crouching
-	if(!bIsCrouching)
+	if (!bIsCrouching)
 	{
 		SetMaxWalkSpeed(ECharacterMoveSpeed::Default);
 	}
@@ -263,15 +268,18 @@ void AProject_Relic_v2Character::StopSprint()
 
 void AProject_Relic_v2Character::DrainStamina()
 {
-	float value = CurrentStamina - DecrementStamina;
-	CurrentStamina = UKismetMathLibrary::FClamp(value, 0.0f, MaxStamina);
+	// Decrement the stamina value 
+	float Value = CurrentStamina - DecrementStamina;
+	CurrentStamina = UKismetMathLibrary::FClamp(Value, 0.0f, MaxStamina);
 
-	if(CurrentStamina == 0.0f)
+	// If there is no stamina left, stop sprinting
+	if (CurrentStamina == 0.0f)
 	{
 		StopSprint();
 	}
 	else
 	{
+		// If the player is still sprinting, continue draining stamina
 		if(bIsSprinting)
 		{
 			GetWorldTimerManager().SetTimer(SprintHandle, this, &AProject_Relic_v2Character::DrainStamina, DrainStaminaTime, false);
@@ -281,12 +289,16 @@ void AProject_Relic_v2Character::DrainStamina()
 
 void AProject_Relic_v2Character::RegenerateStamina()
 {
-	float value = CurrentStamina + IncrementStamina;
-	CurrentStamina = UKismetMathLibrary::FClamp(value, 0.0f, MaxStamina);
+	// Increment the stamina value 
+	float Value = CurrentStamina + IncrementStamina;
+	CurrentStamina = UKismetMathLibrary::FClamp(Value, 0.0f, MaxStamina);
 
-	if(CurrentStamina != MaxStamina)
+	// If there is stamina left to regain
+	if (CurrentStamina != MaxStamina)
 	{
-		if(!bIsSprinting)
+
+		// If the player is not sprinting, continue regenerating stamina
+		if (!bIsSprinting)
 		{
 			GetWorldTimerManager().SetTimer(SprintHandle, this, &AProject_Relic_v2Character::RegenerateStamina, RegenerateStaminaTime, false);
 		}
@@ -298,25 +310,20 @@ void AProject_Relic_v2Character::SetIsCrouching(bool isCrouching)
 	bIsCrouching = isCrouching;
 }
 
-bool AProject_Relic_v2Character::GetIsCrouching() const
-{
-	return bIsCrouching;
-}
-
 void AProject_Relic_v2Character::SetMaxWalkSpeed(ECharacterMoveSpeed MoveSpeed)
 {
 	CurrentMoveSpeed = MoveSpeed;
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeedMap[CurrentMoveSpeed];
 }
 
-FVector AProject_Relic_v2Character::GetCameraSocketOffset() const
-{
-	return CameraBoom->SocketOffset;
-}
-
 void AProject_Relic_v2Character::SetCameraSocketOffset(FVector offset)
 {
 	CameraBoom->SocketOffset = offset;
+}
+
+FVector AProject_Relic_v2Character::GetCameraSocketOffset() const
+{
+	return CameraBoom->SocketOffset;
 }
 
 void AProject_Relic_v2Character::SetFOV(float FOV)
@@ -334,9 +341,9 @@ void AProject_Relic_v2Character::InitCrouchTimeline()
 		BlueprintCreatedComponents.Add(CrouchTimelineComponent);
 
 		// Bind crouch function to timeline
-		FOnTimelineFloat onTimelineCallback;
-		onTimelineCallback.BindUFunction(this, FName(TEXT("CrouchTimelineProgress")));
-		CrouchTimelineComponent->AddInterpFloat(CrouchCurveFloat, onTimelineCallback);
+		FOnTimelineFloat OnTimelineCallback;
+		OnTimelineCallback.BindUFunction(this, FName(TEXT("CrouchTimelineProgress")));
+		CrouchTimelineComponent->AddInterpFloat(CrouchCurveFloat, OnTimelineCallback);
 		CrouchTimelineComponent->SetLooping(false);
 		CrouchTimelineComponent->RegisterComponent();
 	}

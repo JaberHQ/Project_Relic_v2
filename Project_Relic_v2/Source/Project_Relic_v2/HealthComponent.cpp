@@ -10,7 +10,7 @@ UHealthComponent::UHealthComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
-	MaxHealth = 100;
+	MaxHealth = 100.0f;
 	Health = MaxHealth;
 }
 
@@ -34,9 +34,9 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UHealthComponent::TakeDamage()
 {
-	if(Health > 0)
+	if (Health > 0.0f)
 	{
-		Health -= 20;
+		Health -= 20.0f;
 	}
 }
 

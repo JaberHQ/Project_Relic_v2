@@ -22,10 +22,10 @@ struct FInputActionValue;
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_WeaponComponent_h_21_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execSwitchWeapons); \
 	DECLARE_FUNCTION(execAttachWeapon); \
-	DECLARE_FUNCTION(execADSFieldOfViewProgress); \
-	DECLARE_FUNCTION(execADSCameraOffsetProgress); \
-	DECLARE_FUNCTION(execADS); \
-	DECLARE_FUNCTION(execStopADS); \
+	DECLARE_FUNCTION(execAimingFieldOfViewProgress); \
+	DECLARE_FUNCTION(execAimingCameraOffsetProgress); \
+	DECLARE_FUNCTION(execStartAiming); \
+	DECLARE_FUNCTION(execStopAiming); \
 	DECLARE_FUNCTION(execGetIsReloading); \
 	DECLARE_FUNCTION(execGetIsShooting); \
 	DECLARE_FUNCTION(execGetReserveAmmoOfCurrentWeapon); \

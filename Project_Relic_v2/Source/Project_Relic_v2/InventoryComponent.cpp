@@ -55,7 +55,7 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 void UInventoryComponent::ReloadWeapon(EAmmunitionType Ammo)
 {
 	/* If there is enough reserve ammunition to refill a full magazine */
-	if(ReserveAmmunitionCountMap[Ammo] >= MaxAmmunitionInCatridgeMap[Ammo])
+	if (ReserveAmmunitionCountMap[Ammo] >= MaxAmmunitionInCatridgeMap[Ammo])
 	{
 		ReserveAmmunitionCountMap[Ammo] -= (MaxAmmunitionInCatridgeMap[Ammo] - CurrentAmmunitionCountMap[Ammo]);
 		CurrentAmmunitionCountMap[Ammo] = MaxAmmunitionInCatridgeMap[Ammo];
@@ -63,10 +63,10 @@ void UInventoryComponent::ReloadWeapon(EAmmunitionType Ammo)
 
 	/* If there isn't enough reserve ammunition to refill a full magazine 
 		but there is reserve ammo left */
-	else if(ReserveAmmunitionCountMap[Ammo] < MaxAmmunitionInCatridgeMap[Ammo] && ReserveAmmunitionCountMap[Ammo] > 0)
+	else if (ReserveAmmunitionCountMap[Ammo] < MaxAmmunitionInCatridgeMap[Ammo] && ReserveAmmunitionCountMap[Ammo] > 0)
 	{
 		/* If there isn't enough reserve for a full magazine */
-		if(ReserveAmmunitionCountMap[Ammo] < (MaxAmmunitionInCatridgeMap[Ammo] - CurrentAmmunitionCountMap[Ammo]))
+		if (ReserveAmmunitionCountMap[Ammo] < (MaxAmmunitionInCatridgeMap[Ammo] - CurrentAmmunitionCountMap[Ammo]))
 		{
 			CurrentAmmunitionCountMap[Ammo] += ReserveAmmunitionCountMap[Ammo];
 			ReserveAmmunitionCountMap[Ammo] = 0;
