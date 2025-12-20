@@ -33,6 +33,63 @@
     <Filter Include="Source\Project_Relic_v2">
       <UniqueIdentifier>{C16AB064-9819-39AE-AC2D-5AC558CB8798}</UniqueIdentifier>
     </Filter>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="..\..\Source\Project_Relic_v2\AIPatrolPoint.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\AIPatrolPoint.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\AutomaticRifle.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\AutomaticRifle.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BaseWeapon.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BaseWeapon.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\EnemyCharacter.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\EnemyCharacter.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\EnemyController.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\EnemyController.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\HealthComponent.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\HealthComponent.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\InventoryComponent.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\InventoryComponent.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
+>>>>>>> Stashed changes
     <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs">
       <Filter>Source\Project_Relic_v2</Filter>
     </None>

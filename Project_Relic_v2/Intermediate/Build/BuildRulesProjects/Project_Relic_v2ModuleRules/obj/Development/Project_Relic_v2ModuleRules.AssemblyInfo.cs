@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Project_Relic_v2ModuleRules")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Development")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< Updated upstream
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b523b0b1b403b1846ce51f0d7cd6897a5fe7e8a1")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+464da1440183556d35eb8456a43c42cb6d41e237")]
+>>>>>>> Stashed changes
 [assembly: System.Reflection.AssemblyProductAttribute("Project_Relic_v2ModuleRules")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Project_Relic_v2ModuleRules")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

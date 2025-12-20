@@ -6,6 +6,7 @@
 			"description": "Default Uncontrolled Changelist",
 			"files": [
 				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.uasset",
+<<<<<<< Updated upstream
 				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset",
 				"C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/AnimStarterPack/UE5_Mannequin/UE5_Aim_Space_Hip.uasset",
 				"C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/AnimStarterPack/UE5_Mannequin/UE5_Aim_Space_Ironsights.uasset",
@@ -72,6 +73,18 @@
 				"C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/AnimStarterPack/UE5_Mannequin/UE5_Walk_Lt_Rifle_Ironsights.uasset",
 				"C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/AnimStarterPack/UE5_Mannequin/UE5_Walk_Rt_Rifle_Ironsights.uasset",
 				"C:/Users/Jaber/OneDrive/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/AnimStarterPack/UE5_Mannequin/UE5_UE4ASP_HeroTPP_AnimBlueprint.uasset"
+=======
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/AI/BP_EnemyController.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/AI/BP_EnemyCharacter.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/__ExternalActors__/ThirdPerson/Lvl_ThirdPerson/A/VE/28F4FQZ6P0XNMSGYAI1MOB.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/__ExternalActors__/ThirdPerson/Lvl_ThirdPerson/3/NG/R8CVGBLM298Z9TN90XJRMC.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/__ExternalActors__/ThirdPerson/Lvl_ThirdPerson/4/ET/8XEXA9PSPTD9MJW3QIZ3B4.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/AI/BB_Enemy.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/AI/BT_Enemy.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/AI/BTT_FindRandomPatrol.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/AI/BTTask_ChasePlayer.uasset",
+				"C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Content/ThirdPerson/AI/BP_AIPatrolPoint.uasset"
+>>>>>>> Stashed changes
 			]
 		}
 	]

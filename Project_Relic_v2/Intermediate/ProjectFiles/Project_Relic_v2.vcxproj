@@ -266,6 +266,45 @@
     <None Include="..\..\Config\DefaultEngine.ini"/>
     <None Include="..\..\Config\DefaultGame.ini"/>
     <None Include="..\..\Config\DefaultInput.ini"/>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="..\..\Source\Project_Relic_v2\AIPatrolPoint.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\AIPatrolPoint.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\AutomaticRifle.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\AutomaticRifle.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BaseWeapon.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BaseWeapon.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTChasePlayer.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\BTTFindRandomPatrol.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\EnemyCharacter.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\EnemyCharacter.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\EnemyController.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\EnemyController.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\HealthComponent.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\HealthComponent.h"/>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\InventoryComponent.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\InventoryComponent.h"/>
+>>>>>>> Stashed changes
     <None Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.Build.cs"/>
     <ClCompile Include="..\..\Source\Project_Relic_v2\Project_Relic_v2.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
