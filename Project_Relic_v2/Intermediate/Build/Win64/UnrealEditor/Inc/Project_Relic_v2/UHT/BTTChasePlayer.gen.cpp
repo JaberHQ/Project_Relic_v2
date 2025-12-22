@@ -60,6 +60,7 @@ struct Z_Construct_UClass_UBTTChasePlayer_Statics
 #endif
 		{ "IncludePath", "BTTChasePlayer.h" },
 		{ "ModuleRelativePath", "BTTChasePlayer.h" },
+		{ "ObjectInitializerConstructorDeclared", "" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ChaseSpeed_MetaData[] = {
 		{ "Category", "Movement" },
@@ -74,7 +75,7 @@ struct Z_Construct_UClass_UBTTChasePlayer_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBTTChasePlayer_Statics::NewProp_ChaseSpeed = { "ChaseSpeed", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBTTChasePlayer, ChaseSpeed), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ChaseSpeed_MetaData), NewProp_ChaseSpeed_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBTTChasePlayer_Statics::NewProp_ChaseSpeed = { "ChaseSpeed", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UBTTChasePlayer, ChaseSpeed), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ChaseSpeed_MetaData), NewProp_ChaseSpeed_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UBTTChasePlayer_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBTTChasePlayer_Statics::NewProp_ChaseSpeed,
 };
@@ -107,7 +108,6 @@ UClass* Z_Construct_UClass_UBTTChasePlayer()
 	}
 	return Z_Registration_Info_UClass_UBTTChasePlayer.OuterSingleton;
 }
-UBTTChasePlayer::UBTTChasePlayer(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UBTTChasePlayer);
 UBTTChasePlayer::~UBTTChasePlayer() {}
 // ********** End Class UBTTChasePlayer ************************************************************
@@ -116,10 +116,10 @@ UBTTChasePlayer::~UBTTChasePlayer() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BTTChasePlayer_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UBTTChasePlayer, UBTTChasePlayer::StaticClass, TEXT("UBTTChasePlayer"), &Z_Registration_Info_UClass_UBTTChasePlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBTTChasePlayer), 1887455080U) },
+		{ Z_Construct_UClass_UBTTChasePlayer, UBTTChasePlayer::StaticClass, TEXT("UBTTChasePlayer"), &Z_Registration_Info_UClass_UBTTChasePlayer, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBTTChasePlayer), 2398524908U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BTTChasePlayer_h__Script_Project_Relic_v2_3282405340(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BTTChasePlayer_h__Script_Project_Relic_v2_2233237176(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BTTChasePlayer_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BTTChasePlayer_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

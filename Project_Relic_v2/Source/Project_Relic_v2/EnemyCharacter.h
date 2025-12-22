@@ -33,12 +33,10 @@ public:
 	UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
 
 private:
-	UFUNCTION()
-	void OnPlayerDetected(APawn* DetectedPawn);
+
 private:
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* BehaviourTree;
 
-	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UPawnSensingComponent* PawnSensingComponent;
+	
 };

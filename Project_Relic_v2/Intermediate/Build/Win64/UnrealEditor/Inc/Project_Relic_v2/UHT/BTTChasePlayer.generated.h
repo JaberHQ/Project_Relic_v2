@@ -31,8 +31,6 @@ public: \
 
 
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_BTTChasePlayer_h_15_ENHANCED_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UBTTChasePlayer(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	UBTTChasePlayer(UBTTChasePlayer&&) = delete; \
 	UBTTChasePlayer(const UBTTChasePlayer&) = delete; \

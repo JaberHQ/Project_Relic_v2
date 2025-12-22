@@ -18,7 +18,10 @@ class PROJECT_RELIC_V2_API AEnemyController : public AAIController
 
 public:
 	AEnemyController();
-	void SetPlayerDetected(APawn* DetectedPawn);
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
 public:
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComponent() const { return BlackboardComponent; }
@@ -28,6 +31,9 @@ public:
 	int32 CurrentPatrolPoint;
 private:
 	virtual void OnPossess(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPlayerDetected(APawn* DetectedPawn);
 
 private:
 	UBehaviorTreeComponent* BehaviourTreeComponent;
@@ -45,6 +51,8 @@ private:
 
 	TArray<AActor*> PatrolPoints;
 
+	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	class UPawnSensingComponent* PawnSensingComponent;
 	
 
 };

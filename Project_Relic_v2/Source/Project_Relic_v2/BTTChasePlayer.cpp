@@ -3,15 +3,26 @@
 
 #include "BTTChasePlayer.h"
 #include "EnemyCharacter.h"
+#include "EnemyController.h"
+
+UBTTChasePlayer::UBTTChasePlayer(FObjectInitializer const& ObjectInitalizer)
+{
+	NodeName = "Chase Player";
+
+	bCreateNodeInstance = true;
+}
 
 EBTNodeResult::Type UBTTChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	ChaseSpeed = 500.0f;
-	AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(OwnerComp.GetAIOwner());
-	if(EnemyCharacter)
+	AEnemyController* EnemyController = Cast<AEnemyController>(OwnerComp.GetAIOwner());
+	if (EnemyController)
 	{
-		EnemyCharacter->UpdateWalkSpeed(ChaseSpeed);
-		return EBTNodeResult::Succeeded;
+		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(EnemyController->GetPawn());
+		if (EnemyCharacter)
+		{
+			EnemyCharacter->UpdateWalkSpeed(ChaseSpeed);
+			return EBTNodeResult::Succeeded;
+		}
 	}
 	return EBTNodeResult::Failed;
 }

@@ -16,10 +16,10 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyController.cpp"
                                 },
                                 "region": {
-                                    "startLine": 23,
+                                    "startLine": 18,
                                     "startColumn": 48,
                                     "snippet": {
                                         "text": "\tPawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT(\"PawnSensingComponent\"));"
@@ -41,10 +41,10 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyController.cpp"
                                 },
                                 "region": {
-                                    "startLine": 24,
+                                    "startLine": 19,
                                     "startColumn": 22,
                                     "snippet": {
                                         "text": "\tPawnSensingComponent->SetPeripheralVisionAngle(90.0f);"
@@ -66,13 +66,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyController.cpp"
                                 },
                                 "region": {
-                                    "startLine": 34,
+                                    "startLine": 44,
                                     "startColumn": 23,
                                     "snippet": {
-                                        "text": "\t\tPawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemyCharacter::OnPlayerDetected);"
+                                        "text": "\t\tPawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemyController::OnPlayerDetected);"
                                     }
                                 }
                             }
@@ -132,72 +132,6 @@
                 {
                     "ruleId": "C4996",
                     "message": {
-                        "text": "'Cast::FStaticWarningMsg_159::condition': Attempting to use Cast<> on types that are not related"
-                    },
-                    "analysisTarget": {
-                        "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.3.cpp"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/Templates/Casts.h"
-                                },
-                                "region": {
-                                    "startLine": 159,
-                                    "startColumn": 6,
-                                    "snippet": {
-                                        "text": "\t\t\t\t\tUE_STATIC_ASSERT_WARN((std::is_base_of_v<From, To>), \"Attempting to use Cast<> on types that are not related\");"
-                                    }
-                                }
-                            }
-                        }
-                    ],
-                    "relatedLocations": [
-                        {
-                            "id": 0,
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/Templates/Casts.h"
-                                },
-                                "region": {
-                                    "startLine": 159,
-                                    "startColumn": 6,
-                                    "snippet": {
-                                        "text": "\t\t\t\t\tUE_STATIC_ASSERT_WARN((std::is_base_of_v<From, To>), \"Attempting to use Cast<> on types that are not related\");"
-                                    }
-                                }
-                            },
-                            "message": {
-                                "text": "the template instantiation context (the oldest one first) is"
-                            }
-                        },
-                        {
-                            "id": 1,
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/BTTChasePlayer.cpp"
-                                },
-                                "region": {
-                                    "startLine": 10,
-                                    "startColumn": 36,
-                                    "snippet": {
-                                        "text": "\tAEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(OwnerComp.GetAIOwner());"
-                                    }
-                                }
-                            },
-                            "message": {
-                                "text": "see reference to function template instantiation 'AEnemyCharacter *Cast<AEnemyCharacter,AAIController>(From *)' being compiled\n        with\n        [\n            From=AAIController\n        ]"
-                            },
-                            "properties": {
-                                "nestingLevel": 1
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "C4996",
-                    "message": {
                         "text": "'UPawnSensingComponent': Pawn sensing is deprecated. AI Perception should be used instead. - Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile."
                     },
                     "analysisTarget": {
@@ -242,10 +176,10 @@
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyController.cpp"
                                 },
                                 "region": {
-                                    "startLine": 23,
+                                    "startLine": 18,
                                     "startColumn": 25,
                                     "snippet": {
                                         "text": "\tPawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT(\"PawnSensingComponent\"));"

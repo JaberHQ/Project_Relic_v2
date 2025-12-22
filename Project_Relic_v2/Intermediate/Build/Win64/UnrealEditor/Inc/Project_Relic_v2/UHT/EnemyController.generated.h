@@ -16,7 +16,13 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
+class APawn;
+
 // ********** Begin Class AEnemyController *********************************************************
+#define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execOnPlayerDetected);
+
+
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AEnemyController_NoRegister();
 
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h_17_INCLASS_NO_PURE_DECLS \
@@ -44,6 +50,7 @@ public: \
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h_17_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
+	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
 	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h_17_INCLASS_NO_PURE_DECLS \
 	FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h_17_ENHANCED_CONSTRUCTORS \
 private: \

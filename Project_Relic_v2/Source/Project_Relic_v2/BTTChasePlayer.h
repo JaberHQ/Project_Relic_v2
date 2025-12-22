@@ -14,11 +14,13 @@ class PROJECT_RELIC_V2_API UBTTChasePlayer : public UBTTaskNode
 {
 	GENERATED_BODY()
 
-	//UBTTChasePlayer(FObjectInitializer const& ObjectInitalizer);
-private:
+public:
+	UBTTChasePlayer(FObjectInitializer const& ObjectInitalizer);
+
+protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-	float ChaseSpeed;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float ChaseSpeed = 500.0f;
 };

@@ -19,10 +19,10 @@ class PROJECT_RELIC_V2_API UBTTFindRandomPatrol : public UBTTaskNode
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol")
+	UPROPERTY(EditAnywhere, Category = "Patrol")
 	float PatrolSpeed = 125.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol")
+	UPROPERTY(EditAnywhere, Category = "Patrol")
 	float PatrolRadius = 1000.0f;
 
 };

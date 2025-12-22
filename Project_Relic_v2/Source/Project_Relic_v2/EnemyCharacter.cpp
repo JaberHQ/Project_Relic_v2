@@ -5,7 +5,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnemyController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
-#include "Perception/PawnSensingComponent.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -19,20 +18,13 @@ AEnemyCharacter::AEnemyCharacter()
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
 
-	// Initialise senses
-	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
-	PawnSensingComponent->SetPeripheralVisionAngle(90.0f);
+	
 }
 
 // Called when the game starts or when spawned
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (PawnSensingComponent)
-	{
-		PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemyCharacter::OnPlayerDetected);
-	}
 }
 
 // Called every frame
@@ -54,13 +46,4 @@ void AEnemyCharacter::UpdateWalkSpeed(float NewWalkSpeed)
 	GetCharacterMovement()->MaxWalkSpeed = NewWalkSpeed;
 }
 
-void AEnemyCharacter::OnPlayerDetected(APawn* DetectedPawn)
-{
-	// Player controller reference
-	AEnemyController* EnemyController = Cast<AEnemyController>(GetController());
-	if (EnemyController)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("You have been caught!"));
-		EnemyController->SetPlayerDetected(DetectedPawn);
-	}
-}
+

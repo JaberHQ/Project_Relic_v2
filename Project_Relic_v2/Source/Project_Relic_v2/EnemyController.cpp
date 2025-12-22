@@ -6,12 +6,17 @@
 #include "EnemyCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "Perception/PawnSensingComponent.h"
 
 AEnemyController::AEnemyController()
 {
 	/* Initialise blackboard and BT */
 	BehaviourTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviourTreeComponent"));
 	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
+
+	// Initialise senses
+	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
+	PawnSensingComponent->SetPeripheralVisionAngle(90.0f);
 
 	/* Initialise blackboard keys */
 	PatrolLocation = "PatrolLocation";
@@ -20,11 +25,23 @@ AEnemyController::AEnemyController()
 	CurrentPatrolPoint = 0;
 }
 
-void AEnemyController::SetPlayerDetected(APawn* DetectedPawn)
+void AEnemyController::OnPlayerDetected(APawn* DetectedPawn)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("You have been caught!")); // DEBUG -----------------------------------------------
 	if(BlackboardComponent)
 	{
 		BlackboardComponent->SetValueAsObject(EnemyActor, DetectedPawn);
+		BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
+	}
+}
+
+void AEnemyController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if(PawnSensingComponent)
+	{
+		PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemyController::OnPlayerDetected);
 	}
 }
 
