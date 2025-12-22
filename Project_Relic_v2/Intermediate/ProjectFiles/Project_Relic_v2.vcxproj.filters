@@ -33,6 +33,12 @@
     <Filter Include="Source\Project_Relic_v2">
       <UniqueIdentifier>{C16AB064-9819-39AE-AC2D-5AC558CB8798}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Project_Relic_v2\AIPatrolPoint.cpp">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Project_Relic_v2\AIPatrolPoint.h">
+      <Filter>Source\Project_Relic_v2</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Project_Relic_v2\AutomaticRifle.cpp">
       <Filter>Source\Project_Relic_v2</Filter>
     </ClCompile>

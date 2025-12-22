@@ -56,19 +56,53 @@ struct Z_Construct_UClass_AEnemyController_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "/**\n * \n */" },
+		{ "Comment", "/**\n *\n */" },
 #endif
 		{ "HideCategories", "Collision Rendering Transformation" },
 		{ "IncludePath", "EnemyController.h" },
 		{ "ModuleRelativePath", "EnemyController.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PatrolLocation_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "AI" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/* Blackboard keys */" },
+#endif
+		{ "ModuleRelativePath", "EnemyController.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Blackboard keys" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_EnemyActor_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "AI" },
+		{ "ModuleRelativePath", "EnemyController.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_HasLineOfSight_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "AI" },
+		{ "ModuleRelativePath", "EnemyController.h" },
+	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FNamePropertyParams NewProp_PatrolLocation;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_EnemyActor;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_HasLineOfSight;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<AEnemyController>::IsAbstract,
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_AEnemyController_Statics::NewProp_PatrolLocation = { "PatrolLocation", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AEnemyController, PatrolLocation), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PatrolLocation_MetaData), NewProp_PatrolLocation_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_AEnemyController_Statics::NewProp_EnemyActor = { "EnemyActor", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AEnemyController, EnemyActor), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_EnemyActor_MetaData), NewProp_EnemyActor_MetaData) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_AEnemyController_Statics::NewProp_HasLineOfSight = { "HasLineOfSight", nullptr, (EPropertyFlags)0x0040000000010001, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AEnemyController, HasLineOfSight), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_HasLineOfSight_MetaData), NewProp_HasLineOfSight_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AEnemyController_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AEnemyController_Statics::NewProp_PatrolLocation,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AEnemyController_Statics::NewProp_EnemyActor,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AEnemyController_Statics::NewProp_HasLineOfSight,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_AEnemyController_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_AEnemyController_Statics::DependentSingletons[])() = {
 	(UObject* (*)())Z_Construct_UClass_AAIController,
 	(UObject* (*)())Z_Construct_UPackage__Script_Project_Relic_v2,
@@ -80,11 +114,11 @@ const UECodeGen_Private::FClassParams Z_Construct_UClass_AEnemyController_Static
 	&StaticCppClassTypeInfo,
 	DependentSingletons,
 	nullptr,
-	nullptr,
+	Z_Construct_UClass_AEnemyController_Statics::PropPointers,
 	nullptr,
 	UE_ARRAY_COUNT(DependentSingletons),
 	0,
-	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_AEnemyController_Statics::PropPointers),
 	0,
 	0x009003A4u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_AEnemyController_Statics::Class_MetaDataParams), Z_Construct_UClass_AEnemyController_Statics::Class_MetaDataParams)
@@ -97,7 +131,6 @@ UClass* Z_Construct_UClass_AEnemyController()
 	}
 	return Z_Registration_Info_UClass_AEnemyController.OuterSingleton;
 }
-AEnemyController::AEnemyController(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 DEFINE_VTABLE_PTR_HELPER_CTOR(AEnemyController);
 AEnemyController::~AEnemyController() {}
 // ********** End Class AEnemyController ***********************************************************
@@ -106,10 +139,10 @@ AEnemyController::~AEnemyController() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AEnemyController, AEnemyController::StaticClass, TEXT("AEnemyController"), &Z_Registration_Info_UClass_AEnemyController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AEnemyController), 1675484618U) },
+		{ Z_Construct_UClass_AEnemyController, AEnemyController::StaticClass, TEXT("AEnemyController"), &Z_Registration_Info_UClass_AEnemyController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AEnemyController), 2703750197U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h__Script_Project_Relic_v2_859128528(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h__Script_Project_Relic_v2_1412675579(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyController_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

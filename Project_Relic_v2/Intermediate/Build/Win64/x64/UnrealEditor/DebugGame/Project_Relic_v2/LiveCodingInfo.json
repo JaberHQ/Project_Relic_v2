@@ -2,6 +2,7 @@
 	"RemapUnityFiles": 
 	{
 		"Module.Project_Relic_v2.1.cpp.obj": [
+			"AIPatrolPoint.gen.cpp.obj",
 			"AnimNotify_CheckChargedAttack.gen.cpp.obj",
 			"AnimNotify_CheckCombo.gen.cpp.obj",
 			"AnimNotify_DoAttackTrace.gen.cpp.obj",
@@ -49,15 +50,16 @@
 			"SideScrollingMovingPlatform.gen.cpp.obj",
 			"SideScrollingNPC.gen.cpp.obj",
 			"SideScrollingPickup.gen.cpp.obj",
-			"SideScrollingPlayerController.gen.cpp.obj",
-			"SideScrollingSoftPlatform.gen.cpp.obj"
+			"SideScrollingPlayerController.gen.cpp.obj"
 		],
 		"Module.Project_Relic_v2.3.cpp.obj": [
+			"SideScrollingSoftPlatform.gen.cpp.obj",
 			"SideScrollingStateTreeUtility.gen.cpp.obj",
 			"SideScrollingUI.gen.cpp.obj",
 			"SingleShotRifle.gen.cpp.obj",
 			"WeaponComponent.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
+			"AIPatrolPoint.cpp.obj",
 			"AutomaticRifle.cpp.obj",
 			"BaseWeapon.cpp.obj",
 			"BTTChasePlayer.cpp.obj",

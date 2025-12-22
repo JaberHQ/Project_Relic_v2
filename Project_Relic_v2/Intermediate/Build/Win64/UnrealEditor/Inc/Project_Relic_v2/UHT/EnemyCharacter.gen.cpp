@@ -12,11 +12,56 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEnemyCharacter() {}
 
 // ********** Begin Cross Module References ********************************************************
+AIMODULE_API UClass* Z_Construct_UClass_UBehaviorTree_NoRegister();
+AIMODULE_API UClass* Z_Construct_UClass_UPawnSensingComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_ACharacter();
+ENGINE_API UClass* Z_Construct_UClass_APawn_NoRegister();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AEnemyCharacter();
 PROJECT_RELIC_V2_API UClass* Z_Construct_UClass_AEnemyCharacter_NoRegister();
 UPackage* Z_Construct_UPackage__Script_Project_Relic_v2();
 // ********** End Cross Module References **********************************************************
+
+// ********** Begin Class AEnemyCharacter Function OnPlayerDetected ********************************
+struct Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics
+{
+	struct EnemyCharacter_eventOnPlayerDetected_Parms
+	{
+		APawn* DetectedPawn;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "EnemyCharacter.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_DetectedPawn;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::NewProp_DetectedPawn = { "DetectedPawn", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(EnemyCharacter_eventOnPlayerDetected_Parms, DetectedPawn), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::NewProp_DetectedPawn,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AEnemyCharacter, nullptr, "OnPlayerDetected", Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::PropPointers), sizeof(Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::EnemyCharacter_eventOnPlayerDetected_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::Function_MetaDataParams), Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::EnemyCharacter_eventOnPlayerDetected_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AEnemyCharacter::execOnPlayerDetected)
+{
+	P_GET_OBJECT(APawn,Z_Param_DetectedPawn);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->OnPlayerDetected(Z_Param_DetectedPawn);
+	P_NATIVE_END;
+}
+// ********** End Class AEnemyCharacter Function OnPlayerDetected **********************************
 
 // ********** Begin Class AEnemyCharacter Function UpdateWalkSpeed *********************************
 struct Z_Construct_UFunction_AEnemyCharacter_UpdateWalkSpeed_Statics
@@ -65,6 +110,7 @@ void AEnemyCharacter::StaticRegisterNativesAEnemyCharacter()
 {
 	UClass* Class = AEnemyCharacter::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
+		{ "OnPlayerDetected", &AEnemyCharacter::execOnPlayerDetected },
 		{ "UpdateWalkSpeed", &AEnemyCharacter::execUpdateWalkSpeed },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -106,9 +152,24 @@ struct Z_Construct_UClass_AEnemyCharacter_Statics
 		{ "IncludePath", "EnemyCharacter.h" },
 		{ "ModuleRelativePath", "EnemyCharacter.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BehaviourTree_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "AI" },
+		{ "ModuleRelativePath", "EnemyCharacter.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PawnSensingComponent_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "AI" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "EnemyCharacter.h" },
+	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_BehaviourTree;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_PawnSensingComponent;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_AEnemyCharacter_OnPlayerDetected, "OnPlayerDetected" }, // 2932070883
 		{ &Z_Construct_UFunction_AEnemyCharacter_UpdateWalkSpeed, "UpdateWalkSpeed" }, // 4067734349
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -117,6 +178,13 @@ struct Z_Construct_UClass_AEnemyCharacter_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AEnemyCharacter_Statics::NewProp_BehaviourTree = { "BehaviourTree", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AEnemyCharacter, BehaviourTree), Z_Construct_UClass_UBehaviorTree_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BehaviourTree_MetaData), NewProp_BehaviourTree_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AEnemyCharacter_Statics::NewProp_PawnSensingComponent = { "PawnSensingComponent", nullptr, (EPropertyFlags)0x00400000000a0009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AEnemyCharacter, PawnSensingComponent), Z_Construct_UClass_UPawnSensingComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PawnSensingComponent_MetaData), NewProp_PawnSensingComponent_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AEnemyCharacter_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AEnemyCharacter_Statics::NewProp_BehaviourTree,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AEnemyCharacter_Statics::NewProp_PawnSensingComponent,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_AEnemyCharacter_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_AEnemyCharacter_Statics::DependentSingletons[])() = {
 	(UObject* (*)())Z_Construct_UClass_ACharacter,
 	(UObject* (*)())Z_Construct_UPackage__Script_Project_Relic_v2,
@@ -128,11 +196,11 @@ const UECodeGen_Private::FClassParams Z_Construct_UClass_AEnemyCharacter_Statics
 	&StaticCppClassTypeInfo,
 	DependentSingletons,
 	FuncInfo,
-	nullptr,
+	Z_Construct_UClass_AEnemyCharacter_Statics::PropPointers,
 	nullptr,
 	UE_ARRAY_COUNT(DependentSingletons),
 	UE_ARRAY_COUNT(FuncInfo),
-	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_AEnemyCharacter_Statics::PropPointers),
 	0,
 	0x009001A4u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_AEnemyCharacter_Statics::Class_MetaDataParams), Z_Construct_UClass_AEnemyCharacter_Statics::Class_MetaDataParams)
@@ -153,10 +221,10 @@ AEnemyCharacter::~AEnemyCharacter() {}
 struct Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyCharacter_h__Script_Project_Relic_v2_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AEnemyCharacter, AEnemyCharacter::StaticClass, TEXT("AEnemyCharacter"), &Z_Registration_Info_UClass_AEnemyCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AEnemyCharacter), 1384147212U) },
+		{ Z_Construct_UClass_AEnemyCharacter, AEnemyCharacter::StaticClass, TEXT("AEnemyCharacter"), &Z_Registration_Info_UClass_AEnemyCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AEnemyCharacter), 2785145644U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyCharacter_h__Script_Project_Relic_v2_4103920357(TEXT("/Script/Project_Relic_v2"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyCharacter_h__Script_Project_Relic_v2_3608145042(TEXT("/Script/Project_Relic_v2"),
 	Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyCharacter_h__Script_Project_Relic_v2_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyCharacter_h__Script_Project_Relic_v2_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

@@ -3,25 +3,35 @@
 
 #include "BTTFindRandomPatrol.h"
 #include "EnemyCharacter.h"
-//#include "NavigationSystem.h"
+#include "EnemyController.h"
+#include "AIPatrolPoint.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 EBTNodeResult::Type UBTTFindRandomPatrol::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(OwnerComp.GetAIOwner());
-	if(EnemyCharacter)
+	AEnemyController* EnemyController = Cast<AEnemyController>(OwnerComp.GetAIOwner());
+	if (EnemyController)
 	{
-		EnemyCharacter->UpdateWalkSpeed(PatrolSpeed);
+		UBlackboardComponent* BlackboardComponent = EnemyController->GetBlackBoardComponent();
 
-		FVector EnemyLoc = EnemyCharacter->GetActorLocation();
-		
-		UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
+		AAIPatrolPoint* CurrentPoint = Cast<AAIPatrolPoint>(BlackboardComponent->GetValueAsObject("PatrolLocation"));
+		TArray<AActor*> AvailablePatrolPoints = EnemyController->GetPatrolPoints();
 
-		FNavLocation RandomPoint(EnemyLoc);
+		AAIPatrolPoint* NextPatrolPoint = nullptr;
 
-		
+		if (EnemyController->CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
+		{
+			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[EnemyController->CurrentPatrolPoint++]);
+		}
+		else
+		{
+			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[0]);
+			EnemyController->CurrentPatrolPoint = 0;
+		}
+
+		BlackboardComponent->SetValueAsObject("PatrolLocation", NextPatrolPoint);
 
 		return EBTNodeResult::Succeeded;
 	}
-	return EBTNodeResult::Failed;
-
+	return EBTNodeResult::Failed; 
 }

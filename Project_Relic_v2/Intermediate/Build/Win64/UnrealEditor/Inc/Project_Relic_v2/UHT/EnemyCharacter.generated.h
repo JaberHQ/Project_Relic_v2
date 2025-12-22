@@ -16,8 +16,11 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
+class APawn;
+
 // ********** Begin Class AEnemyCharacter **********************************************************
 #define FID_Users_Jaber_Documents_GitHub_Project_Relic_v2_Project_Relic_v2_Source_Project_Relic_v2_EnemyCharacter_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execOnPlayerDetected); \
 	DECLARE_FUNCTION(execUpdateWalkSpeed);
 
 

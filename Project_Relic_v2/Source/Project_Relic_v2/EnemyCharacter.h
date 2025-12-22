@@ -20,7 +20,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -30,20 +30,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UpdateWalkSpeed(float NewWalkSpeed);
 
-<<<<<<< Updated upstream
-=======
 	UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
 
 private:
 	UFUNCTION()
-	void OnPlayerCaught(APawn* Pawn);
-
+	void OnPlayerDetected(APawn* DetectedPawn);
 private:
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* BehaviourTree;
 
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UPawnSensingComponent* PawnSensingComponent;
-
->>>>>>> Stashed changes
 };

@@ -21,4 +21,3 @@
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/SideScrollingNPC.gen.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/SideScrollingPickup.gen.cpp"
 #include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/SideScrollingPlayerController.gen.cpp"
-#include "C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/UnrealEditor/Inc/Project_Relic_v2/UHT/SideScrollingSoftPlatform.gen.cpp"

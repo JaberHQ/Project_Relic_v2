@@ -2,6 +2,7 @@
 	"RemapUnityFiles": 
 	{
 		"Module.Project_Relic_v2.1.cpp.obj": [
+			"AIPatrolPoint.gen.cpp.obj",
 			"AnimNotify_CheckChargedAttack.gen.cpp.obj",
 			"AnimNotify_CheckCombo.gen.cpp.obj",
 			"AnimNotify_DoAttackTrace.gen.cpp.obj",
@@ -9,6 +10,7 @@
 			"AutomaticRifle.gen.cpp.obj",
 			"BaseWeapon.gen.cpp.obj",
 			"BTTChasePlayer.gen.cpp.obj",
+			"BTTFindRandomPatrol.gen.cpp.obj",
 			"CombatActivatable.gen.cpp.obj",
 			"CombatActivationVolume.gen.cpp.obj",
 			"CombatAIController.gen.cpp.obj",
@@ -57,9 +59,11 @@
 			"SingleShotRifle.gen.cpp.obj",
 			"WeaponComponent.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
+			"AIPatrolPoint.cpp.obj",
 			"AutomaticRifle.cpp.obj",
 			"BaseWeapon.cpp.obj",
 			"BTTChasePlayer.cpp.obj",
+			"BTTFindRandomPatrol.cpp.obj",
 			"EnemyCharacter.cpp.obj",
 			"EnemyController.cpp.obj",
 			"HealthComponent.cpp.obj",

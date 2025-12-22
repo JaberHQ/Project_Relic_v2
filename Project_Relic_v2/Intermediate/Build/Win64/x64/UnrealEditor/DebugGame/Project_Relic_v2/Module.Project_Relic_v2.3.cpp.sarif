@@ -5,6 +5,81 @@
         {
             "results": [
                 {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'UPawnSensingComponent': Pawn sensing is deprecated. AI Perception should be used instead. - Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile."
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.3.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                },
+                                "region": {
+                                    "startLine": 23,
+                                    "startColumn": 48,
+                                    "snippet": {
+                                        "text": "\tPawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT(\"PawnSensingComponent\"));"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'UPawnSensingComponent::SetPeripheralVisionAngle': Pawn sensing is deprecated. AI Perception should be used instead. - Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile."
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.3.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                },
+                                "region": {
+                                    "startLine": 24,
+                                    "startColumn": 22,
+                                    "snippet": {
+                                        "text": "\tPawnSensingComponent->SetPeripheralVisionAngle(90.0f);"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'UPawnSensingComponent::OnSeePawn': Pawn sensing is deprecated. AI Perception should be used instead. - Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile."
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.3.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                },
+                                "region": {
+                                    "startLine": 34,
+                                    "startColumn": 23,
+                                    "snippet": {
+                                        "text": "\t\tPawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemyCharacter::OnPlayerDetected);"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
                     "ruleId": "C5038",
                     "message": {
                         "text": "data member 'UWeaponComponent::ShootingDistance' will be initialized after data member 'UWeaponComponent::WeaponIndex'"
@@ -116,6 +191,97 @@
                             },
                             "properties": {
                                 "nestingLevel": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'UPawnSensingComponent': Pawn sensing is deprecated. AI Perception should be used instead. - Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile."
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.3.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h"
+                                },
+                                "region": {
+                                    "startLine": 152,
+                                    "startColumn": 24,
+                                    "snippet": {
+                                        "text": "\t\tUClass* ReturnType = TReturnType::StaticClass();"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h"
+                                },
+                                "region": {
+                                    "startLine": 152,
+                                    "startColumn": 24,
+                                    "snippet": {
+                                        "text": "\t\tUClass* ReturnType = TReturnType::StaticClass();"
+                                    }
+                                }
+                            },
+                            "message": {
+                                "text": "the template instantiation context (the oldest one first) is"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Source/Project_Relic_v2/EnemyCharacter.cpp"
+                                },
+                                "region": {
+                                    "startLine": 23,
+                                    "startColumn": 25,
+                                    "snippet": {
+                                        "text": "\tPawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT(\"PawnSensingComponent\"));"
+                                    }
+                                }
+                            },
+                            "message": {
+                                "text": "see reference to function template instantiation 'TReturnType *UObject::CreateDefaultSubobject<UPawnSensingComponent>(FName,bool)' being compiled\n        with\n        [\n            TReturnType=UPawnSensingComponent\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'UPawnSensingComponent::StaticClass': Pawn sensing is deprecated. AI Perception should be used instead. - Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile."
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///C:/Users/Jaber/Documents/GitHub/Project_Relic_v2/Project_Relic_v2/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/Project_Relic_v2/Module.Project_Relic_v2.3.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h"
+                                },
+                                "region": {
+                                    "startLine": 152,
+                                    "startColumn": 37,
+                                    "snippet": {
+                                        "text": "\t\tUClass* ReturnType = TReturnType::StaticClass();"
+                                    }
+                                }
                             }
                         }
                     ]
