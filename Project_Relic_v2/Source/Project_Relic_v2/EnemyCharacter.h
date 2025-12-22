@@ -30,4 +30,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UpdateWalkSpeed(float NewWalkSpeed);
 
+<<<<<<< Updated upstream
+=======
+	UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
+
+private:
+	UFUNCTION()
+	void OnPlayerCaught(APawn* Pawn);
+
+private:
+	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	class UBehaviorTree* BehaviourTree;
+
+	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	class UPawnSensingComponent* PawnSensingComponent;
+
+>>>>>>> Stashed changes
 };
