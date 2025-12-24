@@ -72,3 +72,7 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+/Project_Relic_v2/Intermediate
+/Project_Relic_v2/Binaries
+/Project_Relic_v2/DerivedDataCache
+/Project_Relic_v2/Saved
