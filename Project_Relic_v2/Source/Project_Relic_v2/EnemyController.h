@@ -30,21 +30,26 @@ public:
 	//UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
 
 	int32 CurrentPatrolPoint;
+
+
+	UFUNCTION(BlueprintCallable, Category = "AI")
+	void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+
 private:
 	virtual void OnPossess(APawn* InPawn) override;
 
-	//UFUNCTION()
-	//void OnTargetDetected(AActor* Actor, FAIStimulus Stimulus);
-
 private:
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	//UAIPerceptionComponent* AIPerceptionComponent;
+	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	class UBehaviorTree* BehaviourTree;
 
-	/*UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UBehaviorTree* BehaviourTree;*/
-private:
+	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UBehaviorTreeComponent* BehaviourTreeComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UBlackboardComponent* BlackboardComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	UAIPerceptionComponent* AIPerceptionComponent;
 
 	/* Blackboard keys */
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
@@ -55,6 +60,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	FName HasLineOfSight;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	FName TargetLastKnownLocation;
 
 	TArray<AActor*> PatrolPoints;
 

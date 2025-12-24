@@ -6,7 +6,6 @@
 #include "Perception/AISenseConfig.h"
 #include "AISense_Player.h"
 #include "AISenseConfig_Player.generated.h"
-
 /**
  * 
  */
@@ -14,7 +13,6 @@ UCLASS()
 class PROJECT_RELIC_V2_API UAISenseConfig_Player : public UAISenseConfig
 {
 	GENERATED_BODY()
-	
 public:
 	UAISenseConfig_Player(const FObjectInitializer& ObjectInitializer);
 
