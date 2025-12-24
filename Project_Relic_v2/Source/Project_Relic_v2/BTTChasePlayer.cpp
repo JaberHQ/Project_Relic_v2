@@ -6,6 +6,7 @@
 #include "EnemyController.h"
 
 UBTTChasePlayer::UBTTChasePlayer(FObjectInitializer const& ObjectInitalizer)
+	:Super(ObjectInitalizer)
 {
 	NodeName = "Chase Player";
 
