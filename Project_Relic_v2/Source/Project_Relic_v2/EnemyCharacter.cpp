@@ -17,14 +17,13 @@ AEnemyCharacter::AEnemyCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
-
-	
 }
 
 // Called when the game starts or when spawned
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
 
 // Called every frame

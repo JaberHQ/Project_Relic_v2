@@ -30,13 +30,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UpdateWalkSpeed(float NewWalkSpeed);
 
-	UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
+	
 
 private:
-
-private:
-	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UBehaviorTree* BehaviourTree;
-
 	
 };
