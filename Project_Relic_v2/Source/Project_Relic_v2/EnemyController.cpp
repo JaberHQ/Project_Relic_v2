@@ -6,8 +6,8 @@
 #include "EnemyCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BehaviorTree.h"
-#include "EnemyAISense.h"
-#include "EnemyAISenseConfig.h"
+#include "AISense_Player.h"
+#include "AISenseConfig_Player.h"
 #include "Perception/AIPerceptionComponent.h"
 
 AEnemyController::AEnemyController()
@@ -15,7 +15,7 @@ AEnemyController::AEnemyController()
 	/* Initialise blackboard and BT */
 	BehaviourTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviourTreeComponent"));
 	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
-	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+	//AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 	// Initialise senses
 	/*PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
 	PawnSensingComponent->SetPeripheralVisionAngle(90.0f);*/
@@ -27,55 +27,55 @@ AEnemyController::AEnemyController()
 	CurrentPatrolPoint = 0;
 }
 
-void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("You have been caught!")); // DEBUG -----------------------------------------------
-	
-	if (Stimulus.WasSuccessfullySensed())
-	{
-	}
-	
-	/*if(BlackboardComponent)
-	{
-		BlackboardComponent->SetValueAsObject(EnemyActor, DetectedPawn);
-		BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
-	}*/
-
-
-}
+//void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
+//{
+//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("You have been caught!")); // DEBUG -----------------------------------------------
+//	
+//	if (Stimulus.WasSuccessfullySensed())
+//	{
+//	}
+//	
+//	/*if(BlackboardComponent)
+//	{
+//		BlackboardComponent->SetValueAsObject(EnemyActor, DetectedPawn);
+//		BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
+//	}*/
+//
+//
+//}
 
 void AEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (AIPerceptionComponent)
+	/*if (AIPerceptionComponent)
 	{
 		AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyController::OnTargetDetected);
-	}
+	}*/
 }
 
 void AEnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	// Get character ref
-	AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(InPawn);
-	if(EnemyCharacter)
-	{
-		UBlackboardData* BlackboardAsset = EnemyCharacter->GetBehaviourTree()->BlackboardAsset;
-		if(BlackboardAsset)
-		{
-			BlackboardComponent->InitializeBlackboard(*BlackboardAsset);
-		}
+	//// Get character ref
+	//AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(InPawn);
+	//if(EnemyCharacter)
+	//{
+	//	UBlackboardData* BlackboardAsset = EnemyCharacter->GetBehaviourTree()->BlackboardAsset;
+	//	if(BlackboardAsset)
+	//	{
+	//		BlackboardComponent->InitializeBlackboard(*BlackboardAsset);
+	//	}
 
-		/* Populate PatrolPoint array */
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIPatrolPoint::StaticClass(), PatrolPoints);
+	//	/* Populate PatrolPoint array */
+	//	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIPatrolPoint::StaticClass(), PatrolPoints);
 
-		/* Start behaviour tree */
-		if(BehaviourTree)
-		{
-			RunBehaviorTree(BehaviourTree);
-			BehaviourTreeComponent->StartTree(*BehaviourTree);
-		}
-	}
+	//	/* Start behaviour tree */
+	//	if(BehaviourTree)
+	//	{
+	//		RunBehaviorTree(BehaviourTree);
+	//		BehaviourTreeComponent->StartTree(*BehaviourTree);
+	//	}
+	//}
 }

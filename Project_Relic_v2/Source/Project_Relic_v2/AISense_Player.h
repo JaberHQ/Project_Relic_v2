@@ -4,30 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "Perception/AISense.h"
-#include "EnemyAISense.generated.h"
+#include "AISense_Player.generated.h"
 
-class UEnemyAISense;
-class UEnemyAISenseConfig;
+class UAISense_Player;
+class UAISenseConfig_Player;
 
-// https://www.twoneuronsstudio.com/2023/02/13/ue5-tutorial-custom-ai-senses/
+
 /**
  * 
  */
 UCLASS(ClassGroup = AI, Config = Game)
-class PROJECT_RELIC_V2_API UEnemyAISense : public UAISense
+class PROJECT_RELIC_V2_API UAISense_Player : public UAISense
 {
 	GENERATED_UCLASS_BODY()
-
-public:
-	//UEnemyAISense(const FObjectInitializer& ObjectIntializer);
-
+	
 public:
 	struct FDigestedTargetProperties
 	{
 		float TargetRadius;
 
 		FDigestedTargetProperties();
-		FDigestedTargetProperties(const UEnemyAISenseConfig& SenseConfig);
+		FDigestedTargetProperties(const UAISenseConfig_Player& SenseConfig);
 	};
 
 protected:

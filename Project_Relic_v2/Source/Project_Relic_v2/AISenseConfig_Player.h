@@ -4,26 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "Perception/AISenseConfig.h"
-#include "EnemyAISense.h"
-#include "EnemyAISenseConfig.generated.h"
+#include "AISense_Player.h"
+#include "AISenseConfig_Player.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECT_RELIC_V2_API UEnemyAISenseConfig : public UAISenseConfig
+class PROJECT_RELIC_V2_API UAISenseConfig_Player : public UAISenseConfig
 {
 	GENERATED_BODY()
-
+	
 public:
-	UEnemyAISenseConfig(const FObjectInitializer& ObjectInitializer);
+	UAISenseConfig_Player(const FObjectInitializer& ObjectInitializer);
 
 	virtual TSubclassOf<UAISense> GetSenseImplementation() const override;
 
 public:
 	/* Implements the logic for this sense config */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sense", NoClear, Config)
-	TSubclassOf<UEnemyAISense> Implementation;
+	TSubclassOf<UAISense_Player> Implementation;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sense", config, meta = (UIMin = 0.0, ClampMin = 0.0))
 	float TargetRadius = 10.0f; // Maximum sight distance to notice a target
@@ -31,4 +31,5 @@ public:
 #if WITH_GAMEPLAY_DEBUGGER
 	virtual void DescribeSelfToGameplayDebugger(const UAIPerceptionComponent* PerceptionComponent, FGameplayDebuggerCategory* DebuggerCategory) const override;
 #endif // WITH_GAMEPLAY_DEBUGGER
+
 };

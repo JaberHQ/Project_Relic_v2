@@ -27,21 +27,21 @@ public:
 	FORCEINLINE UBlackboardComponent* GetBlackBoardComponent() const { return BlackboardComponent; }
 	FORCEINLINE UBehaviorTreeComponent* GetBehaviourTree() const { return BehaviourTreeComponent; }
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
-	UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
+	//UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
 
 	int32 CurrentPatrolPoint;
 private:
 	virtual void OnPossess(APawn* InPawn) override;
 
-	UFUNCTION()
-	void OnTargetDetected(AActor* Actor, FAIStimulus Stimulus);
+	//UFUNCTION()
+	//void OnTargetDetected(AActor* Actor, FAIStimulus Stimulus);
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UAIPerceptionComponent* AIPerceptionComponent;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	//UAIPerceptionComponent* AIPerceptionComponent;
 
-	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UBehaviorTree* BehaviourTree;
+	/*UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	class UBehaviorTree* BehaviourTree;*/
 private:
 	UBehaviorTreeComponent* BehaviourTreeComponent;
 	UBlackboardComponent* BlackboardComponent;
