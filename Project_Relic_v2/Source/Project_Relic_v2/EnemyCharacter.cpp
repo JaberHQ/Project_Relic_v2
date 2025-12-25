@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnemyController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "HealthComponent.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -17,6 +18,9 @@ AEnemyCharacter::AEnemyCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
+
+	// Health defaults
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent" ));
 }
 
 // Called when the game starts or when spawned

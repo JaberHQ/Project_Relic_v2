@@ -106,6 +106,8 @@ public:
 	/** Constructor */
 	AProject_Relic_v2Character();	
 
+	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
 protected:
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

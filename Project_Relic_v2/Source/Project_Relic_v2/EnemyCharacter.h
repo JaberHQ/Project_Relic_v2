@@ -7,14 +7,21 @@
 #include "AIController.h"
 #include "EnemyCharacter.generated.h"
 
+class UHealthComponent;
+
 UCLASS()
 class PROJECT_RELIC_V2_API AEnemyCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+	UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true") )
+	UHealthComponent* HealthComponent;
+
 public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
+
+	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
 
 protected:
 	// Called when the game starts or when spawned

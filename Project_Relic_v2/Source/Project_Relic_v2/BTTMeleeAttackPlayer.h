@@ -4,23 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "BTTChasePlayer.generated.h"
+#include "BTTMeleeAttackPlayer.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECT_RELIC_V2_API UBTTChasePlayer : public UBTTaskNode
+class PROJECT_RELIC_V2_API UBTTMeleeAttackPlayer : public UBTTaskNode
 {
 	GENERATED_BODY()
 
 public:
-	UBTTChasePlayer(FObjectInitializer const& ObjectInitializer);
+	UBTTMeleeAttackPlayer(FObjectInitializer const& ObjectInitializer);
 
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-public:
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float ChaseSpeed = 500.0f;
+private:
+	FName Player;
+
 };
