@@ -38,6 +38,11 @@ void UHealthComponent::TakeDamage()
 	{
 		Health -= 20.0f;
 	}
+
+	if( Health < 0.0f )
+	{
+		Health = 0;
+	}
 }
 
 void UHealthComponent::ResetHealth()
