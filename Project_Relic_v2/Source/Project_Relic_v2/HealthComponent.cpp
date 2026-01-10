@@ -24,7 +24,6 @@ void UHealthComponent::BeginPlay()
 	
 }
 
-
 // Called every frame
 void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -32,18 +31,27 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::TakeDamage()
-{
-	if (Health > 0.0f)
-	{
-		Health -= 20.0f;
-	}
 
-	if( Health < 0.0f )
+void UHealthComponent::TakeDamage(float DamageAmount)
+{
+	Health = FMath::Clamp(Health - DamageAmount, 0.0f, MaxHealth);
+
+	if (Health <= 0.0f)
 	{
-		Health = 0;
+		HandleDeath();
 	}
 }
+
+void UHealthComponent::HandleDeath()
+{
+	AActor* Owner = GetOwner();
+
+	if (Owner && Owner->Implements<UDeathHandlerInterface>())
+	{
+		IDeathHandlerInterface::Execute_HandleDeath(Owner);
+	}
+}
+
 
 void UHealthComponent::ResetHealth()
 {

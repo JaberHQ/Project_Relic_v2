@@ -5,16 +5,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AIController.h"
+#include "Animation/AnimMontage.h"
+#include "HealthComponent.h"
 #include "EnemyCharacter.generated.h"
 
-class UHealthComponent;
-
 UCLASS()
-class PROJECT_RELIC_V2_API AEnemyCharacter : public ACharacter
+class PROJECT_RELIC_V2_API AEnemyCharacter : public ACharacter, public IDeathHandlerInterface
 {
 	GENERATED_BODY()
 
-	UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true") )
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;
 
 public:
@@ -37,8 +37,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UpdateWalkSpeed(float NewWalkSpeed);
 
-	
+	virtual void HandleDeath_Implementation() override;
 
-private:
-	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UAnimMontage* AnimDeath; // Animation Montage
 };

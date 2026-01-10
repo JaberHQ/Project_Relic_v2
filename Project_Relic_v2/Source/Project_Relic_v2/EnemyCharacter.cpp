@@ -49,4 +49,16 @@ void AEnemyCharacter::UpdateWalkSpeed(float NewWalkSpeed)
 	GetCharacterMovement()->MaxWalkSpeed = NewWalkSpeed;
 }
 
+void AEnemyCharacter::HandleDeath_Implementation()
+{
+	AEnemyController* EnemyController = Cast<AEnemyController>(GetController());
+	if (EnemyController)
+	{
+		EnemyController->SetIsDead(true);
+		SetActorEnableCollision(false);
+		PlayAnimMontage(AnimDeath);
+		EnemyController->UnPossess();
+	}
+}
+
 

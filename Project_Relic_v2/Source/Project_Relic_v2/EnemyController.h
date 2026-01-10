@@ -35,6 +35,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AI")
 	void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 
+	void SetIsDead(bool IsDead);
+
 private:
 	virtual void OnPossess(APawn* InPawn) override;
 
@@ -63,6 +65,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	FName TargetLastKnownLocation;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	FName bIsDead;
 
 	TArray<AActor*> PatrolPoints;
 

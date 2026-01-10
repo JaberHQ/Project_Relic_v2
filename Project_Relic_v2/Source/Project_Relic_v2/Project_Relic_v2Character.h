@@ -50,7 +50,7 @@ struct FCharacterMoveSpeed
  *  Implements a controllable orbiting camera
  */
 UCLASS(Abstract)
-class AProject_Relic_v2Character : public ACharacter
+class AProject_Relic_v2Character : public ACharacter, public IDeathHandlerInterface
 {
 	GENERATED_BODY()
 
@@ -107,6 +107,8 @@ public:
 	AProject_Relic_v2Character();	
 
 	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
+	virtual void HandleDeath_Implementation() override;
 
 protected:
 	/** Initialize input action bindings */

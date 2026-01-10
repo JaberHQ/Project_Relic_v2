@@ -22,7 +22,7 @@ EBTNodeResult::Type UBTTMeleeAttackPlayer::ExecuteTask(UBehaviorTreeComponent& O
 			AProject_Relic_v2Character* PlayerCharacter = Cast<AProject_Relic_v2Character>(BlackboardComponent->GetValueAsObject(Player));
 			if (PlayerCharacter)
 			{
-				PlayerCharacter->GetHealthComponent()->TakeDamage();
+				PlayerCharacter->GetHealthComponent()->TakeDamage(10.0f);
 			}
 		}
 	}

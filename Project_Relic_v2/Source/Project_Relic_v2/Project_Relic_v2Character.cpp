@@ -87,6 +87,17 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
+void AProject_Relic_v2Character::HandleDeath_Implementation()
+{
+	// Disable character movement
+	GetCharacterMovement()->DisableMovement();
+
+	// Disable Player input
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if(PlayerController)
+		DisableInput(PlayerController);
+}
+
 void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings

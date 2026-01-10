@@ -25,6 +25,7 @@ AEnemyController::AEnemyController()
 	PatrolLocation = "PatrolLocation";
 	EnemyActor = "EnemyActor";
 	TargetLastKnownLocation = "TargetLastKnownLocation";
+	bIsDead = "bIsDead";
 
 	CurrentPatrolPoint = 0;
 }
@@ -59,6 +60,11 @@ void AEnemyController::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 	}
 
 	
+}
+
+void AEnemyController::SetIsDead(bool IsDead)
+{
+	BlackboardComponent->SetValueAsBool(bIsDead, IsDead);
 }
 
 void AEnemyController::OnPossess(APawn* InPawn)
