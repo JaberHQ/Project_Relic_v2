@@ -51,13 +51,13 @@ void AEnemyCharacter::UpdateWalkSpeed(float NewWalkSpeed)
 
 void AEnemyCharacter::HandleDeath_Implementation()
 {
+	SetActorEnableCollision(false);
+	PlayAnimMontage(AnimDeath);
+
 	AEnemyController* EnemyController = Cast<AEnemyController>(GetController());
 	if (EnemyController)
 	{
-		EnemyController->SetIsDead(true);
-		SetActorEnableCollision(false);
-		PlayAnimMontage(AnimDeath);
-		EnemyController->UnPossess();
+		EnemyController->Death();
 	}
 }
 

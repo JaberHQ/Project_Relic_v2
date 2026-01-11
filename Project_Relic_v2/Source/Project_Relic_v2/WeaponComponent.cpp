@@ -323,7 +323,7 @@ void UWeaponComponent::RaycastShot()
 		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(Hit.GetActor());
 		if (EnemyCharacter)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy has been hit!")); // DEBUG -----------------------
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy has been hit!")); // DEBUG -----------------------
 			DrawDebugBox(GetWorld(), Hit.ImpactPoint, FVector(5, 5, 5), FColor::Blue, false, 2.0f); // DEBUG -----------------------
 			
 			EnemyCharacter->GetHealthComponent()->TakeDamage(10.0f);
