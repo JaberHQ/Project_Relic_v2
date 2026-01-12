@@ -51,8 +51,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetHealth();
 
-	UHealthComponent* GetHealthComponent() const { return nullptr; }
-
 private:
 	void HandleDeath();
 

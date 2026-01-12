@@ -17,6 +17,9 @@ class PROJECT_RELIC_V2_API AEnemyCharacter : public ACharacter, public IDeathHan
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	class UAIPerceptionStimuliSourceComponent* PerceptionStimuliSourceComponent;
+
 public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
@@ -42,4 +45,6 @@ public:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* AnimDeath; // Animation Montage
+
+private:
 };

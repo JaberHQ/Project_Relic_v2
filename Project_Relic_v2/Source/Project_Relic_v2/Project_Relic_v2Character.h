@@ -11,6 +11,7 @@
 #include "WeaponComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "HealthComponent.h"
+#include "EnemyController.h"
 #include "Project_Relic_v2Character.generated.h"
 
 class USpringArmComponent;
@@ -18,6 +19,8 @@ class UCameraComponent;
 class UInputAction;
 class UCurveFloat;
 class USkeletalMeshComponent;
+class AEnemyCharacter;
+class UDetectionHUDWidget;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -50,7 +53,7 @@ struct FCharacterMoveSpeed
  *  Implements a controllable orbiting camera
  */
 UCLASS(Abstract)
-class AProject_Relic_v2Character : public ACharacter, public IDeathHandlerInterface
+class AProject_Relic_v2Character : public ACharacter, public IDeathHandlerInterface, public IDetectionInterface
 {
 	GENERATED_BODY()
 
@@ -205,9 +208,33 @@ private:
 	UFUNCTION()
 	void CrouchTimelineProgress(float Value);
 
+	virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
+	virtual void StopDetection_Implementation() override;
+	virtual void StartChase_Implementation() override;
+	virtual void StopChase_Implementation() override;
+
+	void InitDetectionMeterTimeline();
+
+	UPROPERTY()
+	UTimelineComponent* DetectionCurveTimelineComponent;
+
+	UFUNCTION()
+	void DetectionMeterProgress(float DetectionMeterValue);
+
+	UFUNCTION()
+	void OnDetectionMeterTimelineFinished();
+
+	FTimerHandle DetectionMeterDelayHandle;
+
+	void OnDetectionMeterDelayFinished();
+
 protected:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Curve Float")
 	UCurveFloat* CrouchCurveFloat;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+	UCurveFloat* DetectionMeterCurveFloat;
 
 private:
 	UPROPERTY()
@@ -222,6 +249,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<UUserWidget> CharacterHUDWidgetClass;
 	UUserWidget* CharacterHUDWidget;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UUserWidget> DetectionHUDWidgetClass;
+	UUserWidget* DetectionHUDWidget;
+
+	UDetectionHUDWidget* DetectionHUD;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float CurrentStamina;
@@ -245,6 +278,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	FCharacterMoveSpeed CharacterMoveSpeedDefaults;
+
 
 };
 

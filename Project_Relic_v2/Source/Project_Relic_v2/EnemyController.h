@@ -8,11 +8,38 @@
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "EnemyController.generated.h"
 
+class AEnemyCharacter;
+
+UINTERFACE( Blueprintable )
+class UDetectionInterface : public UInterface
+{
+	GENERATED_BODY()
+};
+
+class IDetectionInterface
+{
+	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StartDetection(AEnemyCharacter* EnemyCharacter);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StopDetection();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StartChase();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StopChase();
+
+};
+
 /**
  *
  */
 UCLASS()
-class PROJECT_RELIC_V2_API AEnemyController : public AAIController
+class PROJECT_RELIC_V2_API AEnemyController : public AAIController, public IDetectionInterface
 {
 	GENERATED_BODY()
 
@@ -30,15 +57,33 @@ public:
 	//UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
 
 	int32 CurrentPatrolPoint;
-
-
+	
+	/*UFUNCTION(BlueprintCallable, Category = "AI")
+	void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);*/
 	UFUNCTION(BlueprintCallable, Category = "AI")
-	void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+	void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus);
 
 	void Death();
 
+	void StartDetection(AEnemyCharacter* EnemyCharacter);
+	virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
+
+	void StopDetection();
+	virtual void StopDetection_Implementation() override;
+
+	void StartChase();
+	virtual void StartChase_Implementation() override;
+
+	void StopChase();
+	virtual void StopChase_Implementation() override;
+
+
 private:
 	virtual void OnPossess(APawn* InPawn) override;
+
+	void SetupPerceptionSystem();
+
+	void OnDetectionDelayComplete();
 
 private:
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
@@ -52,6 +97,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
+
+	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	class UAISenseConfig_Sight* SightConfig;
 
 	/* Blackboard keys */
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
@@ -67,6 +115,11 @@ private:
 	FName TargetLastKnownLocation;
 
 	TArray<AActor*> PatrolPoints;
+
+	bool bIsDetectingPlayer; // If the AI has initially seen the player 
+
+
+	FTimerHandle DetectionTimerHandle;
 
 	/*UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UPawnSensingComponent* PawnSensingComponent;*/

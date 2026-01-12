@@ -6,6 +6,8 @@
 #include "EnemyController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "HealthComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -21,6 +23,14 @@ AEnemyCharacter::AEnemyCharacter()
 
 	// Health defaults
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent" ));
+
+	PerceptionStimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("StimulusComponent"));
+	if (PerceptionStimuliSourceComponent)
+	{
+		PerceptionStimuliSourceComponent->RegisterForSense(TSubclassOf<UAISense_Sight>());
+		PerceptionStimuliSourceComponent->RegisterWithPerceptionSystem();
+	}
+
 }
 
 // Called when the game starts or when spawned
@@ -60,5 +70,4 @@ void AEnemyCharacter::HandleDeath_Implementation()
 		EnemyController->Death();
 	}
 }
-
 

@@ -11,6 +11,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include <Kismet/KismetMathLibrary.h>
+#include "EnemyCharacter.h"
+#include "DetectionHUDWidget.h"
 #include "Project_Relic_v2.h"
 
 
@@ -144,6 +146,12 @@ void AProject_Relic_v2Character::BeginPlay()
 	{
 		CharacterHUDWidget = CreateWidget<UUserWidget>(GetWorld(), CharacterHUDWidgetClass);
 		CharacterHUDWidget->AddToViewport(0);
+	}
+
+	if (DetectionHUDWidgetClass)
+	{
+		DetectionHUDWidget = CreateWidget<UUserWidget>(GetWorld(), DetectionHUDWidgetClass);
+		DetectionHUDWidget->AddToViewport(1);
 	}
 }
 
@@ -363,4 +371,96 @@ void AProject_Relic_v2Character::InitCrouchTimeline()
 void AProject_Relic_v2Character::CrouchTimelineProgress(float Value)
 {
 	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, Value));
+}
+
+void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* EnemyCharacter)
+{
+	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
+	if (DetectionHUD)
+	{
+		if (DetectionHUD->GetDetectionMeter()->GetVisibility() == ESlateVisibility::Visible)
+		{
+			DetectionCurveTimelineComponent->Play();
+		}
+		else
+		{
+			DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
+		}
+	}
+}
+
+void AProject_Relic_v2Character::StopDetection_Implementation()
+{
+	if (DetectionCurveTimelineComponent)
+	{
+		DetectionCurveTimelineComponent->Stop();
+		DetectionCurveTimelineComponent->Reverse();
+	}
+}
+
+void AProject_Relic_v2Character::StartChase_Implementation()
+{
+
+}
+
+void AProject_Relic_v2Character::StopChase_Implementation()
+{
+}
+
+void AProject_Relic_v2Character::InitDetectionMeterTimeline()
+{
+	DetectionCurveTimelineComponent = NewObject<UTimelineComponent>(this, FName("DetectionTimelineAnimation"));
+	DetectionCurveTimelineComponent->CreationMethod = EComponentCreationMethod::SimpleConstructionScript;
+	BlueprintCreatedComponents.Add(DetectionCurveTimelineComponent);
+
+	/* Bind the ADS function to the timeline */
+	FOnTimelineFloat DetectionMeterCallback;
+	DetectionMeterCallback.BindUFunction(this, FName(TEXT("DetectionMeterProgress")));
+	DetectionCurveTimelineComponent->AddInterpFloat(DetectionMeterCurveFloat, DetectionMeterCallback);
+
+	FOnTimelineEvent DetectionMeterFinishedCallback;
+	DetectionMeterFinishedCallback.BindUFunction(this, FName(TEXT("OnDetectionMeterFinished")));
+
+	DetectionCurveTimelineComponent->SetTimelineFinishedFunc(DetectionMeterFinishedCallback);
+
+	DetectionCurveTimelineComponent->SetLooping(false);
+	DetectionCurveTimelineComponent->RegisterComponent();
+}
+
+void AProject_Relic_v2Character::DetectionMeterProgress(float DetectionMeterValue)
+{
+	if (DetectionHUD)
+	{
+		DetectionHUD->SetDetectionMeterPercent(DetectionMeterValue);
+	}
+}
+
+void AProject_Relic_v2Character::OnDetectionMeterTimelineFinished()
+{
+	if (DetectionCurveTimelineComponent->IsReversing())
+	{
+		// backwards
+		GetWorldTimerManager().ClearTimer(DetectionMeterDelayHandle);
+
+		GetWorldTimerManager().SetTimer(DetectionMeterDelayHandle, this, &AProject_Relic_v2Character::OnDetectionMeterDelayFinished, 0.5f, false);
+	}
+	else
+	{
+		// forwards
+		// AI->StartChase();
+		if (DetectionHUD)
+		{
+			DetectionHUD->SetDetectionMeterColour(FLinearColor::Red);
+		}
+	}
+
+}
+
+void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
+{
+	DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Hidden);
+
+	// AI->Stop Chase
+	DetectionHUD->SetDetectionMeterColour(FLinearColor::White);
+
 }
