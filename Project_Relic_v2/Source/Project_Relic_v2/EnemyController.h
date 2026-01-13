@@ -9,6 +9,7 @@
 #include "EnemyController.generated.h"
 
 class AEnemyCharacter;
+class AProject_Relic_v2Character;
 
 UINTERFACE( Blueprintable )
 class UDetectionInterface : public UInterface
@@ -32,7 +33,6 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void StopChase();
-
 };
 
 /**
@@ -65,16 +65,16 @@ public:
 
 	void Death();
 
-	void StartDetection(AEnemyCharacter* EnemyCharacter);
-	virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
+	////void StartDetection(AEnemyCharacter* EnemyCharacter);
+	//virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
 
-	void StopDetection();
-	virtual void StopDetection_Implementation() override;
+	////void StopDetection();
+	//virtual void StopDetection_Implementation() override;
 
-	void StartChase();
+	////void StartChase();
 	virtual void StartChase_Implementation() override;
 
-	void StopChase();
+	////void StopChase();
 	virtual void StopChase_Implementation() override;
 
 
@@ -118,8 +118,12 @@ private:
 
 	bool bIsDetectingPlayer; // If the AI has initially seen the player 
 
+	bool bShouldChase;
 
 	FTimerHandle DetectionTimerHandle;
+
+	AEnemyCharacter* ControlledEnemyCharacter;
+	AProject_Relic_v2Character* PlayerCharacter;
 
 	/*UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UPawnSensingComponent* PawnSensingComponent;*/

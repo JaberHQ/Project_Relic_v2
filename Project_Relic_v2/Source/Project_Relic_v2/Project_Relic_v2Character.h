@@ -210,8 +210,6 @@ private:
 
 	virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
 	virtual void StopDetection_Implementation() override;
-	virtual void StartChase_Implementation() override;
-	virtual void StopChase_Implementation() override;
 
 	void InitDetectionMeterTimeline();
 
@@ -279,6 +277,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	FCharacterMoveSpeed CharacterMoveSpeedDefaults;
 
+	AEnemyCharacter* EnemyCharacterRef;
 
 };
 

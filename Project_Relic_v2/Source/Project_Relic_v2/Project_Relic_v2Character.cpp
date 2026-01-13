@@ -13,6 +13,7 @@
 #include <Kismet/KismetMathLibrary.h>
 #include "EnemyCharacter.h"
 #include "DetectionHUDWidget.h"
+#include "EnemyController.h"
 #include "Project_Relic_v2.h"
 
 
@@ -140,6 +141,8 @@ void AProject_Relic_v2Character::BeginPlay()
 
 	// Create a timeline for crouching 
 	InitCrouchTimeline();
+
+	InitDetectionMeterTimeline();
 
 	// Add Player HUD UI to viewport 
 	if (CharacterHUDWidgetClass)
@@ -375,17 +378,18 @@ void AProject_Relic_v2Character::CrouchTimelineProgress(float Value)
 
 void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* EnemyCharacter)
 {
+	EnemyCharacterRef = EnemyCharacter;
 	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
 	if (DetectionHUD)
 	{
 		if (DetectionHUD->GetDetectionMeter()->GetVisibility() == ESlateVisibility::Visible)
 		{
-			DetectionCurveTimelineComponent->Play();
 		}
 		else
 		{
 			DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
 		}
+		DetectionCurveTimelineComponent->Play();
 	}
 }
 
@@ -398,14 +402,6 @@ void AProject_Relic_v2Character::StopDetection_Implementation()
 	}
 }
 
-void AProject_Relic_v2Character::StartChase_Implementation()
-{
-
-}
-
-void AProject_Relic_v2Character::StopChase_Implementation()
-{
-}
 
 void AProject_Relic_v2Character::InitDetectionMeterTimeline()
 {
@@ -419,7 +415,7 @@ void AProject_Relic_v2Character::InitDetectionMeterTimeline()
 	DetectionCurveTimelineComponent->AddInterpFloat(DetectionMeterCurveFloat, DetectionMeterCallback);
 
 	FOnTimelineEvent DetectionMeterFinishedCallback;
-	DetectionMeterFinishedCallback.BindUFunction(this, FName(TEXT("OnDetectionMeterFinished")));
+	DetectionMeterFinishedCallback.BindUFunction(this, FName(TEXT("OnDetectionMeterTimelineFinished")));
 
 	DetectionCurveTimelineComponent->SetTimelineFinishedFunc(DetectionMeterFinishedCallback);
 
@@ -446,8 +442,16 @@ void AProject_Relic_v2Character::OnDetectionMeterTimelineFinished()
 	}
 	else
 	{
+
 		// forwards
 		// AI->StartChase();
+		if(EnemyCharacterRef)
+		{
+			AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
+			if (EnemyControllerRef)
+				IDetectionInterface::Execute_StartChase(EnemyControllerRef);
+		}
+
 		if (DetectionHUD)
 		{
 			DetectionHUD->SetDetectionMeterColour(FLinearColor::Red);
@@ -462,5 +466,12 @@ void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
 
 	// AI->Stop Chase
 	DetectionHUD->SetDetectionMeterColour(FLinearColor::White);
+
+	if(EnemyCharacterRef)
+	{
+		AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
+		if(EnemyControllerRef)
+			IDetectionInterface::Execute_StopChase(EnemyControllerRef);
+	}
 
 }
