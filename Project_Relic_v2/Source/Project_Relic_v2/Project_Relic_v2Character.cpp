@@ -397,7 +397,7 @@ void AProject_Relic_v2Character::StopDetection_Implementation()
 {
 	if (DetectionCurveTimelineComponent)
 	{
-		DetectionCurveTimelineComponent->Stop();
+		//DetectionCurveTimelineComponent->Stop();
 		DetectionCurveTimelineComponent->Reverse();
 	}
 }
@@ -433,7 +433,10 @@ void AProject_Relic_v2Character::DetectionMeterProgress(float DetectionMeterValu
 
 void AProject_Relic_v2Character::OnDetectionMeterTimelineFinished()
 {
-	if (DetectionCurveTimelineComponent->IsReversing())
+
+	float Position = DetectionCurveTimelineComponent->GetPlaybackPosition();
+
+	if (Position <= 0.0f)
 	{
 		// backwards
 		GetWorldTimerManager().ClearTimer(DetectionMeterDelayHandle);
@@ -442,21 +445,20 @@ void AProject_Relic_v2Character::OnDetectionMeterTimelineFinished()
 	}
 	else
 	{
-
-		// forwards
-		// AI->StartChase();
-		if(EnemyCharacterRef)
+		// Forwards
+		if( EnemyCharacterRef )
 		{
 			AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
-			if (EnemyControllerRef)
+			if( EnemyControllerRef )
 				IDetectionInterface::Execute_StartChase(EnemyControllerRef);
 		}
 
-		if (DetectionHUD)
+		if( DetectionHUD )
 		{
 			DetectionHUD->SetDetectionMeterColour(FLinearColor::Red);
 		}
 	}
+	
 
 }
 

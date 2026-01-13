@@ -19,7 +19,6 @@ AEnemyController::AEnemyController()
 	/* Initialise blackboard and BT */
 	BehaviourTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviourTreeComponent"));
 	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
-	//AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 	SetupPerceptionSystem();
 
 	// Set AI peripheral
@@ -31,6 +30,7 @@ AEnemyController::AEnemyController()
 	PatrolLocation = "PatrolLocation";
 	EnemyActor = "EnemyActor";
 	TargetLastKnownLocation = "TargetLastKnownLocation";
+	HasLineOfSight = "HasLineOfSight";
 
 	CurrentPatrolPoint = 0;
 }
@@ -39,10 +39,6 @@ void AEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	/*if (AIPerceptionComponent)
-	{
-		AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyController::OnTargetDetected);
-	}*/
 }
 
 void AEnemyController::Death()
@@ -52,52 +48,22 @@ void AEnemyController::Death()
 		BrainComp->PauseLogic(TEXT("Enemy Dead"));
 }
 
-//void AEnemyController::StartDetection(AEnemyCharacter* EnemyCharacter)
-//{
-//	AActor* OwnerActor = GetOwner();
-//
-//	if (OwnerActor && OwnerActor->Implements<UDetectionInterface>())
-//	{
-//		IDetectionInterface::Execute_StartDetection(OwnerActor, EnemyCharacter);
-//	}
-//}
-//
-//void AEnemyController::StartDetection_Implementation(AEnemyCharacter* EnemyCharacter)
-//{
-//}
-//
-//void AEnemyController::StopDetection()
-//{
-//	AActor* OwnerActor = GetOwner();
-//
-//	if(OwnerActor && OwnerActor->Implements<UDetectionInterface>())
-//	{
-//		IDetectionInterface::Execute_StopDetection(OwnerActor);
-//	}
-//}
-//
-//void AEnemyController::StopDetection_Implementation()
-//{
-//}
-//
-//void AEnemyController::StartChase()
-//{
-//	AActor* OwnerActor = GetOwner();
-//
-//	if (OwnerActor && OwnerActor->Implements<UDetectionInterface>())
-//	{
-//		IDetectionInterface::Execute_StartChase(OwnerActor);
-//	}
-//}
-//
 void AEnemyController::StartChase_Implementation()
 {
 	bShouldChase = true;
+
 }
 
 void AEnemyController::StopChase_Implementation()
 {
 	bShouldChase = false;
+
+	if( BlackboardComponent )
+	{
+		BlackboardComponent->ClearValue(EnemyActor);
+		BlackboardComponent->ClearValue(HasLineOfSight);
+		BlackboardComponent->ClearValue(TargetLastKnownLocation);
+	}
 }
 
 void AEnemyController::OnPossess(APawn* InPawn)
@@ -169,37 +135,26 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 				{
 					//PlayerCharacter->Execute_StartDetection(PlayerCharacter,ControlledEnemyCharacter);
 					IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
-					GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
-					GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
+					
+				}
+			}
 
-					if(bShouldChase)
-					{
-						FVector ReceiverLocation = Stimulus.ReceiverLocation;
-						FVector TargetLocation = Stimulus.StimulusLocation;
+			GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
+			GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
 
-						if(BlackboardComponent)
-						{
-							BlackboardComponent->SetValueAsObject(EnemyActor, Actor);
-							BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
-							BlackboardComponent->SetValueAsVector(TargetLastKnownLocation, TargetLocation);
-						}
-					}
+			if (bShouldChase)
+			{
+				//FVector ReceiverLocation = Stimulus.ReceiverLocation;
+				FVector TargetLocation = Stimulus.StimulusLocation;
+
+				if (BlackboardComponent)
+				{
+					BlackboardComponent->SetValueAsObject(EnemyActor, Actor);
+					BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
+					BlackboardComponent->SetValueAsVector(TargetLastKnownLocation, TargetLocation);
 				}
 			}
 		}
-
-		//else if (Stimulus.Type == UAISense::GetSenseID<UAISense_Player>())
-		//{
-		//		//FVector ReceiverLocation = Stimulus.ReceiverLocation;
-		//	FVector TargetLocation = Stimulus.StimulusLocation;
-
-		//	if (BlackboardComponent)
-		//	{
-		//		BlackboardComponent->SetValueAsObject(EnemyActor, Actor);
-		//		BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
-		//		BlackboardComponent->SetValueAsVector(TargetLastKnownLocation, TargetLocation);
-		//	}
-		//}
 	}
 }
 
