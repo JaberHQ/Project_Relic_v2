@@ -37,21 +37,18 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame
 void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
 void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void AEnemyCharacter::UpdateWalkSpeed(float NewWalkSpeed)

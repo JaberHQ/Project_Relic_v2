@@ -65,18 +65,13 @@ public:
 
 	void Death();
 
-	////void StartDetection(AEnemyCharacter* EnemyCharacter);
-	//virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
-
-	////void StopDetection();
-	//virtual void StopDetection_Implementation() override;
-
-	////void StartChase();
 	virtual void StartChase_Implementation() override;
 
-	////void StopChase();
 	virtual void StopChase_Implementation() override;
 
+	FVector GetTargetLastKnownLocation() const;
+
+	void ClearTargetLastKnownLocation();
 
 private:
 	virtual void OnPossess(APawn* InPawn) override;

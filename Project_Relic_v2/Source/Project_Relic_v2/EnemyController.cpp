@@ -62,8 +62,17 @@ void AEnemyController::StopChase_Implementation()
 	{
 		BlackboardComponent->ClearValue(EnemyActor);
 		BlackboardComponent->ClearValue(HasLineOfSight);
-		BlackboardComponent->ClearValue(TargetLastKnownLocation);
 	}
+}
+
+FVector AEnemyController::GetTargetLastKnownLocation() const
+{
+	return BlackboardComponent->GetValueAsVector(TargetLastKnownLocation);
+}
+
+void AEnemyController::ClearTargetLastKnownLocation()
+{
+	BlackboardComponent->ClearValue(TargetLastKnownLocation);
 }
 
 void AEnemyController::OnPossess(APawn* InPawn)
@@ -124,18 +133,22 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 {
 	if (Stimulus.WasSuccessfullySensed())
 	{
-		if(Stimulus.Type == UAISense::GetSenseID<UAISense_Player>())
+		if(Stimulus.Type == UAISense::GetSenseID<UAISenseConfig_Sight>())
 		{
 			if(!bIsDetectingPlayer)
 			{
+				if (BlackboardComponent)
+				{
+					FVector TargetLocation = Stimulus.StimulusLocation;
+					BlackboardComponent->SetValueAsVector(TargetLastKnownLocation, TargetLocation);
+				}
+
 				bIsDetectingPlayer = true;
 
 				PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
 				if(ControlledEnemyCharacter && PlayerCharacter)
 				{
-					//PlayerCharacter->Execute_StartDetection(PlayerCharacter,ControlledEnemyCharacter);
 					IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
-					
 				}
 			}
 
@@ -144,14 +157,10 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 
 			if (bShouldChase)
 			{
-				//FVector ReceiverLocation = Stimulus.ReceiverLocation;
-				FVector TargetLocation = Stimulus.StimulusLocation;
-
 				if (BlackboardComponent)
 				{
 					BlackboardComponent->SetValueAsObject(EnemyActor, Actor);
 					BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
-					BlackboardComponent->SetValueAsVector(TargetLastKnownLocation, TargetLocation);
 				}
 			}
 		}

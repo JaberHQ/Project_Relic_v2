@@ -380,12 +380,11 @@ void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* 
 {
 	EnemyCharacterRef = EnemyCharacter;
 	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
+
 	if (DetectionHUD)
 	{
-		if (DetectionHUD->GetDetectionMeter()->GetVisibility() == ESlateVisibility::Visible)
-		{
-		}
-		else
+		// Set hud to visible
+		if (DetectionHUD->GetDetectionMeter()->GetVisibility() != ESlateVisibility::Visible)
 		{
 			DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
 		}
@@ -397,11 +396,10 @@ void AProject_Relic_v2Character::StopDetection_Implementation()
 {
 	if (DetectionCurveTimelineComponent)
 	{
-		//DetectionCurveTimelineComponent->Stop();
+		DetectionCurveTimelineComponent->Stop();
 		DetectionCurveTimelineComponent->Reverse();
 	}
 }
-
 
 void AProject_Relic_v2Character::InitDetectionMeterTimeline()
 {
