@@ -133,7 +133,7 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 {
 	if (Stimulus.WasSuccessfullySensed())
 	{
-		if(Stimulus.Type == UAISense::GetSenseID<UAISenseConfig_Sight>())
+		if (Stimulus.Type == UAISense::GetSenseID<UAISense_Player>())
 		{
 			if(!bIsDetectingPlayer)
 			{

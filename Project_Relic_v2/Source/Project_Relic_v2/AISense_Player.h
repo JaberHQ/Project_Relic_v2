@@ -22,6 +22,9 @@ public:
 	struct FDigestedTargetProperties
 	{
 		float TargetRadius;
+		float DetectionRate;
+		float LoseRate;
+		float PeripheralVisionCos;
 
 		FDigestedTargetProperties();
 		FDigestedTargetProperties(const UAISenseConfig_Player& SenseConfig);

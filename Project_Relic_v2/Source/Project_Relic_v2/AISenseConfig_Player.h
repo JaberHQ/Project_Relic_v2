@@ -26,6 +26,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sense", config, meta = (UIMin = 0.0, ClampMin = 0.0))
 	float TargetRadius = 10.0f; // Maximum sight distance to notice a target
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sense", config, meta = (ClampMin = 0.0))
+	float DetectionRate = 0.15f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sense", config, meta = (ClampMin = 0.0))
+	float LoseRate = 0.2f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sense", config, meta = (ClampMin = 0.0, ClampMax = 180.0))
+	float PeripheralVisionAngle = 60.0f;
+
 #if WITH_GAMEPLAY_DEBUGGER
 	virtual void DescribeSelfToGameplayDebugger(const UAIPerceptionComponent* PerceptionComponent, FGameplayDebuggerCategory* DebuggerCategory) const override;
 #endif // WITH_GAMEPLAY_DEBUGGER
