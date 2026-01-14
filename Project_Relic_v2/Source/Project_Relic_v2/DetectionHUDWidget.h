@@ -7,6 +7,8 @@
 #include "Components/ProgressBar.h"
 #include "DetectionHUDWidget.generated.h"
 
+class AProject_Relic_v2Character;
+class AEnemyCharacter;
 /**
  * 
  */
@@ -19,6 +21,8 @@ public:
 
 	virtual void NativeConstruct() override;
 
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
 	UProgressBar* GetDetectionMeter() const { return DetectionMeter; }
 
 	void SetDetectionMeterVisiblity(ESlateVisibility MeterVisibility);
@@ -28,4 +32,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UProgressBar* DetectionMeter;
+
+	void SetEnemyCharacter(AEnemyCharacter* EnemyCharacterRef){ EnemyCharacter = EnemyCharacterRef; }
+
+private:
+	AProject_Relic_v2Character* PlayerCharacter;
+	AEnemyCharacter* EnemyCharacter;
+
+
 };

@@ -379,6 +379,7 @@ void AProject_Relic_v2Character::CrouchTimelineProgress(float Value)
 void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* EnemyCharacter)
 {
 	EnemyCharacterRef = EnemyCharacter;
+
 	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
 
 	if (DetectionHUD)
@@ -388,6 +389,7 @@ void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* 
 		{
 			DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
 		}
+		DetectionHUD->SetEnemyCharacter(EnemyCharacter);
 		DetectionCurveTimelineComponent->Play();
 	}
 }
@@ -462,16 +464,22 @@ void AProject_Relic_v2Character::OnDetectionMeterTimelineFinished()
 
 void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
 {
-	DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Hidden);
-
-	// AI->Stop Chase
-	DetectionHUD->SetDetectionMeterColour(FLinearColor::White);
-
-	if(EnemyCharacterRef)
+	if (DetectionHUD && EnemyCharacterRef)
 	{
+		DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Hidden);
+		DetectionHUD->SetDetectionMeterColour(FLinearColor::White);
+		DetectionHUD->SetEnemyCharacter(nullptr);
+
 		AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
 		if(EnemyControllerRef)
 			IDetectionInterface::Execute_StopChase(EnemyControllerRef);
+	}
+
+	// AI->Stop Chase
+
+	if(EnemyCharacterRef)
+	{
+		
 	}
 
 }

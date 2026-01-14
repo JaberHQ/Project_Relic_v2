@@ -30,7 +30,7 @@ AEnemyController::AEnemyController()
 	PatrolLocation = "PatrolLocation";
 	EnemyActor = "EnemyActor";
 	TargetLastKnownLocation = "TargetLastKnownLocation";
-	HasLineOfSight = "HasLineOfSight";
+	//HasLineOfSight = "HasLineOfSight";
 
 	CurrentPatrolPoint = 0;
 }
@@ -61,7 +61,7 @@ void AEnemyController::StopChase_Implementation()
 	if( BlackboardComponent )
 	{
 		BlackboardComponent->ClearValue(EnemyActor);
-		BlackboardComponent->ClearValue(HasLineOfSight);
+		//BlackboardComponent->ClearValue(HasLineOfSight);
 	}
 }
 
@@ -160,7 +160,7 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 				if (BlackboardComponent)
 				{
 					BlackboardComponent->SetValueAsObject(EnemyActor, Actor);
-					BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
+					//BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
 				}
 			}
 		}
