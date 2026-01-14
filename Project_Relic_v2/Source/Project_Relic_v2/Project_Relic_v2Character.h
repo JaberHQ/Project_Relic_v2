@@ -111,6 +111,11 @@ public:
 
 	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
 
+	/*********************************************************************
+	/** Interface function: IDeathHandlerInterface (See HealthComponent.h) 
+	 ** Communicates with UHealthComponent (See HealthComponent.h) 
+ 	 ** Handles the events of the owning character's death
+	/*********************************************************************/
 	virtual void HandleDeath_Implementation() override;
 
 protected:
@@ -158,9 +163,12 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void StopSprint();
 
+	/* Handles the consumption of the player's stamina */
 	void DrainStamina();
 
+	/* Handles the regeneration of the player's stamina */
 	void RegenerateStamina();
+
 public:
 	/** Set the boolean for crouching that tells if player is crouching or not */
 	UFUNCTION(BlueprintCallable, Category = "Input")
@@ -191,12 +199,15 @@ public:
 	/** Returns Inventory Component **/
 	FORCEINLINE class UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 
+	/** Returns the current stamina of the player **/
 	UFUNCTION(BlueprintCallable)
 	float GetCurrentStamina() const { return CurrentStamina; }
 
+	/** Returns the maximum stamina of the player **/
 	UFUNCTION(BlueprintCallable)
 	float GetMaxStamina() const { return MaxStamina; }
 
+	/** Returns the boolean that holds whether the player is sprinting or not **/
 	UFUNCTION(BlueprintCallable)
 	bool GetIsSprinting() const { return bIsSprinting; }
 
@@ -208,76 +219,105 @@ private:
 	UFUNCTION()
 	void CrouchTimelineProgress(float Value);
 
+	/*********************************************************************
+	/** Interface function: IDetectionInterface (See EnemyController.h)
+	 ** For communication between the player and enemy
+	 **		(See Project_Relic_v2Character.h and EnemyController.h)
+	 ** Handles the start of the AI detection of the enemy
+	/*********************************************************************/
 	virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
+
+	/*********************************************************************
+	/** Interface function: IDetectionInterface (See EnemyController.h)
+	 ** For communication between the player and enemy
+	 **		(See Project_Relic_v2Character.h and EnemyController.h)
+	 ** Handles the stopping of the AI detection of the enemy
+	/*********************************************************************/
 	virtual void StopDetection_Implementation() override;
 
+	/* Initialise the detection curve timeline component */
 	void InitDetectionMeterTimeline();
+
+	/* The update function for the detection curve timeline component 
+	** Called while the detection meter is updating */
+	UFUNCTION()
+	void DetectionMeterProgress(float DetectionMeterValue);
+
+	/* The finish function for the detection curve timeline component 
+	** Called when the detection meter is complete */
+	UFUNCTION()
+	void OnDetectionMeterTimelineFinished();
+
+	/* Called when timer is complete 
+	** for delaying whether the enemy has seen the player or not */
+	void OnDetectionMeterDelayFinished();
+
+public:
+
+protected:
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+	UCurveFloat* CrouchCurveFloat; // A track of interpolated float points to evaluate over a given range
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+	UCurveFloat* DetectionMeterCurveFloat; // A track of interpolated float points to evaluate over a given range
+
+private:
+
+	/***************************** UI *********************************************/
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UUserWidget> CharacterHUDWidgetClass;
+	UUserWidget* CharacterHUDWidget; // Reference to the Characters HUD object
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UUserWidget> DetectionHUDWidgetClass;
+	UUserWidget* DetectionHUDWidget; // Reference to the detection HUD widget object
+	/*************************************************************************************/
+
+	/***************************** Detection *********************************************/
+	UDetectionHUDWidget* DetectionHUD; // Reference to the detection HUD widget class
 
 	UPROPERTY()
 	UTimelineComponent* DetectionCurveTimelineComponent;
 
-	UFUNCTION()
-	void DetectionMeterProgress(float DetectionMeterValue);
-
-	UFUNCTION()
-	void OnDetectionMeterTimelineFinished();
-
 	FTimerHandle DetectionMeterDelayHandle;
+	/*************************************************************************************/
 
-	void OnDetectionMeterDelayFinished();
 
-protected:
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Curve Float")
-	UCurveFloat* CrouchCurveFloat;
+	/****************************** Movement ***********************************************/
+	bool bIsCrouching; // If character is crouching
+	bool bIsSprinting; // If character is sprinting
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
-	UCurveFloat* DetectionMeterCurveFloat;
-
-private:
 	UPROPERTY()
 	UTimelineComponent* CrouchTimelineComponent;
 
-private:
-	bool bIsCrouching; // If character is crouching
-	bool bIsSprinting; // If character is sprinting
-	TMap<ECharacterMoveSpeed, float> MoveSpeedMap;
-	ECharacterMoveSpeed CurrentMoveSpeed;
-
-	UPROPERTY(EditDefaultsOnly, Category = "UI")
-	TSubclassOf<UUserWidget> CharacterHUDWidgetClass;
-	UUserWidget* CharacterHUDWidget;
-
-	UPROPERTY(EditDefaultsOnly, Category = "UI")
-	TSubclassOf<UUserWidget> DetectionHUDWidgetClass;
-	UUserWidget* DetectionHUDWidget;
-
-	UDetectionHUDWidget* DetectionHUD;
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	float CurrentStamina; // Holds the current stamina of the player
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float CurrentStamina;
+	float MaxStamina; // Holds the maximum stamina of the player
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float MaxStamina;
+	float DecrementStamina; // Holds the constant amount the player's stamina is subtracted by during use
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float DecrementStamina;
+	float IncrementStamina; // Holds the constant amount added to the player's stamina upon regeneration
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float IncrementStamina;
+	float DrainStaminaTime; // How quick the player's stamina drains
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float DrainStaminaTime;
+	float RegenerateStaminaTime; // How long is takes for the player's stamina to regenerate
+
+	FTimerHandle SprintHandle; // Timer handle for player sprinting
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float RegenerateStaminaTime;
+	FCharacterMoveSpeed CharacterMoveSpeedDefaults; // Default values for player movement speeds, held in a struct
 
-	FTimerHandle SprintHandle;
+	TMap<ECharacterMoveSpeed, float> MoveSpeedMap; // Hashmap, used for setting the movement speed of the player
+	ECharacterMoveSpeed CurrentMoveSpeed; // Used to hold the current move speed of the player
+	/*************************************************************************************/
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	FCharacterMoveSpeed CharacterMoveSpeedDefaults;
-
-	AEnemyCharacter* EnemyCharacterRef;
+	AEnemyCharacter* EnemyCharacterRef; // Reference to enemy character
 
 };
 

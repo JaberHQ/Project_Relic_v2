@@ -18,6 +18,11 @@ class IDeathHandlerInterface
 	GENERATED_BODY()
 
 public:
+	/*********************************************************************
+	/** Interface function: IDeathHandlerInterface 
+	 ** Communicates with UHealthComponent (See HealthComponent.h)
+	 ** Handles the events of the owning character's death
+	/*********************************************************************/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void HandleDeath();
 };

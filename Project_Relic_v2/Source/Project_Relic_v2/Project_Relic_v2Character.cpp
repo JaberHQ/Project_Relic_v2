@@ -151,6 +151,7 @@ void AProject_Relic_v2Character::BeginPlay()
 		CharacterHUDWidget->AddToViewport(0);
 	}
 
+	// Add detection indicator HUD to viewport
 	if (DetectionHUDWidgetClass)
 	{
 		DetectionHUDWidget = CreateWidget<UUserWidget>(GetWorld(), DetectionHUDWidgetClass);
@@ -265,7 +266,6 @@ void AProject_Relic_v2Character::DoSprint()
 		WeaponComponent->StopAiming();
 	}
 
-	// Set character max walk speed to fast
 	SetMaxWalkSpeed(ECharacterMoveSpeed::Fast);
 	bIsSprinting = true;
 	DrainStamina();
@@ -384,13 +384,17 @@ void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* 
 
 	if (DetectionHUD)
 	{
-		// Set hud to visible
+		// Set detection hud to visible
 		if (DetectionHUD->GetDetectionMeter()->GetVisibility() != ESlateVisibility::Visible)
 		{
 			DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
 		}
-		DetectionHUD->SetEnemyCharacter(EnemyCharacter);
-		DetectionCurveTimelineComponent->Play();
+
+		// Send enemy character reference to UI
+		DetectionHUD->SetEnemyCharacter(EnemyCharacter); 
+
+		// Play the detection meter timeline
+		DetectionCurveTimelineComponent->Play(); 
 	}
 }
 
@@ -405,26 +409,29 @@ void AProject_Relic_v2Character::StopDetection_Implementation()
 
 void AProject_Relic_v2Character::InitDetectionMeterTimeline()
 {
+	/* Create detection curve timeline object */
 	DetectionCurveTimelineComponent = NewObject<UTimelineComponent>(this, FName("DetectionTimelineAnimation"));
 	DetectionCurveTimelineComponent->CreationMethod = EComponentCreationMethod::SimpleConstructionScript;
 	BlueprintCreatedComponents.Add(DetectionCurveTimelineComponent);
 
-	/* Bind the ADS function to the timeline */
+	/* Bind function that is called while timeline is updating */
 	FOnTimelineFloat DetectionMeterCallback;
 	DetectionMeterCallback.BindUFunction(this, FName(TEXT("DetectionMeterProgress")));
 	DetectionCurveTimelineComponent->AddInterpFloat(DetectionMeterCurveFloat, DetectionMeterCallback);
 
+	/* Bind function that is called when the timeline is finished */
 	FOnTimelineEvent DetectionMeterFinishedCallback;
 	DetectionMeterFinishedCallback.BindUFunction(this, FName(TEXT("OnDetectionMeterTimelineFinished")));
-
 	DetectionCurveTimelineComponent->SetTimelineFinishedFunc(DetectionMeterFinishedCallback);
 
+	// Timeline defaults
 	DetectionCurveTimelineComponent->SetLooping(false);
 	DetectionCurveTimelineComponent->RegisterComponent();
 }
 
 void AProject_Relic_v2Character::DetectionMeterProgress(float DetectionMeterValue)
 {
+	// Continously set the UI for the detection meter progress 
 	if (DetectionHUD)
 	{
 		DetectionHUD->SetDetectionMeterPercent(DetectionMeterValue);
@@ -433,53 +440,49 @@ void AProject_Relic_v2Character::DetectionMeterProgress(float DetectionMeterValu
 
 void AProject_Relic_v2Character::OnDetectionMeterTimelineFinished()
 {
-
+	// Get the position of the timeline comoponent
 	float Position = DetectionCurveTimelineComponent->GetPlaybackPosition();
 
+	// If the timeline is going backwards
 	if (Position <= 0.0f)
 	{
-		// backwards
+		/* Set a timer for detecting the player */
 		GetWorldTimerManager().ClearTimer(DetectionMeterDelayHandle);
-
 		GetWorldTimerManager().SetTimer(DetectionMeterDelayHandle, this, &AProject_Relic_v2Character::OnDetectionMeterDelayFinished, 0.5f, false);
 	}
 	else
 	{
-		// Forwards
-		if( EnemyCharacterRef )
+		// If the timeline is going forwards
+		if (EnemyCharacterRef)
 		{
+			/* Communicate with the interface and tell the enemy to start chasing the player */
 			AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
-			if( EnemyControllerRef )
+			if (EnemyControllerRef)
 				IDetectionInterface::Execute_StartChase(EnemyControllerRef);
 		}
 
-		if( DetectionHUD )
+		if (DetectionHUD)
 		{
+			// Set the meter colour to indicate that the player has been fully detected 
 			DetectionHUD->SetDetectionMeterColour(FLinearColor::Red);
 		}
 	}
-	
-
 }
 
 void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
 {
+	/* If the player has not been fully detected */
 	if (DetectionHUD && EnemyCharacterRef)
 	{
+		/* Reset the Detection HUD back to default */
 		DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Hidden);
-		DetectionHUD->SetDetectionMeterColour(FLinearColor::White);
+		DetectionHUD->SetDetectionMeterColour(FLinearColor::Yellow);
 		DetectionHUD->SetEnemyCharacter(nullptr);
 
+		/* Communicate with the interface and tell the enemy to stop chasing the player */
 		AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
 		if(EnemyControllerRef)
 			IDetectionInterface::Execute_StopChase(EnemyControllerRef);
-	}
-
-	// AI->Stop Chase
-
-	if(EnemyCharacterRef)
-	{
-		
 	}
 
 }

@@ -9,11 +9,16 @@
 #include "HealthComponent.h"
 #include "EnemyCharacter.generated.h"
 
+
+/**
+ *  AI character manager
+ */
 UCLASS()
 class PROJECT_RELIC_V2_API AEnemyCharacter : public ACharacter, public IDeathHandlerInterface
 {
 	GENERATED_BODY()
 
+	/* Health component that handles the enemies health */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UHealthComponent* HealthComponent;
 
@@ -37,14 +42,18 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// Set the character's maximum movement speed
 	UFUNCTION(BlueprintCallable)
 	void UpdateWalkSpeed(float NewWalkSpeed);
 
+	/*********************************************************************
+	/** Interface function: IDeathHandlerInterface (See HealthComponent.h)
+	 ** Communicates with UHealthComponent (See HealthComponent.h)
+	 ** Handles the events of the owning character's death
+	/*********************************************************************/
 	virtual void HandleDeath_Implementation() override;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
-	UAnimMontage* AnimDeath; // Animation Montage
-
-private:
+	UAnimMontage* AnimDeath; // Animation Montage for enemy dying
 };

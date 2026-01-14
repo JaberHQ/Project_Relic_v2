@@ -30,7 +30,6 @@ AEnemyController::AEnemyController()
 	PatrolLocation = "PatrolLocation";
 	EnemyActor = "EnemyActor";
 	TargetLastKnownLocation = "TargetLastKnownLocation";
-	//HasLineOfSight = "HasLineOfSight";
 
 	CurrentPatrolPoint = 0;
 }
@@ -43,6 +42,7 @@ void AEnemyController::BeginPlay()
 
 void AEnemyController::Death()
 {
+	/* Pause behaviour tree for AI logic to stop running */
 	UBrainComponent* BrainComp = GetBrainComponent();
 	if(BrainComp)
 		BrainComp->PauseLogic(TEXT("Enemy Dead"));
@@ -61,7 +61,6 @@ void AEnemyController::StopChase_Implementation()
 	if( BlackboardComponent )
 	{
 		BlackboardComponent->ClearValue(EnemyActor);
-		//BlackboardComponent->ClearValue(HasLineOfSight);
 	}
 }
 
@@ -160,7 +159,6 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 				if (BlackboardComponent)
 				{
 					BlackboardComponent->SetValueAsObject(EnemyActor, Actor);
-					//BlackboardComponent->SetValueAsBool(HasLineOfSight, true);
 				}
 			}
 		}
