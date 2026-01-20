@@ -97,9 +97,17 @@ void AEnemyController::OnPossess(APawn* InPawn)
 
 void AEnemyController::SetupPerceptionSystem()
 {
-	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
+	AISenseConfig_Player = CreateDefaultSubobject<UAISenseConfig_Player>(TEXT("Sight Config"));
+	
+	if (AISenseConfig_Player)
+	{
+		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
+		//AISenseConfig_Player->Implementation = AISense_Player;
 
-	if (SightConfig)
+		AISenseConfig_Player->TargetRadius = 1000.0f;
+		//AISenseConfig_Player->SetMaxAge(2.5f);
+	}
+	/*if (SightConfig)
 	{
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
 
@@ -115,7 +123,7 @@ void AEnemyController::SetupPerceptionSystem()
 		GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
 		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyController::OnTargetDetected);
 		GetPerceptionComponent()->ConfigureSense(*SightConfig);
-	}
+	}*/
 }
 
 void AEnemyController::OnDetectionDelayComplete()

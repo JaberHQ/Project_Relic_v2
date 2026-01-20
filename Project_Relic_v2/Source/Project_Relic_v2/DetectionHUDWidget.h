@@ -25,6 +25,8 @@ public:
 
 	UProgressBar* GetDetectionMeter() const { return DetectionMeter; }
 
+	float GetDetectionMeterPercent() const { return DetectionMeter->GetPercent(); }
+
 	void SetDetectionMeterVisiblity(ESlateVisibility MeterVisibility);
 
 	void SetDetectionMeterPercent(float Percent);

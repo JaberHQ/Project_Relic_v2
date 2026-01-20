@@ -248,6 +248,8 @@ private:
 	UFUNCTION()
 	void OnDetectionMeterTimelineFinished();
 
+	void OnDetected();
+
 	/* Called when timer is complete 
 	** for delaying whether the enemy has seen the player or not */
 	void OnDetectionMeterDelayFinished();
@@ -280,6 +282,12 @@ private:
 	UTimelineComponent* DetectionCurveTimelineComponent;
 
 	FTimerHandle DetectionMeterDelayHandle;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Detection", meta = (AllowPrivateAccess = "true"))
+	float MaxDetection;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Detection", meta = (AllowPrivateAccess = "true"))
+	float InstantDetection;
 	/*************************************************************************************/
 
 
@@ -290,27 +298,27 @@ private:
 	UPROPERTY()
 	UTimelineComponent* CrouchTimelineComponent;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float CurrentStamina; // Holds the current stamina of the player
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MaxStamina; // Holds the maximum stamina of the player
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float DecrementStamina; // Holds the constant amount the player's stamina is subtracted by during use
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float IncrementStamina; // Holds the constant amount added to the player's stamina upon regeneration
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float DrainStaminaTime; // How quick the player's stamina drains
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RegenerateStaminaTime; // How long is takes for the player's stamina to regenerate
 
 	FTimerHandle SprintHandle; // Timer handle for player sprinting
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	FCharacterMoveSpeed CharacterMoveSpeedDefaults; // Default values for player movement speeds, held in a struct
 
 	TMap<ECharacterMoveSpeed, float> MoveSpeedMap; // Hashmap, used for setting the movement speed of the player

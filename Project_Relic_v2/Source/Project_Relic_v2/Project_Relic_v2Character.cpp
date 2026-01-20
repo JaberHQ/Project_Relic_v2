@@ -86,6 +86,10 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 	DrainStaminaTime = 0.05f;
 	RegenerateStaminaTime = 0.05f;
 
+	// Detection defaults
+	MaxDetection = 1000.0f;
+	InstantDetection = 100.0f;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -382,7 +386,7 @@ void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* 
 
 	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
 
-	if (DetectionHUD)
+	if (DetectionHUD && EnemyCharacterRef)
 	{
 		// Set detection hud to visible
 		if (DetectionHUD->GetDetectionMeter()->GetVisibility() != ESlateVisibility::Visible)
@@ -393,8 +397,26 @@ void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* 
 		// Send enemy character reference to UI
 		DetectionHUD->SetEnemyCharacter(EnemyCharacter); 
 
-		// Play the detection meter timeline
-		DetectionCurveTimelineComponent->Play(); 
+		FVector PlayerLocation = GetActorLocation();
+		FVector EnemyLocation = EnemyCharacterRef->GetActorLocation();
+		float Distance = FVector::Distance(PlayerLocation, EnemyLocation);
+		
+
+		// If player is too close to enemy when seen, instantly detect the player
+		if (Distance <= InstantDetection)
+		{
+			DetectionHUD->SetDetectionMeterPercent(1.0f);
+			OnDetected();
+		}
+		else
+		{
+			if (DetectionCurveTimelineComponent)
+			{
+				// Play the detection meter timeline
+				DetectionCurveTimelineComponent->Play(); 
+			}
+		}
+		
 	}
 }
 
@@ -452,20 +474,25 @@ void AProject_Relic_v2Character::OnDetectionMeterTimelineFinished()
 	}
 	else
 	{
-		// If the timeline is going forwards
-		if (EnemyCharacterRef)
-		{
-			/* Communicate with the interface and tell the enemy to start chasing the player */
-			AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
-			if (EnemyControllerRef)
-				IDetectionInterface::Execute_StartChase(EnemyControllerRef);
-		}
+		OnDetected();
+	}
+}
 
-		if (DetectionHUD)
-		{
-			// Set the meter colour to indicate that the player has been fully detected 
-			DetectionHUD->SetDetectionMeterColour(FLinearColor::Red);
-		}
+void AProject_Relic_v2Character::OnDetected()
+{
+	// If the timeline is going forwards
+	if (EnemyCharacterRef)
+	{
+		/* Communicate with the interface and tell the enemy to start chasing the player */
+		AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
+		if( EnemyControllerRef )
+			IDetectionInterface::Execute_StartChase(EnemyControllerRef);
+	}
+
+	if( DetectionHUD )
+	{
+		// Set the meter colour to indicate that the player has been fully detected 
+		DetectionHUD->SetDetectionMeterColour(FLinearColor::Red);
 	}
 }
 

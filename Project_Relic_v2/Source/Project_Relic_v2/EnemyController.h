@@ -93,8 +93,14 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
 
+	/*UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	class UAISenseConfig_Sight* SightConfig;*/
+
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UAISenseConfig_Sight* SightConfig;
+	class UAISenseConfig_Player * AISenseConfig_Player;
+
+	//UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	//class UAISense_Player* AISense_Player;
 
 	/* Blackboard keys */
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
