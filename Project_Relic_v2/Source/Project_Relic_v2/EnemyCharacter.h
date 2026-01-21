@@ -10,6 +10,18 @@
 #include "EnemyCharacter.generated.h"
 
 
+USTRUCT(BlueprintType)
+struct FEnemyMoveSpeed
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
+	float Patrol = 150.0f; // Slow moving speed
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
+	float Chase = 400.0f; // Default Moving speed
+};
+
 /**
  *  AI character manager
  */
@@ -56,4 +68,9 @@ public:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* AnimDeath; // Animation Montage for enemy dying
+
+private:
+	
+
+	
 };

@@ -31,6 +31,8 @@ AEnemyCharacter::AEnemyCharacter()
 		PerceptionStimuliSourceComponent->RegisterWithPerceptionSystem();
 	}
 
+
+
 }
 
 // Called when the game starts or when spawned

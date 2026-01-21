@@ -35,6 +35,18 @@ public:
 	void StopChase();
 };
 
+UENUM(BlueprintType)
+enum class EEnemyState : uint8
+{
+	Patrol       UMETA(DisplayName = "Patrol"),
+	Investigate  UMETA(DisplayName = "Investigate"),
+	ChasePlayer  UMETA(DisplayName = "ChasePlayer"),
+	ShootPlayer  UMETA(DisplayName = "ShootPlayer"),
+	Dead		 UMETA(DisplayName = "Dead")
+};
+
+
+
 /**
  *
  */
@@ -79,6 +91,18 @@ private:
 	void SetupPerceptionSystem();
 
 	void OnDetectionDelayComplete();
+
+	/* Run the finite state machine that determines the AI's current behaviour */
+	void RunStateMachine();
+
+	/* State machine functions */
+	void Patrol();
+
+	void Investigate();
+
+	void ChasePlayer();
+
+	void ShootPlayer();
 
 private:
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
@@ -126,8 +150,12 @@ private:
 	AEnemyCharacter* ControlledEnemyCharacter;
 	AProject_Relic_v2Character* PlayerCharacter;
 
+	EEnemyState EnemyState;
+
+	bool bIsShooting = false;
+
 	/*UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UPawnSensingComponent* PawnSensingComponent;*/
 	
-
+	FEnemyMoveSpeed MoveSpeed;
 };

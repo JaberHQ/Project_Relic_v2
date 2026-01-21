@@ -32,6 +32,8 @@ AEnemyController::AEnemyController()
 	TargetLastKnownLocation = "TargetLastKnownLocation";
 
 	CurrentPatrolPoint = 0;
+
+	EnemyState = EEnemyState::Patrol;
 }
 
 void AEnemyController::BeginPlay()
@@ -42,6 +44,8 @@ void AEnemyController::BeginPlay()
 
 void AEnemyController::Death()
 {
+	EnemyState = EEnemyState::Dead;
+
 	/* Pause behaviour tree for AI logic to stop running */
 	UBrainComponent* BrainComp = GetBrainComponent();
 	if(BrainComp)
@@ -51,12 +55,18 @@ void AEnemyController::Death()
 void AEnemyController::StartChase_Implementation()
 {
 	bShouldChase = true;
-
+	EnemyState = EEnemyState::ChasePlayer;
 }
 
 void AEnemyController::StopChase_Implementation()
 {
 	bShouldChase = false;
+	EnemyState = EEnemyState::Investigate;
+
+	// Play a timer
+	// After investigation timer
+	// Return to patrol 
+		// EnemyState = EEnemyState::Patrol;
 
 	if( BlackboardComponent )
 	{
@@ -92,6 +102,7 @@ void AEnemyController::OnPossess(APawn* InPawn)
 		BehaviourTreeComponent->StartTree(*BehaviourTree);
 
 		ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
+		RunStateMachine();
 	}
 }
 
@@ -133,6 +144,106 @@ void AEnemyController::OnDetectionDelayComplete()
 		IDetectionInterface::Execute_StopDetection(PlayerCharacter);
 	}
 	bIsDetectingPlayer = false;
+}
+
+void AEnemyController::RunStateMachine()
+{
+	/*
+	if patrol
+		set walking speed
+		find random patrol
+		move to patrol location
+		wait 
+	if investigate
+		Rotate to face TargetLastKnownLocation
+		Wait
+		Move to LastKnownLocation
+		Wait 
+			Clear last known location (go back to patrol)
+
+	if chasePlayer
+		update walk speed to fast
+		rotate to face enemy - potentially do after move
+		move to player
+		wait
+
+	if shootPlayer
+		bshootPlayer = true; (Play the animation)
+		Raycast bullet to hit the player
+		Player to take damage
+	*/
+
+	switch (EnemyState)
+	{
+		case EEnemyState::Patrol:
+			Patrol();
+			break;
+		case EEnemyState::Investigate:
+			Investigate();
+			break;
+		case EEnemyState::ChasePlayer:
+			ChasePlayer();
+			break;
+		case EEnemyState::ShootPlayer:
+			ShootPlayer();
+			break;
+		case EEnemyState::Dead:
+			Death();
+			break;
+	}
+
+	
+}
+
+void AEnemyController::Patrol()
+{
+	/*if patrol
+		set walking speed
+		find random patrol
+		move to patrol location
+		wait*/
+
+	if (ControlledEnemyCharacter)
+	{
+		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
+
+		AAIPatrolPoint* CurrentPoint = Cast<AAIPatrolPoint>(BlackboardComponent->GetValueAsObject("PatrolLocation"));
+		TArray<AActor*> AvailablePatrolPoints = GetPatrolPoints();
+
+		AAIPatrolPoint* NextPatrolPoint = nullptr;
+
+		if (CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
+		{
+			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[CurrentPatrolPoint++]);
+		}
+		else
+		{
+			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[0]);
+			CurrentPatrolPoint = 0;
+		}
+
+		BlackboardComponent->SetValueAsObject(PatrolLocation, NextPatrolPoint);
+
+		MoveToLocation(BlackboardComponent->GetValueAsVector(PatrolLocation));
+
+		//FTimerHandle WaitDelay;
+		//float WaitTime = 5.0f;
+		//GetWorldTimerManager().SetTimer(WaitDelay, this, &AEnemyController::Patrol, WaitTime, false);
+	}
+
+	
+}
+
+void AEnemyController::Investigate()
+{
+}
+
+void AEnemyController::ChasePlayer()
+{
+}
+
+void AEnemyController::ShootPlayer()
+{
 }
 
 
