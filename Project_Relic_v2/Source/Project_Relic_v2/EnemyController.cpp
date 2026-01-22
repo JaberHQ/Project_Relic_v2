@@ -221,7 +221,6 @@ void AEnemyController::Patrol()
 
 		PatrolLocation = NextPatrolPoint;
 		MoveToActor(PatrolLocation);
-
 	}
 
 	
@@ -235,7 +234,6 @@ void AEnemyController::Investigate()
 		Move to LastKnownLocation
 		Wait
 		Clear last known location(go back to patrol)*/
-	FTimerHandle InvestigateHandle;
 	GetWorldTimerManager().SetTimer(InvestigateHandle, this, &AEnemyController::MoveToLastKnownLocation, 3.0f, false);
 }
 
@@ -258,7 +256,6 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	Super::OnMoveCompleted(RequestID, Result);
 
 	
-	FTimerHandle WaitHandle;
 	GetWorldTimerManager().SetTimer(WaitHandle,this, &AEnemyController::RunStateMachine, 3.0f, false);
 
 
@@ -275,6 +272,7 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 			if(!bIsDetectingPlayer)
 			{
 				EnemyState = EEnemyState::Investigate;
+				GetWorld()->GetTimerManager().ClearTimer(WaitHandle);
 
 				FVector TargetLocation = Stimulus.StimulusLocation;
 				TargetLastKnownLocation = TargetLocation;
@@ -293,10 +291,12 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 
 			if (bShouldChase)
 			{
+				GetWorld()->GetTimerManager().ClearTimer(InvestigateHandle);
 				EnemyActor = Cast<AEnemyCharacter>(Actor);
 				EnemyState = EEnemyState::ChasePlayer;
 			}
 		}
 	}
+	RunStateMachine();
 }
 

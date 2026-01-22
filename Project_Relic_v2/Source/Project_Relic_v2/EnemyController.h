@@ -163,4 +163,8 @@ private:
 	
 	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result);
 
+	FTimerHandle InvestigateHandle;
+	FTimerHandle WaitHandle;
+
+
 };
