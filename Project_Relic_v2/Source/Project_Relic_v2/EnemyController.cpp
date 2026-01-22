@@ -17,29 +17,21 @@
 AEnemyController::AEnemyController()
 {
 	/* Initialise blackboard and BT */
-	BehaviourTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviourTreeComponent"));
-	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
+	//BehaviourTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviourTreeComponent"));
+	//BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
 	SetupPerceptionSystem();
 
-	// Set AI peripheral
-	// 500.0f
-
-	// Sensing interval = 0.2
-
-	/* Initialise blackboard keys */
-	PatrolLocation = "PatrolLocation";
-	EnemyActor = "EnemyActor";
-	TargetLastKnownLocation = "TargetLastKnownLocation";
-
-	CurrentPatrolPoint = 0;
-
+	/* Initialise AI defaults */
+	PatrolLocation = nullptr;
+	EnemyActor = nullptr;
+	TargetLastKnownLocation = FVector::Zero();
 	EnemyState = EEnemyState::Patrol;
+	CurrentPatrolPoint = 0;
 }
 
 void AEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void AEnemyController::Death()
@@ -68,27 +60,31 @@ void AEnemyController::StopChase_Implementation()
 	// Return to patrol 
 		// EnemyState = EEnemyState::Patrol;
 
-	if( BlackboardComponent )
-	{
-		BlackboardComponent->ClearValue(EnemyActor);
-	}
+	EnemyActor = nullptr;
 }
 
 FVector AEnemyController::GetTargetLastKnownLocation() const
 {
-	return BlackboardComponent->GetValueAsVector(TargetLastKnownLocation);
+	return TargetLastKnownLocation;
 }
 
 void AEnemyController::ClearTargetLastKnownLocation()
 {
-	BlackboardComponent->ClearValue(TargetLastKnownLocation);
+	TargetLastKnownLocation = FVector::Zero();
 }
 
 void AEnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	if (BehaviourTree && BlackboardComponent)
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIPatrolPoint::StaticClass(), PatrolPoints);
+
+	ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
+
+	RunStateMachine();
+
+
+	/*if (BehaviourTree && BlackboardComponent)
 	{
 		UBlackboardData* BlackboardAsset = BehaviourTree->BlackboardAsset;
 		if (BlackboardAsset)
@@ -103,7 +99,7 @@ void AEnemyController::OnPossess(APawn* InPawn)
 
 		ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
 		RunStateMachine();
-	}
+	}*/
 }
 
 void AEnemyController::SetupPerceptionSystem()
@@ -205,9 +201,10 @@ void AEnemyController::Patrol()
 
 	if (ControlledEnemyCharacter)
 	{
+		FEnemyMoveSpeed MoveSpeed;
 		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
 
-		AAIPatrolPoint* CurrentPoint = Cast<AAIPatrolPoint>(BlackboardComponent->GetValueAsObject("PatrolLocation"));
+		AAIPatrolPoint* CurrentPoint = PatrolLocation;
 		TArray<AActor*> AvailablePatrolPoints = GetPatrolPoints();
 
 		AAIPatrolPoint* NextPatrolPoint = nullptr;
@@ -222,13 +219,9 @@ void AEnemyController::Patrol()
 			CurrentPatrolPoint = 0;
 		}
 
-		BlackboardComponent->SetValueAsObject(PatrolLocation, NextPatrolPoint);
+		PatrolLocation = NextPatrolPoint;
+		MoveToActor(PatrolLocation);
 
-		MoveToLocation(BlackboardComponent->GetValueAsVector(PatrolLocation));
-
-		//FTimerHandle WaitDelay;
-		//float WaitTime = 5.0f;
-		//GetWorldTimerManager().SetTimer(WaitDelay, this, &AEnemyController::Patrol, WaitTime, false);
 	}
 
 	
@@ -236,6 +229,14 @@ void AEnemyController::Patrol()
 
 void AEnemyController::Investigate()
 {
+	/*if investigate
+		Rotate to face TargetLastKnownLocation
+		Wait
+		Move to LastKnownLocation
+		Wait
+		Clear last known location(go back to patrol)*/
+	FTimerHandle InvestigateHandle;
+	GetWorldTimerManager().SetTimer(InvestigateHandle, this, &AEnemyController::MoveToLastKnownLocation, 3.0f, false);
 }
 
 void AEnemyController::ChasePlayer()
@@ -244,6 +245,24 @@ void AEnemyController::ChasePlayer()
 
 void AEnemyController::ShootPlayer()
 {
+}
+
+void AEnemyController::MoveToLastKnownLocation()
+{
+	MoveToLocation(TargetLastKnownLocation);
+
+}
+
+void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
+{
+	Super::OnMoveCompleted(RequestID, Result);
+
+	
+	FTimerHandle WaitHandle;
+	GetWorldTimerManager().SetTimer(WaitHandle,this, &AEnemyController::RunStateMachine, 3.0f, false);
+
+
+	//RunStateMachine();
 }
 
 
@@ -255,11 +274,10 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 		{
 			if(!bIsDetectingPlayer)
 			{
-				if (BlackboardComponent)
-				{
-					FVector TargetLocation = Stimulus.StimulusLocation;
-					BlackboardComponent->SetValueAsVector(TargetLastKnownLocation, TargetLocation);
-				}
+				EnemyState = EEnemyState::Investigate;
+
+				FVector TargetLocation = Stimulus.StimulusLocation;
+				TargetLastKnownLocation = TargetLocation;
 
 				bIsDetectingPlayer = true;
 
@@ -275,10 +293,8 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 
 			if (bShouldChase)
 			{
-				if (BlackboardComponent)
-				{
-					BlackboardComponent->SetValueAsObject(EnemyActor, Actor);
-				}
+				EnemyActor = Cast<AEnemyCharacter>(Actor);
+				EnemyState = EEnemyState::ChasePlayer;
 			}
 		}
 	}

@@ -69,8 +69,4 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* AnimDeath; // Animation Montage for enemy dying
 
-private:
-	
-
-	
 };

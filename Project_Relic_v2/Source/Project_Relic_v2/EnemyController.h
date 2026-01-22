@@ -10,6 +10,7 @@
 
 class AEnemyCharacter;
 class AProject_Relic_v2Character;
+class AAIPatrolPoint;
 
 UINTERFACE( Blueprintable )
 class UDetectionInterface : public UInterface
@@ -42,6 +43,7 @@ enum class EEnemyState : uint8
 	Investigate  UMETA(DisplayName = "Investigate"),
 	ChasePlayer  UMETA(DisplayName = "ChasePlayer"),
 	ShootPlayer  UMETA(DisplayName = "ShootPlayer"),
+	HitPlayer	 UMETA(DisplayName = "HitPlayer"),
 	Dead		 UMETA(DisplayName = "Dead")
 };
 
@@ -63,8 +65,8 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	FORCEINLINE UBlackboardComponent* GetBlackBoardComponent() const { return BlackboardComponent; }
-	FORCEINLINE UBehaviorTreeComponent* GetBehaviourTree() const { return BehaviourTreeComponent; }
+	/*FORCEINLINE UBlackboardComponent* GetBlackBoardComponent() const { return BlackboardComponent; }
+	FORCEINLINE UBehaviorTreeComponent* GetBehaviourTree() const { return BehaviourTreeComponent; }*/
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
 	//UBehaviorTree* GetBehaviourTree() const { return BehaviourTree; }
 
@@ -104,15 +106,17 @@ private:
 
 	void ShootPlayer();
 
+	void MoveToLastKnownLocation();
+
 private:
-	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	/*UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* BehaviourTree;
 
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UBehaviorTreeComponent* BehaviourTreeComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	UBlackboardComponent* BlackboardComponent;
+	UBlackboardComponent* BlackboardComponent;*/
 
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
@@ -128,16 +132,16 @@ private:
 
 	/* Blackboard keys */
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	FName PatrolLocation;
+	AAIPatrolPoint* PatrolLocation;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	FName EnemyActor;
+	AEnemyCharacter* EnemyActor;
 
 	/*UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	FName HasLineOfSight;*/
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	FName TargetLastKnownLocation;
+	FVector TargetLastKnownLocation;
 
 	TArray<AActor*> PatrolPoints;
 
@@ -157,5 +161,6 @@ private:
 	/*UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UPawnSensingComponent* PawnSensingComponent;*/
 	
-	FEnemyMoveSpeed MoveSpeed;
+	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result);
+
 };

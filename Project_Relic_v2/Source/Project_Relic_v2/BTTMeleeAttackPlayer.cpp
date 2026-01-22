@@ -13,7 +13,7 @@ UBTTMeleeAttackPlayer::UBTTMeleeAttackPlayer(FObjectInitializer const& ObjectIni
 
 EBTNodeResult::Type UBTTMeleeAttackPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AEnemyController* EnemyController = Cast<AEnemyController>(OwnerComp.GetAIOwner());
+	/*AEnemyController* EnemyController = Cast<AEnemyController>(OwnerComp.GetAIOwner());
 	if (EnemyController)
 	{
 		UBlackboardComponent* BlackboardComponent = EnemyController->GetBlackBoardComponent();
@@ -25,6 +25,6 @@ EBTNodeResult::Type UBTTMeleeAttackPlayer::ExecuteTask(UBehaviorTreeComponent& O
 				PlayerCharacter->GetHealthComponent()->TakeDamage(10.0f);
 			}
 		}
-	}
+	}*/
 	return EBTNodeResult::Failed;
 }
