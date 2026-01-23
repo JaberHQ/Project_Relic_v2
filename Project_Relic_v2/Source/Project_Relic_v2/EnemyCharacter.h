@@ -65,8 +65,26 @@ public:
 	/*********************************************************************/
 	virtual void HandleDeath_Implementation() override;
 
+	void RaycastShot();
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE bool GetIsShooting() const { return bIsShooting; }
+
+	void SetIsShooting(bool IsShooting) { bIsShooting = IsShooting; }
+private:
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* AnimDeath; // Animation Montage for enemy dying
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UAnimMontage* AnimShoot; // Animation Montage for enemy dying
+
+private:
+	/** Line trace distance (how far the player can shoot) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
+	float ShootingDistance;
+
+	bool bIsShooting = false;
 
 };

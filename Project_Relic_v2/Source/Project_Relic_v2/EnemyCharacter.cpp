@@ -7,6 +7,7 @@
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "HealthComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Project_Relic_v2Character.h"
 #include "Perception/AISense_Sight.h"
 
 // Sets default values
@@ -20,6 +21,8 @@ AEnemyCharacter::AEnemyCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 520.0f, 0.0f);
 
 	// Health defaults
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent" ));
@@ -31,7 +34,7 @@ AEnemyCharacter::AEnemyCharacter()
 		PerceptionStimuliSourceComponent->RegisterWithPerceptionSystem();
 	}
 
-
+	ShootingDistance = 2000.0f;
 
 }
 
@@ -67,6 +70,44 @@ void AEnemyCharacter::HandleDeath_Implementation()
 	if (EnemyController)
 	{
 		EnemyController->Death();
+	}
+}
+
+void AEnemyCharacter::RaycastShot()
+{
+	FVector Location;
+	FRotator Rotation;
+	FHitResult Hit;
+
+	GetController()->GetPlayerViewPoint(Location, Rotation); // This can be changed to camera ----
+
+	FVector Start = Location;
+	FVector End = Start + (Rotation.Vector() * ShootingDistance);
+
+	// Send line trace from players pov
+	FCollisionQueryParams TraceParams;
+	TraceParams.AddIgnoredActor(this);
+	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
+
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 2.0f); // DEBUG -----------------------
+
+	// If line trace has hit an object
+	if (bHit)
+	{
+		/* If AI has been hit */
+		AProject_Relic_v2Character* PlayerCharacter = Cast<AProject_Relic_v2Character>(Hit.GetActor());
+		if (PlayerCharacter)
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy has been hit!")); // DEBUG -----------------------
+			DrawDebugBox(GetWorld(), Hit.ImpactPoint, FVector(5, 5, 5), FColor::Blue, false, 2.0f); // DEBUG -----------------------
+
+			PlayerCharacter->GetHealthComponent()->TakeDamage(10.0f);
+		}
+	}
+
+	if (AnimShoot)
+	{
+		PlayAnimMontage(AnimShoot);
 	}
 }
 

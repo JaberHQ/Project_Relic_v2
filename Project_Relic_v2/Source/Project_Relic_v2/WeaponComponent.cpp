@@ -10,14 +10,14 @@
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
 	:TimeBetweenShots(0.15f)
-	, ShootingDistance(2000.0f)
-	, WeaponIndex(0)
-	, CurrentWeapon(EAmmunitionType::Primary)
-	, bCanShoot(true)
-	, bIsShooting(false)
-	, bIsReloading(false)
-	, bIsAiming(false)
-	, ReloadTime(2.0f)
+	,ShootingDistance(2000.0f)
+	,WeaponIndex(0)
+	,CurrentWeapon(EAmmunitionType::Primary)
+	,bCanShoot(true)
+	,bIsShooting(false)
+	,bIsReloading(false)
+	,bIsAiming(false)
+	,ReloadTime(2.0f)
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -79,14 +79,14 @@ void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-ABaseWeapon* UWeaponComponent::SpawnWeapon(const TSubclassOf<ABaseWeapon> weaponRef, const FTransform transform, const FActorSpawnParameters spawnInfo)
+ABaseWeapon* UWeaponComponent::SpawnWeapon(const TSubclassOf<ABaseWeapon> WeaponRef, const FTransform Transform, const FActorSpawnParameters SpawnInfo)
 {
-	return GetWorld()->SpawnActor<ABaseWeapon>(weaponRef, transform, spawnInfo);
+	return GetWorld()->SpawnActor<ABaseWeapon>(WeaponRef, Transform, SpawnInfo);
 }
 
-ABaseWeapon* UWeaponComponent::SpawnWeapon(const TSubclassOf<ABaseWeapon> weaponRef, const FVector location, const FRotator rotator, const FActorSpawnParameters spawnInfo)
+ABaseWeapon* UWeaponComponent::SpawnWeapon(const TSubclassOf<ABaseWeapon> WeaponRef, const FVector Location, const FRotator Rotator, const FActorSpawnParameters SpawnInfo)
 {
-	return GetWorld()->SpawnActor<ABaseWeapon>(weaponRef, location, rotator, spawnInfo);
+	return GetWorld()->SpawnActor<ABaseWeapon>(WeaponRef, Location, Rotator, SpawnInfo);
 }
 
 void UWeaponComponent::InitAimingTimeline()

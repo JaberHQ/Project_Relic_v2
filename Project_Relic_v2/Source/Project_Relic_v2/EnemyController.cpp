@@ -12,6 +12,8 @@
 #include "Project_Relic_v2Character.h"
 #include <Perception/AISenseConfig_Sight.h>
 #include "Perception/AISense_Sight.h"
+#include "Navigation/PathFollowingComponent.h"
+#include "Engine/Canvas.h"
 #include "Perception/AIPerceptionComponent.h"
 
 AEnemyController::AEnemyController()
@@ -27,6 +29,19 @@ AEnemyController::AEnemyController()
 	TargetLastKnownLocation = FVector::Zero();
 	EnemyState = EEnemyState::Patrol;
 	CurrentPatrolPoint = 0;
+}
+
+void AEnemyController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (EnemyState == EEnemyState::ShootPlayer && PlayerCharacter && ControlledEnemyCharacter)
+	{
+		FRotator LookAtRotation = (PlayerCharacter->GetActorLocation() - ControlledEnemyCharacter->GetActorLocation()).Rotation();
+		ControlledEnemyCharacter->SetActorRotation(LookAtRotation);
+	}
+		//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
+
 }
 
 void AEnemyController::BeginPlay()
@@ -47,7 +62,8 @@ void AEnemyController::Death()
 void AEnemyController::StartChase_Implementation()
 {
 	bShouldChase = true;
-	EnemyState = EEnemyState::ChasePlayer;
+	EnemyState = EEnemyState::Reposition;
+	RunStateMachine();
 }
 
 void AEnemyController::StopChase_Implementation()
@@ -82,24 +98,6 @@ void AEnemyController::OnPossess(APawn* InPawn)
 	ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
 
 	RunStateMachine();
-
-
-	/*if (BehaviourTree && BlackboardComponent)
-	{
-		UBlackboardData* BlackboardAsset = BehaviourTree->BlackboardAsset;
-		if (BlackboardAsset)
-		{
-			BlackboardComponent->InitializeBlackboard(*BlackboardAsset);
-		}
-
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIPatrolPoint::StaticClass(), PatrolPoints);
-
-		RunBehaviorTree(BehaviourTree);
-		BehaviourTreeComponent->StartTree(*BehaviourTree);
-
-		ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
-		RunStateMachine();
-	}*/
 }
 
 void AEnemyController::SetupPerceptionSystem()
@@ -157,7 +155,7 @@ void AEnemyController::RunStateMachine()
 		Wait 
 			Clear last known location (go back to patrol)
 
-	if chasePlayer
+	if Reposition
 		update walk speed to fast
 		rotate to face enemy - potentially do after move
 		move to player
@@ -169,6 +167,7 @@ void AEnemyController::RunStateMachine()
 		Player to take damage
 	*/
 
+	
 	switch (EnemyState)
 	{
 		case EEnemyState::Patrol:
@@ -177,8 +176,8 @@ void AEnemyController::RunStateMachine()
 		case EEnemyState::Investigate:
 			Investigate();
 			break;
-		case EEnemyState::ChasePlayer:
-			ChasePlayer();
+		case EEnemyState::Reposition:
+			GetToPosition();
 			break;
 		case EEnemyState::ShootPlayer:
 			ShootPlayer();
@@ -186,8 +185,15 @@ void AEnemyController::RunStateMachine()
 		case EEnemyState::Dead:
 			Death();
 			break;
+		default:
+			break;
 	}
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT(" Current EnemyState"EnemyState)); // DEBUG -----------------------
 
+	/*if (ControlledEnemyCharacter && EnemyState != EEnemyState::ShootPlayer)
+	{
+		ControlledEnemyCharacter->SetIsShooting(false);
+	}*/
 	
 }
 
@@ -237,13 +243,45 @@ void AEnemyController::Investigate()
 	GetWorldTimerManager().SetTimer(InvestigateHandle, this, &AEnemyController::MoveToLastKnownLocation, 3.0f, false);
 }
 
-void AEnemyController::ChasePlayer()
+void AEnemyController::GetToPosition()
 {
+	/*if chasePlayer
+		update walk speed to fast
+		rotate to face enemy - potentially do after move
+		move to player
+		wait*/
+	
+	if (ControlledEnemyCharacter && PlayerCharacter)
+	{
+		FEnemyMoveSpeed MoveSpeed;
+		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
+		MoveToActor(PlayerCharacter, 500.0f);
+
+	}
 }
 
 void AEnemyController::ShootPlayer()
 {
+	/*if shootPlayer
+		bshootPlayer = true; (Play the animation)
+		Raycast bullet to hit the player
+		Player to take damage
+		*/
+	if (ControlledEnemyCharacter && PlayerCharacter)
+	{
+		//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
+		ControlledEnemyCharacter->SetIsShooting(true);
+		ControlledEnemyCharacter->RaycastShot();
+		GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemyController::RunStateMachine, 3.0f, false);
+
+		//SetFocus(EnemyActor);
+		//GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemyController::ShootPlayer, 3.0f, false);
+	}
+	
+
 }
+
+
 
 void AEnemyController::MoveToLastKnownLocation()
 {
@@ -255,10 +293,22 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 {
 	Super::OnMoveCompleted(RequestID, Result);
 
-	
+	if (EnemyState == EEnemyState::Investigate)
+	{
+		if (EnemyActor == nullptr)
+		{
+			EnemyState = EEnemyState::Patrol;
+		}
+	}
+	if (EnemyState == EEnemyState::Reposition)
+	{
+		EnemyState = EEnemyState::ShootPlayer;
+		//ShootPlayer();
+	}
+
 	GetWorldTimerManager().SetTimer(WaitHandle,this, &AEnemyController::RunStateMachine, 3.0f, false);
-
-
+		//GetWorldTimerManager().ClearTimer(WaitHandle);
+	
 	//RunStateMachine();
 }
 
@@ -271,8 +321,7 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 		{
 			if(!bIsDetectingPlayer)
 			{
-				EnemyState = EEnemyState::Investigate;
-				GetWorld()->GetTimerManager().ClearTimer(WaitHandle);
+				//GetWorld()->GetTimerManager().ClearTimer(WaitHandle);
 
 				FVector TargetLocation = Stimulus.StimulusLocation;
 				TargetLastKnownLocation = TargetLocation;
@@ -282,8 +331,10 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 				PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
 				if(ControlledEnemyCharacter && PlayerCharacter)
 				{
+					EnemyState = EEnemyState::Investigate;
 					IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
 				}
+				RunStateMachine();
 			}
 
 			GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
@@ -293,10 +344,10 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 			{
 				GetWorld()->GetTimerManager().ClearTimer(InvestigateHandle);
 				EnemyActor = Cast<AEnemyCharacter>(Actor);
-				EnemyState = EEnemyState::ChasePlayer;
+				//EnemyState = EEnemyState::Reposition;
 			}
 		}
 	}
-	RunStateMachine();
+	//RunStateMachine();
 }
 
