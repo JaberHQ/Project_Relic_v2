@@ -507,9 +507,9 @@ void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
 		DetectionHUD->SetEnemyCharacter(nullptr);
 
 		/* Communicate with the interface and tell the enemy to stop chasing the player */
-		AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
+		/*AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
 		if(EnemyControllerRef)
-			IDetectionInterface::Execute_StopChase(EnemyControllerRef);
+			IDetectionInterface::Execute_StopChase(EnemyControllerRef);*/
 	}
 
 }

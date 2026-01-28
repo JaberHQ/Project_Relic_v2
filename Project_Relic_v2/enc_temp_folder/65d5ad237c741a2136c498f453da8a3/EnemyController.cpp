@@ -267,7 +267,7 @@ void AEnemyController::Reposition()
 		FEnemyMoveSpeed MoveSpeed;
 		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
 		RunEQS();
-		//GetWorldTimerManager().SetTimer(EQSTimerHandle, this, &AEnemyController::RunEQS, 3.0f, false);
+		GetWorldTimerManager().SetTimer(EQSTimerHandle, this, &AEnemyController::RunEQS, 3.0f, false);
 
 
 	}

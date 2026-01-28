@@ -104,7 +104,7 @@ private:
 
 	void Investigate();
 
-	void GetToPosition();
+	void Reposition();
 
 	void ShootPlayer();
 
@@ -144,7 +144,9 @@ private:
 
 	bool bShouldChase;
 
-	bool bFindCover = false;
+	//bool bFindCover = false;
+
+	FTimerHandle EQSTimerHandle;
 
 	FTimerHandle DetectionTimerHandle;
 
