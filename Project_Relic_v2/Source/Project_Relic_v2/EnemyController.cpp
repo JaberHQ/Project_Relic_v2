@@ -47,6 +47,8 @@ void AEnemyController::Tick(float DeltaTime)
 void AEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, this);
 }
 
 void AEnemyController::Death()
@@ -112,6 +114,8 @@ void AEnemyController::SetupPerceptionSystem()
 		AISenseConfig_Player->TargetRadius = 1000.0f;
 		//AISenseConfig_Player->SetMaxAge(2.5f);
 	}
+
+	
 	/*if (SightConfig)
 	{
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
@@ -253,9 +257,14 @@ void AEnemyController::GetToPosition()
 	
 	if (ControlledEnemyCharacter && PlayerCharacter)
 	{
-		FEnemyMoveSpeed MoveSpeed;
+		/*FEnemyMoveSpeed MoveSpeed;
 		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
-		MoveToActor(PlayerCharacter, 500.0f);
+		MoveToActor(PlayerCharacter, 500.0f);*/
+		if (!bFindCover)
+		{
+			RunEQS();
+			bFindCover = true;
+		}
 
 	}
 }
@@ -287,6 +296,18 @@ void AEnemyController::MoveToLastKnownLocation()
 {
 	MoveToLocation(TargetLastKnownLocation);
 
+}
+
+void AEnemyController::FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result)
+{
+	//MoveToActor(PlayerCharacter, 500.0f);
+	MoveTo(Result->GetItemAsLocation(0));
+	
+}
+
+void AEnemyController::RunEQS()
+{
+	FindCoverQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::FindCoverQueryRequestFinished);
 }
 
 void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)

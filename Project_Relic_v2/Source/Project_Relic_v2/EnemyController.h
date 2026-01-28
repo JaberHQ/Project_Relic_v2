@@ -6,11 +6,15 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "EnvironmentQuery/EnvQuery.h"
+#include "EnvironmentQuery/EnvQueryManager.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "EnemyController.generated.h"
 
 class AEnemyCharacter;
 class AProject_Relic_v2Character;
 class AAIPatrolPoint;
+//class UEnvQuery;
 
 UINTERFACE( Blueprintable )
 class UDetectionInterface : public UInterface
@@ -106,6 +110,16 @@ private:
 
 	void MoveToLastKnownLocation();
 
+protected:
+	UPROPERTY(EditAnywhere, Category = "EQS")
+	UEnvQuery* FindCoverQuery;
+
+	FEnvQueryRequest FindCoverQueryRequest;
+
+	void FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result);
+
+	UFUNCTION()
+	void RunEQS();
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
@@ -129,6 +143,8 @@ private:
 	bool bIsDetectingPlayer; // If the AI has initially seen the player 
 
 	bool bShouldChase;
+
+	bool bFindCover = false;
 
 	FTimerHandle DetectionTimerHandle;
 
