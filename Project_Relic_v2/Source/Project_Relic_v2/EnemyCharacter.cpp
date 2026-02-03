@@ -24,6 +24,7 @@ AEnemyCharacter::AEnemyCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 520.0f, 0.0f);
 
+
 	// Health defaults
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent" ));
 
@@ -36,6 +37,7 @@ AEnemyCharacter::AEnemyCharacter()
 
 	ShootingDistance = 2000.0f;
 
+	//UBaseGameEntity* Entity = NewObject<UBaseGameEntity>();
 }
 
 // Called when the game starts or when spawned

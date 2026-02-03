@@ -18,17 +18,15 @@
 
 AEnemyController::AEnemyController()
 {
-	/* Initialise blackboard and BT */
-	//BehaviourTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviourTreeComponent"));
-	//BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
+	PrimaryActorTick.bCanEverTick = true;
+
 	SetupPerceptionSystem();
 
 	/* Initialise AI defaults */
 	PatrolLocation = nullptr;
 	EnemyActor = nullptr;
 	TargetLastKnownLocation = FVector::Zero();
-	EnemyState = EEnemyState::Reposition;
-
+	EnemyState = EEnemyState::Patrol;
 	CurrentPatrolPoint = 0;
 }
 
@@ -41,7 +39,7 @@ void AEnemyController::Tick(float DeltaTime)
 		FRotator LookAtRotation = (PlayerCharacter->GetActorLocation() - ControlledEnemyCharacter->GetActorLocation()).Rotation();
 		ControlledEnemyCharacter->SetActorRotation(LookAtRotation);
 	}
-		//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
+	//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
 
 }
 
@@ -57,29 +55,30 @@ void AEnemyController::Death()
 	EnemyState = EEnemyState::Dead;
 
 	/* Pause behaviour tree for AI logic to stop running */
-	UBrainComponent* BrainComp = GetBrainComponent();
+	/*UBrainComponent* BrainComp = GetBrainComponent();
 	if(BrainComp)
-		BrainComp->PauseLogic(TEXT("Enemy Dead"));
+		BrainComp->PauseLogic(TEXT("Enemy Dead"));*/
 }
 
 void AEnemyController::StartChase_Implementation()
 {
 	bShouldChase = true;
+	
 	EnemyState = EEnemyState::Reposition;
-	RunStateMachine();
+	//RunStateMachine();
 }
 
 void AEnemyController::StopChase_Implementation()
 {
-	bShouldChase = false;
-	EnemyState = EEnemyState::Investigate;
+	//bShouldChase = false;
+	//EnemyState = EEnemyState::Investigate;
 
-	// Play a timer
-	// After investigation timer
-	// Return to patrol 
-		// EnemyState = EEnemyState::Patrol;
+			// Play a timer
+			// After investigation timer
+			// Return to patrol 
+				// EnemyState = EEnemyState::Patrol;
 
-	EnemyActor = nullptr;
+	//EnemyActor = nullptr;
 }
 
 FVector AEnemyController::GetTargetLastKnownLocation() const
@@ -92,6 +91,8 @@ void AEnemyController::ClearTargetLastKnownLocation()
 	TargetLastKnownLocation = FVector::Zero();
 }
 
+
+
 void AEnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -100,7 +101,7 @@ void AEnemyController::OnPossess(APawn* InPawn)
 
 	ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
 
-	RunStateMachine();
+	//RunStateMachine();
 }
 
 void AEnemyController::SetupPerceptionSystem()
@@ -145,68 +146,95 @@ void AEnemyController::OnDetectionDelayComplete()
 	bIsDetectingPlayer = false;
 }
 
-void AEnemyController::RunStateMachine()
-{
-	/*
-	if patrol
-		set walking speed
-		find random patrol
-		move to patrol location
-		wait 
-	if investigate
-		Rotate to face TargetLastKnownLocation
-		Wait
-		Move to LastKnownLocation
-		Wait 
-			Clear last known location (go back to patrol)
-
-	if Reposition
-		update walk speed to fast
-		rotate to face enemy - potentially do after move
-		move to player
-		wait
-
-	if shootPlayer
-		bshootPlayer = true; (Play the animation)
-		Raycast bullet to hit the player
-		Player to take damage
-	*/
-
-	if (EnemyState != EEnemyState::Reposition)
-	{
-		GetWorldTimerManager().ClearTimer(EQSTimerHandle);
-	}
-
-
-
-	switch (EnemyState)
-	{
-		case EEnemyState::Patrol:
-			Patrol();
-			break;
-		case EEnemyState::Investigate:
-			Investigate();
-			break;
-		case EEnemyState::Reposition:
-			Reposition();
-			break;
-		case EEnemyState::ShootPlayer:
-			ShootPlayer();
-			break;
-		case EEnemyState::Dead:
-			Death();
-			break;
-		default:
-			break;
-	}
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT(" Current EnemyState"EnemyState)); // DEBUG -----------------------
-
-	/*if (ControlledEnemyCharacter && EnemyState != EEnemyState::ShootPlayer)
-	{
-		ControlledEnemyCharacter->SetIsShooting(false);
-	}*/
-	
-}
+//void AEnemyController::RunStateMachine()
+//{
+//
+//	switch(EnemyState)
+//	{
+//	case EEnemyState::Patrol:
+//		Patrol();
+//		break;
+//	case EEnemyState::Reposition:
+//		
+//		Reposition();
+//		break;
+//	/*case EEnemyState::Investigate:
+//		Investigate();
+//		break;
+//	case EEnemyState::Reposition:
+//		Reposition();
+//		break;
+//	case EEnemyState::ShootPlayer:
+//		ShootPlayer();
+//		break;
+//	case EEnemyState::Dead:
+//		Death();
+//		break;*/
+//	default:
+//		break;
+//	}
+//
+//
+//	/*
+//	if patrol
+//		set walking speed
+//		find random patrol
+//		move to patrol location
+//		wait 
+//	if investigate
+//		Rotate to face TargetLastKnownLocation
+//		Wait
+//		Move to LastKnownLocation
+//		Wait 
+//			Clear last known location (go back to patrol)
+//
+//	if Reposition
+//		update walk speed to fast
+//		rotate to face enemy - potentially do after move
+//		move to player
+//		wait
+//
+//	if shootPlayer
+//		bshootPlayer = true; (Play the animation)
+//		Raycast bullet to hit the player
+//		Player to take damage
+//	*/
+//
+//	/*if (EnemyState != EEnemyState::Reposition)
+//	{
+//		GetWorldTimerManager().ClearTimer(EQSTimerHandle);
+//	}
+//
+//
+//
+//	switch (EnemyState)
+//	{
+//		case EEnemyState::Patrol:
+//			Patrol();
+//			break;
+//		case EEnemyState::Investigate:
+//			Investigate();
+//			break;
+//		case EEnemyState::Reposition:
+//			Reposition();
+//			break;
+//		case EEnemyState::ShootPlayer:
+//			ShootPlayer();
+//			break;
+//		case EEnemyState::Dead:
+//			Death();
+//			break;
+//		default:
+//			break;
+//	}*/
+//	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT(" Current EnemyState"EnemyState)); // DEBUG -----------------------
+//
+//	/*if (ControlledEnemyCharacter && EnemyState != EEnemyState::ShootPlayer)
+//	{
+//		ControlledEnemyCharacter->SetIsShooting(false);
+//	}*/
+//	
+//}
 
 void AEnemyController::Patrol()
 {
@@ -216,7 +244,7 @@ void AEnemyController::Patrol()
 		move to patrol location
 		wait*/
 
-	if (ControlledEnemyCharacter)
+	/*if (ControlledEnemyCharacter)
 	{
 		FEnemyMoveSpeed MoveSpeed;
 		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
@@ -238,7 +266,7 @@ void AEnemyController::Patrol()
 
 		PatrolLocation = NextPatrolPoint;
 		MoveToActor(PatrolLocation);
-	}
+	}*/
 
 	
 }
@@ -264,12 +292,11 @@ void AEnemyController::Reposition()
 	
 	if (ControlledEnemyCharacter && PlayerCharacter)
 	{
+		ControlledEnemyCharacter->UnCrouch();
 		FEnemyMoveSpeed MoveSpeed;
 		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
 		RunEQS();
 		//GetWorldTimerManager().SetTimer(EQSTimerHandle, this, &AEnemyController::RunEQS, 3.0f, false);
-
-
 	}
 }
 
@@ -285,16 +312,12 @@ void AEnemyController::ShootPlayer()
 		//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
 		ControlledEnemyCharacter->SetIsShooting(true);
 		ControlledEnemyCharacter->RaycastShot();
-		GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemyController::RunStateMachine, 3.0f, false);
+		//GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemyController::RunStateMachine, 3.0f, false);
 
 		//SetFocus(EnemyActor);
 		//GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemyController::ShootPlayer, 3.0f, false);
 	}
-	
-
 }
-
-
 
 void AEnemyController::MoveToLastKnownLocation()
 {
@@ -325,15 +348,18 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 			EnemyState = EEnemyState::Patrol;
 		}
 	}
+
 	if (EnemyState == EEnemyState::Reposition)
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Repositioning...")); // DEBUG -----------------------
-		ControlledEnemyCharacter->Crouch();
+		//ControlledEnemyCharacter->Crouch();
 		//EnemyState = EEnemyState::ShootPlayer;
 		//ShootPlayer();
+		if (ControlledEnemyCharacter)
+			ControlledEnemyCharacter->Crouch();
 	}
 
-	GetWorldTimerManager().SetTimer(WaitHandle,this, &AEnemyController::RunStateMachine, 3.0f, false);
+	//GetWorldTimerManager().SetTimer(WaitHandle,this, &AEnemyController::RunStateMachine, 3.0f, false);
 		//GetWorldTimerManager().ClearTimer(WaitHandle);
 	
 	//RunStateMachine();
@@ -346,35 +372,76 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 	{
 		if (Stimulus.Type == UAISense::GetSenseID<UAISense_Player>())
 		{
-			if(!bIsDetectingPlayer)
-			{
-				//GetWorld()->GetTimerManager().ClearTimer(WaitHandle);
-
-				FVector TargetLocation = Stimulus.StimulusLocation;
-				TargetLastKnownLocation = TargetLocation;
-
-				bIsDetectingPlayer = true;
-
-				PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
-				if(ControlledEnemyCharacter && PlayerCharacter)
-				{
-					//EnemyState = EEnemyState::Investigate;
-					IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
-				}
-				RunStateMachine();
-			}
-
-			GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
-			GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
-
-			if (bShouldChase)
-			{
-				GetWorld()->GetTimerManager().ClearTimer(InvestigateHandle);
-				EnemyActor = Cast<AEnemyCharacter>(Actor);
-				//EnemyState = EEnemyState::Reposition;
-			}
+			PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
+			SetHasLineOfSight(true);
+			/*EnemyState = EEnemyState::Reposition;
+			RunStateMachine();*/
 		}
 	}
-	//RunStateMachine();
 }
+
+//void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
+//{
+//	if (Stimulus.WasSuccessfullySensed())
+//	{
+//		if (Stimulus.Type == UAISense::GetSenseID<UAISense_Player>())
+//		{
+//			if(!bIsDetectingPlayer)
+//			{
+//				//GetWorld()->GetTimerManager().ClearTimer(WaitHandle);
+//
+//				FVector TargetLocation = Stimulus.StimulusLocation;
+//				TargetLastKnownLocation = TargetLocation;
+//
+//				bIsDetectingPlayer = true;
+//
+//				PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
+//				if(ControlledEnemyCharacter && PlayerCharacter)
+//				{
+//					//EnemyState = EEnemyState::Investigate;
+//					//IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
+//				}
+//				//RunStateMachine();
+//			}
+//
+//			//GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
+//			//GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
+//
+//			if (bShouldChase)
+//			{
+//				//GetWorld()->GetTimerManager().ClearTimer(InvestigateHandle);
+//				//EnemyActor = Cast<AEnemyCharacter>(Actor);
+//				//EnemyState = EEnemyState::Reposition;
+//			}
+//		}
+//	}
+//	//RunStateMachine();
+//}
+
+
+void AEnemyController::ChangeState(State<AEnemyController>* NewState)
+{
+	check(CurrentState && NewState);
+
+	CurrentState->Exit(this);
+	CurrentState = NewState;
+	CurrentState->Enter(this);
+}
+
+void AEnemyController::Update()
+{
+	// Changes here
+
+
+	if (CurrentState)
+	{
+		CurrentState->Execute(this);
+	}
+}
+
+void AEnemyController::SetID(int val)
+{
+	ID = val;
+}
+
 

@@ -9,12 +9,15 @@
 #include "EnvironmentQuery/EnvQuery.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
+#include "State.h"
 #include "EnemyController.generated.h"
 
 class AEnemyCharacter;
 class AProject_Relic_v2Character;
 class AAIPatrolPoint;
 //class UEnvQuery;
+
+
 
 UINTERFACE( Blueprintable )
 class UDetectionInterface : public UInterface
@@ -52,7 +55,6 @@ enum class EEnemyState : uint8
 };
 
 
-
 /**
  *
  */
@@ -88,6 +90,11 @@ public:
 
 	void ClearTargetLastKnownLocation();
 
+	bool GetHasLineOfSight() { return bHasLineOfSight; }
+	void SetHasLineOfSight(bool HasLineOfSight) { bHasLineOfSight = HasLineOfSight; }
+
+private:
+	bool bHasLineOfSight = false;
 
 private:
 	virtual void OnPossess(APawn* InPawn) override;
@@ -97,7 +104,7 @@ private:
 	void OnDetectionDelayComplete();
 
 	/* Run the finite state machine that determines the AI's current behaviour */
-	void RunStateMachine();
+	//void RunStateMachine();
 
 	/* State machine functions */
 	void Patrol();
@@ -121,6 +128,12 @@ protected:
 	UFUNCTION()
 	void RunEQS();
 
+public:
+	AEnemyCharacter* ControlledEnemyCharacter;
+	AProject_Relic_v2Character* PlayerCharacter;
+	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	AAIPatrolPoint* PatrolLocation;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
@@ -129,8 +142,7 @@ private:
 	class UAISenseConfig_Player * AISenseConfig_Player;
 
 	/* Blackboard keys */
-	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	AAIPatrolPoint* PatrolLocation;
+	
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	AEnemyCharacter* EnemyActor;
@@ -150,11 +162,9 @@ private:
 
 	FTimerHandle DetectionTimerHandle;
 
-	AEnemyCharacter* ControlledEnemyCharacter;
-	AProject_Relic_v2Character* PlayerCharacter;
+	
 
 	EEnemyState EnemyState;
-
 
 	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result);
 
@@ -164,4 +174,20 @@ private:
 
 
 
+public:
+	int32 GetID() const{ return ID; }
+
+	void ChangeState(State<AEnemyController>* NewState);
+
+	virtual void Update();
+
+private:
+	void SetID(int val);
+
+private:
+	static int32 NextValidID; // For each enemy instantiated, this will increment
+
+	int32 ID; // The Unique identifier for each enemy instantiated
+	
+	State<AEnemyController>* CurrentState;
 };

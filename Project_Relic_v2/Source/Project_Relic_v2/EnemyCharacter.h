@@ -7,8 +7,35 @@
 #include "AIController.h"
 #include "Animation/AnimMontage.h"
 #include "HealthComponent.h"
+#include "State.h"
 #include "EnemyCharacter.generated.h"
 
+//UCLASS(Abstract, Blueprintable)
+//class PROJECT_RELIC_V2_API UBaseGameEntity : public UObject
+//{
+//	GENERATED_BODY()
+//
+//public:
+//	
+//	UBaseGameEntity();
+//
+//	void InitializeWithID(int32 BaseID);
+//
+//	virtual ~UBaseGameEntity(){}
+//
+//	virtual void Update() PURE_VIRTUAL(UBaseGameEntity::Update, );
+//
+//	int32 GetID() const { return ID; }
+//
+//protected:
+//	void SetID(int32 val);
+//
+//private:
+//	UPROPERTY()
+//	int32 ID;
+//
+//	static int32 NextValidID;
+//};
 
 USTRUCT(BlueprintType)
 struct FEnemyMoveSpeed
@@ -87,4 +114,10 @@ private:
 
 	bool bIsShooting = false;
 
+
+public:
+
+
+private:
+	
 };
