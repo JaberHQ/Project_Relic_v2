@@ -9,7 +9,7 @@
 #include "EnvironmentQuery/EnvQuery.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
-#include "State.h"
+#include "StateMachine.h"
 #include "EnemyController.generated.h"
 
 class AEnemyCharacter;
@@ -17,6 +17,23 @@ class AProject_Relic_v2Character;
 class AAIPatrolPoint;
 //class UEnvQuery;
 
+class EnemyGlobalState : public State<AEnemyController>
+{
+public:
+	// Singleton
+	static EnemyGlobalState* Instance();
+
+	virtual void Enter(AEnemyController* Enemy) override;
+	virtual void Execute(AEnemyController* Enemy) override;
+	virtual void Exit(AEnemyController* Enemy) override;
+
+private:
+	EnemyGlobalState() {}
+
+	EnemyGlobalState(const EnemyGlobalState&);
+
+	EnemyGlobalState& operator= (const EnemyGlobalState&);
+};
 
 
 UINTERFACE( Blueprintable )
@@ -43,16 +60,16 @@ public:
 	void StopChase();
 };
 
-UENUM(BlueprintType)
-enum class EEnemyState : uint8
-{
-	Patrol       UMETA(DisplayName = "Patrol"),
-	Investigate  UMETA(DisplayName = "Investigate"),
-	Reposition  UMETA(DisplayName = "Reposition"),
-	ShootPlayer  UMETA(DisplayName = "ShootPlayer"),
-	HitPlayer	 UMETA(DisplayName = "HitPlayer"),
-	Dead		 UMETA(DisplayName = "Dead")
-};
+//UENUM(BlueprintType)
+//enum class EEnemyState : uint8
+//{
+//	Patrol       UMETA(DisplayName = "Patrol"),
+//	Investigate  UMETA(DisplayName = "Investigate"),
+//	Reposition  UMETA(DisplayName = "Reposition"),
+//	ShootPlayer  UMETA(DisplayName = "ShootPlayer"),
+//	HitPlayer	 UMETA(DisplayName = "HitPlayer"),
+//	Dead		 UMETA(DisplayName = "Dead")
+//};
 
 
 /**
@@ -164,7 +181,7 @@ private:
 
 	
 
-	EEnemyState EnemyState;
+	//EEnemyState EnemyState;
 
 	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result);
 
@@ -179,6 +196,8 @@ public:
 
 	void ChangeState(State<AEnemyController>* NewState);
 
+	void RevertToPreviousState();
+
 	virtual void Update();
 
 private:
@@ -190,4 +209,9 @@ private:
 	int32 ID; // The Unique identifier for each enemy instantiated
 	
 	State<AEnemyController>* CurrentState;
+	State<AEnemyController>* PreviousState;
+	State<AEnemyController>* GlobalState;
+
+	StateMachine<AEnemyController>* FiniteStateMachine;
+
 };

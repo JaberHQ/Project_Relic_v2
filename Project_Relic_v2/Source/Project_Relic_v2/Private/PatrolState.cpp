@@ -1,6 +1,7 @@
 #include "PatrolState.h"
 #include "EnemyController.h"
 #include "EnemyCharacter.h"
+#include "HuntState.h"
 
 PatrolState::PatrolState()
 {
@@ -21,9 +22,6 @@ void PatrolState::Enter(AEnemyController* EnemyController)
 	check(EnemyController->ControlledEnemyCharacter);
 
 	TArray<AActor*> AvailablePatrolPoints = EnemyController->GetPatrolPoints();
-	if(AvailablePatrolPoints.Num() == 0)
-		return;
-
 
 	FEnemyMoveSpeed MoveSpeed;
 	EnemyController->ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
@@ -59,10 +57,12 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 
 	// For now we're doing if the player is seen
 		// Stripping away the stealth features until it works well
-	if(EnemyController->GetHasLineOfSight())
+	if (EnemyController->GetHasLineOfSight())
 	{
-		//EnemyController->ChangeState(Chase::Instance());
+		EnemyController->ChangeState(HuntState::Instance());
 	}
+
+
 
 }
 

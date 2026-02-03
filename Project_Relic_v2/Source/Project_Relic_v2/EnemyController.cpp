@@ -14,6 +14,8 @@
 #include "Perception/AISense_Sight.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "Engine/Canvas.h"
+#include "PatrolState.h"
+#include "HuntState.h"
 #include "Perception/AIPerceptionComponent.h"
 
 AEnemyController::AEnemyController()
@@ -26,21 +28,25 @@ AEnemyController::AEnemyController()
 	PatrolLocation = nullptr;
 	EnemyActor = nullptr;
 	TargetLastKnownLocation = FVector::Zero();
-	EnemyState = EEnemyState::Patrol;
+	//EnemyState = EEnemyState::Patrol;
+	//CurrentState = PatrolState::Instance();
 	CurrentPatrolPoint = 0;
+
+	
+
 }
 
 void AEnemyController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (EnemyState == EEnemyState::ShootPlayer && PlayerCharacter && ControlledEnemyCharacter)
-	{
-		FRotator LookAtRotation = (PlayerCharacter->GetActorLocation() - ControlledEnemyCharacter->GetActorLocation()).Rotation();
-		ControlledEnemyCharacter->SetActorRotation(LookAtRotation);
-	}
+	//if (EnemyState == EEnemyState::ShootPlayer && PlayerCharacter && ControlledEnemyCharacter)
+	//{
+	//	FRotator LookAtRotation = (PlayerCharacter->GetActorLocation() - ControlledEnemyCharacter->GetActorLocation()).Rotation();
+	//	ControlledEnemyCharacter->SetActorRotation(LookAtRotation);
+	//}
 	//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
-
+	FiniteStateMachine->Update();
 }
 
 void AEnemyController::BeginPlay()
@@ -48,11 +54,16 @@ void AEnemyController::BeginPlay()
 	Super::BeginPlay();
 
 	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, this);
+
+	FiniteStateMachine = new StateMachine<AEnemyController>(this);
+	FiniteStateMachine->SetCurrentState(PatrolState::Instance());
+	FiniteStateMachine->SetGlobalState(EnemyGlobalState::Instance());
+	FiniteStateMachine->ChangeState(PatrolState::Instance());
 }
 
 void AEnemyController::Death()
 {
-	EnemyState = EEnemyState::Dead;
+	//EnemyState = EEnemyState::Dead;
 
 	/* Pause behaviour tree for AI logic to stop running */
 	/*UBrainComponent* BrainComp = GetBrainComponent();
@@ -64,7 +75,7 @@ void AEnemyController::StartChase_Implementation()
 {
 	bShouldChase = true;
 	
-	EnemyState = EEnemyState::Reposition;
+	//EnemyState = EEnemyState::Reposition;
 	//RunStateMachine();
 }
 
@@ -101,6 +112,7 @@ void AEnemyController::OnPossess(APawn* InPawn)
 
 	ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
 
+	Update();
 	//RunStateMachine();
 }
 
@@ -341,23 +353,28 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 {
 	Super::OnMoveCompleted(RequestID, Result);
 
-	if (EnemyState == EEnemyState::Investigate)
+	if (CurrentState == PatrolState::Instance())
 	{
-		if (EnemyActor == nullptr)
-		{
-			EnemyState = EEnemyState::Patrol;
-		}
+		Update();
 	}
 
-	if (EnemyState == EEnemyState::Reposition)
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Repositioning...")); // DEBUG -----------------------
-		//ControlledEnemyCharacter->Crouch();
-		//EnemyState = EEnemyState::ShootPlayer;
-		//ShootPlayer();
-		if (ControlledEnemyCharacter)
-			ControlledEnemyCharacter->Crouch();
-	}
+	//if (EnemyState == EEnemyState::Investigate)
+	//{
+	//	if (EnemyActor == nullptr)
+	//	{
+	//		EnemyState = EEnemyState::Patrol;
+	//	}
+	//}
+
+	//if (EnemyState == EEnemyState::Reposition)
+	//{
+	//	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Repositioning...")); // DEBUG -----------------------
+	//	//ControlledEnemyCharacter->Crouch();
+	//	//EnemyState = EEnemyState::ShootPlayer;
+	//	//ShootPlayer();
+	//	if (ControlledEnemyCharacter)
+	//		ControlledEnemyCharacter->Crouch();
+	//}
 
 	//GetWorldTimerManager().SetTimer(WaitHandle,this, &AEnemyController::RunStateMachine, 3.0f, false);
 		//GetWorldTimerManager().ClearTimer(WaitHandle);
@@ -428,15 +445,16 @@ void AEnemyController::ChangeState(State<AEnemyController>* NewState)
 	CurrentState->Enter(this);
 }
 
+void AEnemyController::RevertToPreviousState()
+{
+}
+
 void AEnemyController::Update()
 {
 	// Changes here
-
-
-	if (CurrentState)
-	{
-		CurrentState->Execute(this);
-	}
+	if (FiniteStateMachine)
+		FiniteStateMachine->Update();
+	
 }
 
 void AEnemyController::SetID(int val)
@@ -444,4 +462,21 @@ void AEnemyController::SetID(int val)
 	ID = val;
 }
 
+void EnemyGlobalState::Enter(AEnemyController* Enemy)
+{
+}
+
+void EnemyGlobalState::Execute(AEnemyController* Enemy)
+{
+}
+
+void EnemyGlobalState::Exit(AEnemyController* Enemy)
+{
+}
+
+EnemyGlobalState* EnemyGlobalState::Instance()
+{
+	static EnemyGlobalState Instance;
+	return &Instance;
+}
 
