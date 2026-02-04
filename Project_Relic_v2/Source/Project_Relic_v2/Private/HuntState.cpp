@@ -17,19 +17,20 @@ void HuntState::Enter(AEnemyController* EnemyController)
 	check(EnemyController);
 	check(EnemyController->ControlledEnemyCharacter);
 	check(EnemyController->PlayerCharacter);
-	//AEnemyCharacter* EnemyCharacter = EnemyController->ControlledEnemyCharacter;
 
-	EnemyController->MoveToActor(EnemyController->PlayerCharacter);
 
+	//EnemyController->ControlledEnemyCharacter->UnCrouch();
+	FEnemyMoveSpeed MoveSpeed;
+	EnemyController->ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
 }
 
 void HuntState::Execute(AEnemyController* EnemyController)
 {
-	// Time to patrol -> Patrol
-	// If heard minor noise -> Alert
-	// If heard major noise -> Investigate
-	// If see player (low visibility) -> Alert
-	// If see player (clear) -> Chase or Attack
+	// Can see play + in range -> Attack
+	// Lost sight of player -> Search
+	// Low health -> Take cover
+	// Ally calls out player location -> Hunt (new target Pos)
+
 
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;

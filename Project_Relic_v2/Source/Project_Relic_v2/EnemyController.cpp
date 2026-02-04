@@ -33,8 +33,8 @@ AEnemyController::AEnemyController()
 	CurrentPatrolPoint = 0;
 
 	
-
 }
+
 
 void AEnemyController::Tick(float DeltaTime)
 {
@@ -58,8 +58,10 @@ void AEnemyController::BeginPlay()
 	FiniteStateMachine = new StateMachine<AEnemyController>(this);
 	FiniteStateMachine->SetCurrentState(PatrolState::Instance());
 	FiniteStateMachine->SetGlobalState(EnemyGlobalState::Instance());
-	FiniteStateMachine->ChangeState(PatrolState::Instance());
+	//FiniteStateMachine->ChangeState(PatrolState::Instance());
+
 }
+
 
 void AEnemyController::Death()
 {
@@ -353,9 +355,12 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 {
 	Super::OnMoveCompleted(RequestID, Result);
 
-	if (CurrentState == PatrolState::Instance())
+	
+
+	if (FiniteStateMachine->GetCurrentState() == PatrolState::Instance())
 	{
-		Update();
+		bIsMovingToPatrolPoint = false;
+		FiniteStateMachine->Update();
 	}
 
 	//if (EnemyState == EEnemyState::Investigate)
@@ -438,11 +443,13 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 
 void AEnemyController::ChangeState(State<AEnemyController>* NewState)
 {
-	check(CurrentState && NewState);
+	if (CurrentState && NewState)
+	{
+		CurrentState->Exit(this);
+		CurrentState = NewState;
+		CurrentState->Enter(this);
+	}
 
-	CurrentState->Exit(this);
-	CurrentState = NewState;
-	CurrentState->Enter(this);
 }
 
 void AEnemyController::RevertToPreviousState()
@@ -456,6 +463,7 @@ void AEnemyController::Update()
 		FiniteStateMachine->Update();
 	
 }
+
 
 void AEnemyController::SetID(int val)
 {

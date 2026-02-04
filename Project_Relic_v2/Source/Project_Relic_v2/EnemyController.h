@@ -110,6 +110,8 @@ public:
 	bool GetHasLineOfSight() { return bHasLineOfSight; }
 	void SetHasLineOfSight(bool HasLineOfSight) { bHasLineOfSight = HasLineOfSight; }
 
+	UFUNCTION()
+	void RunEQS();
 private:
 	bool bHasLineOfSight = false;
 
@@ -142,8 +144,7 @@ protected:
 
 	void FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result);
 
-	UFUNCTION()
-	void RunEQS();
+	
 
 public:
 	AEnemyCharacter* ControlledEnemyCharacter;
@@ -200,6 +201,11 @@ public:
 
 	virtual void Update();
 
+	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint) { bIsMovingToPatrolPoint = IsMovingToPatrolPoint; }
+	bool GetIsMovingToPatrolPoint() const { return bIsMovingToPatrolPoint; }
+
+	int32 PatrolDirection = 1;
+
 private:
 	void SetID(int val);
 
@@ -213,5 +219,7 @@ private:
 	State<AEnemyController>* GlobalState;
 
 	StateMachine<AEnemyController>* FiniteStateMachine;
+
+	bool bIsMovingToPatrolPoint = false;
 
 };
