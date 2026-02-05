@@ -1,6 +1,7 @@
 #include "AttackState.h"
 #include "EnemyController.h"
 #include "EnemyCharacter.h"
+#include "TakeCoverState.h"
 
 AttackState::AttackState()
 {
@@ -19,20 +20,29 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-	EnemyController->ControlledEnemyCharacter->Crouch();
+	EnemyController->RunFindAttackEQS();
+	EnemyController->SetIsAttacking(true);
+
 
 }
 
 void AttackState::Execute(AEnemyController* EnemyController)
 {
-	// Time to patrol -> Patrol
-	// If heard minor noise -> Alert
-	// If heard major noise -> Investigate
-	// If see player (low visibility) -> Alert
-	// If see player (clear) -> Chase or Attack
-
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;
+
+
+	if (!(EnemyController->GetIsAttacking()))
+	{
+		EnemyController->ChangeState(TakeCoverState::Instance());
+		return;
+	}
+
+	if (EnemyController->GetIsAttacking())
+	{
+		// Shoot player
+		//EnemyController->ControlledEnemyCharacter->UnCrouch();
+	}
 }
 
 void AttackState::Exit(AEnemyController* EnemyController)

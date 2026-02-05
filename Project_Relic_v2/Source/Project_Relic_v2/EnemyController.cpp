@@ -17,6 +17,7 @@
 #include "PatrolState.h"
 #include "HuntState.h"
 #include "TakeCoverState.h"
+#include "AttackState.h"
 #include "Perception/AIPerceptionComponent.h"
 
 AEnemyController::AEnemyController()
@@ -29,13 +30,8 @@ AEnemyController::AEnemyController()
 	PatrolLocation = nullptr;
 	EnemyActor = nullptr;
 	TargetLastKnownLocation = FVector::Zero();
-	//EnemyState = EEnemyState::Patrol;
-	//CurrentState = PatrolState::Instance();
 	CurrentPatrolPoint = 0;
-
-	
 }
-
 
 void AEnemyController::Tick(float DeltaTime)
 {
@@ -49,22 +45,16 @@ void AEnemyController::BeginPlay()
 	Super::BeginPlay();
 
 	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, this);
+	FindAttackQueryRequest = FEnvQueryRequest(FindAttackQuery, this);
 
 	FiniteStateMachine = new StateMachine<AEnemyController>(this);
 	FiniteStateMachine->SetGlobalState(EnemyGlobalState::Instance());
 	FiniteStateMachine->ChangeState(PatrolState::Instance());
-
 }
 
 
 void AEnemyController::Death()
 {
-	//EnemyState = EEnemyState::Dead;
-
-	/* Pause behaviour tree for AI logic to stop running */
-	/*UBrainComponent* BrainComp = GetBrainComponent();
-	if(BrainComp)
-		BrainComp->PauseLogic(TEXT("Enemy Dead"));*/
 }
 
 void AEnemyController::StartChase_Implementation()
@@ -103,30 +93,9 @@ void AEnemyController::SetupPerceptionSystem()
 	if (AISenseConfig_Player)
 	{
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-		//AISenseConfig_Player->Implementation = AISense_Player;
 
 		AISenseConfig_Player->TargetRadius = 1000.0f;
-		//AISenseConfig_Player->SetMaxAge(2.5f);
 	}
-
-	
-	/*if (SightConfig)
-	{
-		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-
-		SightConfig->SightRadius = 500.0f;
-		SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.0f;
-		SightConfig->PeripheralVisionAngleDegrees = 90.0f;
-		SightConfig->SetMaxAge(5.0f);
-		SightConfig->AutoSuccessRangeFromLastSeenLocation = 520.0f;
-		SightConfig->DetectionByAffiliation.bDetectEnemies = true;
-		SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
-		SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
-
-		GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
-		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyController::OnTargetDetected);
-		GetPerceptionComponent()->ConfigureSense(*SightConfig);
-	}*/
 }
 
 void AEnemyController::OnDetectionDelayComplete()
@@ -138,96 +107,6 @@ void AEnemyController::OnDetectionDelayComplete()
 	bIsDetectingPlayer = false;
 }
 
-//void AEnemyController::RunStateMachine()
-//{
-//
-//	switch(EnemyState)
-//	{
-//	case EEnemyState::Patrol:
-//		Patrol();
-//		break;
-//	case EEnemyState::Reposition:
-//		
-//		Reposition();
-//		break;
-//	/*case EEnemyState::Investigate:
-//		Investigate();
-//		break;
-//	case EEnemyState::Reposition:
-//		Reposition();
-//		break;
-//	case EEnemyState::ShootPlayer:
-//		ShootPlayer();
-//		break;
-//	case EEnemyState::Dead:
-//		Death();
-//		break;*/
-//	default:
-//		break;
-//	}
-//
-//
-//	/*
-//	if patrol
-//		set walking speed
-//		find random patrol
-//		move to patrol location
-//		wait 
-//	if investigate
-//		Rotate to face TargetLastKnownLocation
-//		Wait
-//		Move to LastKnownLocation
-//		Wait 
-//			Clear last known location (go back to patrol)
-//
-//	if Reposition
-//		update walk speed to fast
-//		rotate to face enemy - potentially do after move
-//		move to player
-//		wait
-//
-//	if shootPlayer
-//		bshootPlayer = true; (Play the animation)
-//		Raycast bullet to hit the player
-//		Player to take damage
-//	*/
-//
-//	/*if (EnemyState != EEnemyState::Reposition)
-//	{
-//		GetWorldTimerManager().ClearTimer(EQSTimerHandle);
-//	}
-//
-//
-//
-//	switch (EnemyState)
-//	{
-//		case EEnemyState::Patrol:
-//			Patrol();
-//			break;
-//		case EEnemyState::Investigate:
-//			Investigate();
-//			break;
-//		case EEnemyState::Reposition:
-//			Reposition();
-//			break;
-//		case EEnemyState::ShootPlayer:
-//			ShootPlayer();
-//			break;
-//		case EEnemyState::Dead:
-//			Death();
-//			break;
-//		default:
-//			break;
-//	}*/
-//	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT(" Current EnemyState"EnemyState)); // DEBUG -----------------------
-//
-//	/*if (ControlledEnemyCharacter && EnemyState != EEnemyState::ShootPlayer)
-//	{
-//		ControlledEnemyCharacter->SetIsShooting(false);
-//	}*/
-//	
-//}
-
 void AEnemyController::Investigate()
 {
 	/*if investigate
@@ -237,24 +116,6 @@ void AEnemyController::Investigate()
 		Wait
 		Clear last known location(go back to patrol)*/
 	GetWorldTimerManager().SetTimer(InvestigateHandle, this, &AEnemyController::MoveToLastKnownLocation, 3.0f, false);
-}
-
-void AEnemyController::Reposition()
-{
-	/*if chasePlayer
-		update walk speed to fast
-		rotate to face enemy - potentially do after move
-		move to player
-		wait*/
-	
-	//if (ControlledEnemyCharacter && PlayerCharacter)
-	//{
-		//ControlledEnemyCharacter->UnCrouch();
-		//FEnemyMoveSpeed MoveSpeed;
-		//ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
-		//RunEQS();
-		//GetWorldTimerManager().SetTimer(EQSTimerHandle, this, &AEnemyController::RunEQS, 3.0f, false);
-	//}
 }
 
 void AEnemyController::ShootPlayer()
@@ -279,7 +140,16 @@ void AEnemyController::ShootPlayer()
 void AEnemyController::MoveToLastKnownLocation()
 {
 	MoveToLocation(TargetLastKnownLocation);
+}
 
+void AEnemyController::RunFindCoverEQS()
+{
+	FindCoverQueryRequest.Execute(EEnvQueryRunMode::RandomBest5Pct, this, &AEnemyController::FindCoverQueryRequestFinished);
+}
+
+void AEnemyController::RunFindAttackEQS()
+{
+	FindAttackQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::FindAttackQueryRequestFinished);
 }
 
 void AEnemyController::FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result)
@@ -288,31 +158,48 @@ void AEnemyController::FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult>
 	MoveTo(Result->GetItemAsLocation(0));
 }
 
-void AEnemyController::RunEQS()
+void AEnemyController::FindAttackQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result)
 {
-	FindCoverQueryRequest.Execute(EEnvQueryRunMode::RandomBest5Pct, this, &AEnemyController::FindCoverQueryRequestFinished);
+	MoveTo(Result->GetItemAsLocation(0));
 }
+
+
 
 void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
 	Super::OnMoveCompleted(RequestID, Result);
 
-	
 	if (FiniteStateMachine->GetCurrentState() == PatrolState::Instance())
 	{
 		bIsMovingToPatrolPoint = false;
 	}
 
-	if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
+	else if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
 	{
-		bIsMovingToCover = false;
-
 		if (Result.IsSuccess())
 		{
-			bIsInCover = true;
+			bIsMovingToCover = false;
+			//ControlledEnemyCharacter->Crouch();
 		}
 	}
 
+	else if (FiniteStateMachine->GetCurrentState() == AttackState::Instance())
+	{
+		if (Result.IsSuccess())
+		{
+			//bIsAttacking = true;
+			ControlledEnemyCharacter->UnCrouch();
+
+			// Set a timer
+			GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
+		}
+	}
+
+}
+
+void AEnemyController::OnAttackingTimerComplete()
+{
+	bIsAttacking = false;
 }
 
 
@@ -372,12 +259,6 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 
 void AEnemyController::ChangeState(State<AEnemyController>* NewState)
 {
-	/*if (CurrentState && NewState)
-	{
-		CurrentState->Exit(this);
-		CurrentState = NewState;
-		CurrentState->Enter(this);
-	}*/
 	FiniteStateMachine->ChangeState(NewState);
 }
 
@@ -390,14 +271,14 @@ void AEnemyController::Update()
 	// Changes here
 	if (FiniteStateMachine)
 		FiniteStateMachine->Update();
-	
 }
-
 
 void AEnemyController::SetID(int val)
 {
 	ID = val;
 }
+
+
 
 void EnemyGlobalState::Enter(AEnemyController* Enemy)
 {

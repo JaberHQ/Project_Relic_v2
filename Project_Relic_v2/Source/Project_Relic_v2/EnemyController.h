@@ -111,7 +111,10 @@ public:
 	void SetHasLineOfSight(bool HasLineOfSight) { bHasLineOfSight = HasLineOfSight; }
 
 	UFUNCTION()
-	void RunEQS();
+	void RunFindCoverEQS();
+
+	UFUNCTION()
+	void RunFindAttackEQS();
 private:
 	bool bHasLineOfSight = false;
 
@@ -127,8 +130,6 @@ private:
 
 	void Investigate();
 
-	void Reposition();
-
 	void ShootPlayer();
 
 	void MoveToLastKnownLocation();
@@ -141,7 +142,12 @@ protected:
 
 	void FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result);
 
-	
+	UPROPERTY(EditAnywhere, Category = "EQS")
+	UEnvQuery* FindAttackQuery;
+
+	FEnvQueryRequest FindAttackQueryRequest;
+
+	void FindAttackQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result);
 
 public:
 	AEnemyCharacter* ControlledEnemyCharacter;
@@ -207,21 +213,29 @@ public:
 	void SetIsInCover(bool IsInCover) { bIsInCover = IsInCover; }
 	bool GetIsInCover() const { return bIsInCover; }
 
+	void SetIsAttacking(bool IsAttacking) { bIsAttacking = IsAttacking; }
+	bool GetIsAttacking() const { return bIsAttacking; }
+
 private:
 	void SetID(int val);
+
+	void OnAttackingTimerComplete();
 
 private:
 	static int32 NextValidID; // For each enemy instantiated, this will increment
 
 	int32 ID; // The Unique identifier for each enemy instantiated
 	
-	State<AEnemyController>* CurrentState;
-	State<AEnemyController>* PreviousState;
-	State<AEnemyController>* GlobalState;
+	//State<AEnemyController>* CurrentState;
+	//State<AEnemyController>* PreviousState;
+	//State<AEnemyController>* GlobalState;
 
 	StateMachine<AEnemyController>* FiniteStateMachine;
+
+	FTimerHandle AttackingTimerHandle;
 
 	bool bIsMovingToPatrolPoint = false;
 	bool bIsMovingToCover = false;
 	bool bIsInCover = false;
+	bool bIsAttacking = false;
 };

@@ -23,32 +23,27 @@ void TakeCoverState::Enter(AEnemyController* EnemyController)
 	EnemyController->ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Take Cover State.")); // DEBUG -----------------------
-
+	
+	EnemyController->SetIsMovingToCover(true);
+	EnemyController->RunFindCoverEQS();
 }
+
 
 void TakeCoverState::Execute(AEnemyController* EnemyController)
 {
-	// Time to patrol -> Patrol
-	// If heard minor noise -> Alert
-	// If heard major noise -> Investigate
-	// If see player (low visibility) -> Alert
-	// If see player (clear) -> Chase or Attack
-
 	if(!EnemyController || !EnemyController->GetPawn())
 		return;
 
-	if (EnemyController->GetIsInCover())
+	// If the ai has found cover
+	if (!(EnemyController->GetIsMovingToCover()))
 	{
+		EnemyController->ControlledEnemyCharacter->Crouch();
 		EnemyController->ChangeState(AttackState::Instance());
 		return;
 	}
-
-	if (!(EnemyController->GetIsMovingToCover()))
-	{
-		EnemyController->SetIsMovingToCover(true);
-		EnemyController->RunEQS();
-	}
 }
+
+	
 
 void TakeCoverState::Exit(AEnemyController* EnemyController)
 {
