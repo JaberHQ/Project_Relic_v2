@@ -16,6 +16,7 @@
 #include "Engine/Canvas.h"
 #include "PatrolState.h"
 #include "HuntState.h"
+#include "TakeCoverState.h"
 #include "Perception/AIPerceptionComponent.h"
 
 AEnemyController::AEnemyController()
@@ -40,12 +41,6 @@ void AEnemyController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//if (EnemyState == EEnemyState::ShootPlayer && PlayerCharacter && ControlledEnemyCharacter)
-	//{
-	//	FRotator LookAtRotation = (PlayerCharacter->GetActorLocation() - ControlledEnemyCharacter->GetActorLocation()).Rotation();
-	//	ControlledEnemyCharacter->SetActorRotation(LookAtRotation);
-	//}
-	//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
 	FiniteStateMachine->Update();
 }
 
@@ -56,9 +51,8 @@ void AEnemyController::BeginPlay()
 	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, this);
 
 	FiniteStateMachine = new StateMachine<AEnemyController>(this);
-	FiniteStateMachine->SetCurrentState(PatrolState::Instance());
 	FiniteStateMachine->SetGlobalState(EnemyGlobalState::Instance());
-	//FiniteStateMachine->ChangeState(PatrolState::Instance());
+	FiniteStateMachine->ChangeState(PatrolState::Instance());
 
 }
 
@@ -76,22 +70,11 @@ void AEnemyController::Death()
 void AEnemyController::StartChase_Implementation()
 {
 	bShouldChase = true;
-	
-	//EnemyState = EEnemyState::Reposition;
-	//RunStateMachine();
 }
 
 void AEnemyController::StopChase_Implementation()
 {
 	//bShouldChase = false;
-	//EnemyState = EEnemyState::Investigate;
-
-			// Play a timer
-			// After investigation timer
-			// Return to patrol 
-				// EnemyState = EEnemyState::Patrol;
-
-	//EnemyActor = nullptr;
 }
 
 FVector AEnemyController::GetTargetLastKnownLocation() const
@@ -104,8 +87,6 @@ void AEnemyController::ClearTargetLastKnownLocation()
 	TargetLastKnownLocation = FVector::Zero();
 }
 
-
-
 void AEnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -113,9 +94,6 @@ void AEnemyController::OnPossess(APawn* InPawn)
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIPatrolPoint::StaticClass(), PatrolPoints);
 
 	ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
-
-	Update();
-	//RunStateMachine();
 }
 
 void AEnemyController::SetupPerceptionSystem()
@@ -250,41 +228,6 @@ void AEnemyController::OnDetectionDelayComplete()
 //	
 //}
 
-void AEnemyController::Patrol()
-{
-	/*if patrol
-		set walking speed
-		find random patrol
-		move to patrol location
-		wait*/
-
-	/*if (ControlledEnemyCharacter)
-	{
-		FEnemyMoveSpeed MoveSpeed;
-		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
-
-		AAIPatrolPoint* CurrentPoint = PatrolLocation;
-		TArray<AActor*> AvailablePatrolPoints = GetPatrolPoints();
-
-		AAIPatrolPoint* NextPatrolPoint = nullptr;
-
-		if (CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
-		{
-			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[CurrentPatrolPoint++]);
-		}
-		else
-		{
-			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[0]);
-			CurrentPatrolPoint = 0;
-		}
-
-		PatrolLocation = NextPatrolPoint;
-		MoveToActor(PatrolLocation);
-	}*/
-
-	
-}
-
 void AEnemyController::Investigate()
 {
 	/*if investigate
@@ -304,14 +247,14 @@ void AEnemyController::Reposition()
 		move to player
 		wait*/
 	
-	if (ControlledEnemyCharacter && PlayerCharacter)
-	{
-		ControlledEnemyCharacter->UnCrouch();
-		FEnemyMoveSpeed MoveSpeed;
-		ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
-		RunEQS();
+	//if (ControlledEnemyCharacter && PlayerCharacter)
+	//{
+		//ControlledEnemyCharacter->UnCrouch();
+		//FEnemyMoveSpeed MoveSpeed;
+		//ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
+		//RunEQS();
 		//GetWorldTimerManager().SetTimer(EQSTimerHandle, this, &AEnemyController::RunEQS, 3.0f, false);
-	}
+	//}
 }
 
 void AEnemyController::ShootPlayer()
@@ -343,7 +286,6 @@ void AEnemyController::FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult>
 {
 	//MoveToActor(PlayerCharacter, 500.0f);
 	MoveTo(Result->GetItemAsLocation(0));
-	
 }
 
 void AEnemyController::RunEQS()
@@ -356,35 +298,21 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	Super::OnMoveCompleted(RequestID, Result);
 
 	
-
 	if (FiniteStateMachine->GetCurrentState() == PatrolState::Instance())
 	{
 		bIsMovingToPatrolPoint = false;
-		FiniteStateMachine->Update();
 	}
 
-	//if (EnemyState == EEnemyState::Investigate)
-	//{
-	//	if (EnemyActor == nullptr)
-	//	{
-	//		EnemyState = EEnemyState::Patrol;
-	//	}
-	//}
+	if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
+	{
+		bIsMovingToCover = false;
 
-	//if (EnemyState == EEnemyState::Reposition)
-	//{
-	//	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Repositioning...")); // DEBUG -----------------------
-	//	//ControlledEnemyCharacter->Crouch();
-	//	//EnemyState = EEnemyState::ShootPlayer;
-	//	//ShootPlayer();
-	//	if (ControlledEnemyCharacter)
-	//		ControlledEnemyCharacter->Crouch();
-	//}
+		if (Result.IsSuccess())
+		{
+			bIsInCover = true;
+		}
+	}
 
-	//GetWorldTimerManager().SetTimer(WaitHandle,this, &AEnemyController::RunStateMachine, 3.0f, false);
-		//GetWorldTimerManager().ClearTimer(WaitHandle);
-	
-	//RunStateMachine();
 }
 
 
@@ -396,6 +324,7 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 		{
 			PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
 			SetHasLineOfSight(true);
+			StopMovement();
 			/*EnemyState = EEnemyState::Reposition;
 			RunStateMachine();*/
 		}
@@ -443,13 +372,13 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 
 void AEnemyController::ChangeState(State<AEnemyController>* NewState)
 {
-	if (CurrentState && NewState)
+	/*if (CurrentState && NewState)
 	{
 		CurrentState->Exit(this);
 		CurrentState = NewState;
 		CurrentState->Enter(this);
-	}
-
+	}*/
+	FiniteStateMachine->ChangeState(NewState);
 }
 
 void AEnemyController::RevertToPreviousState()

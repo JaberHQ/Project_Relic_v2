@@ -125,9 +125,6 @@ private:
 	/* Run the finite state machine that determines the AI's current behaviour */
 	//void RunStateMachine();
 
-	/* State machine functions */
-	void Patrol();
-
 	void Investigate();
 
 	void Reposition();
@@ -204,7 +201,11 @@ public:
 	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint) { bIsMovingToPatrolPoint = IsMovingToPatrolPoint; }
 	bool GetIsMovingToPatrolPoint() const { return bIsMovingToPatrolPoint; }
 
-	int32 PatrolDirection = 1;
+	void SetIsMovingToCover(bool IsMovingToCover) { bIsMovingToCover = IsMovingToCover; }
+	bool GetIsMovingToCover() const { return bIsMovingToCover; }
+
+	void SetIsInCover(bool IsInCover) { bIsInCover = IsInCover; }
+	bool GetIsInCover() const { return bIsInCover; }
 
 private:
 	void SetID(int val);
@@ -221,5 +222,6 @@ private:
 	StateMachine<AEnemyController>* FiniteStateMachine;
 
 	bool bIsMovingToPatrolPoint = false;
-
+	bool bIsMovingToCover = false;
+	bool bIsInCover = false;
 };

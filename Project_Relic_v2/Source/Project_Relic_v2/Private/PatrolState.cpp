@@ -2,6 +2,7 @@
 #include "EnemyController.h"
 #include "EnemyCharacter.h"
 #include "HuntState.h"
+#include "TakeCoverState.h"
 
 PatrolState::PatrolState()
 {
@@ -25,6 +26,8 @@ void PatrolState::Enter(AEnemyController* EnemyController)
 	FEnemyMoveSpeed MoveSpeed;
 	EnemyController->ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
 	
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Patrol State.")); // DEBUG -----------------------
+
 
 }
 
@@ -42,7 +45,7 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 		// Stripping away the stealth features until it works well
 	if (EnemyController->GetHasLineOfSight())
 	{
-		EnemyController->ChangeState(HuntState::Instance());
+		EnemyController->ChangeState(TakeCoverState::Instance());
 		return;
 	}
 
@@ -74,4 +77,6 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 
 void PatrolState::Exit(AEnemyController* EnemyController)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Patrol State.")); // DEBUG -----------------------
+
 }

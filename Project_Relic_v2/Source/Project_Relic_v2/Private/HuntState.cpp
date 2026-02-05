@@ -17,11 +17,6 @@ void HuntState::Enter(AEnemyController* EnemyController)
 	check(EnemyController);
 	check(EnemyController->ControlledEnemyCharacter);
 	check(EnemyController->PlayerCharacter);
-
-
-	//EnemyController->ControlledEnemyCharacter->UnCrouch();
-	FEnemyMoveSpeed MoveSpeed;
-	EnemyController->ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
 }
 
 void HuntState::Execute(AEnemyController* EnemyController)
@@ -34,8 +29,11 @@ void HuntState::Execute(AEnemyController* EnemyController)
 
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;
+
+	
 }
 
 void HuntState::Exit(AEnemyController* EnemyController)
 {
+
 }

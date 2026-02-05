@@ -22,16 +22,3 @@ public:
 
 
 
-//class Chase : public State<AEnemyController>
-//{
-//public:
-//	static Chase* Instance();
-//
-//	virtual void Enter(AEnemyController* EnemyController);
-//	virtual void Execute(AEnemyController* EnemyController);
-//	virtual void Exit(AEnemyController* EnemyController);
-//
-//
-//private:
-//	Chase();
-//};
