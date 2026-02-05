@@ -144,7 +144,7 @@ void AEnemyController::MoveToLastKnownLocation()
 
 void AEnemyController::RunFindCoverEQS()
 {
-	FindCoverQueryRequest.Execute(EEnvQueryRunMode::RandomBest5Pct, this, &AEnemyController::FindCoverQueryRequestFinished);
+	FindCoverQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::FindCoverQueryRequestFinished);
 }
 
 void AEnemyController::RunFindAttackEQS()
@@ -155,7 +155,11 @@ void AEnemyController::RunFindAttackEQS()
 void AEnemyController::FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result)
 {
 	//MoveToActor(PlayerCharacter, 500.0f);
-	MoveTo(Result->GetItemAsLocation(0));
+
+	if (Result->IsSuccessful() && Result->Items.Num() > 0)
+	{
+		MoveTo(Result->GetItemAsLocation(0));
+	}
 }
 
 void AEnemyController::FindAttackQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result)
