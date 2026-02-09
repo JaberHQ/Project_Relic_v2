@@ -144,30 +144,48 @@ void AEnemyController::MoveToLastKnownLocation()
 
 void AEnemyController::RunFindCoverEQS()
 {
-	FindCoverQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::FindCoverQueryRequestFinished);
+	FindCoverQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::MoveToQueryRequest);
+}
+
+void AEnemyController::GetToAttackPoint()
+{
+	GetWorld()->GetTimerManager().SetTimer(GetToAttackingPointHandle, this, &AEnemyController::RunFindAttackEQS, 5.0f, false);
+}
+
+void AEnemyController::RotateToFacePlayer()
+{
+	if(!PlayerCharacter) return;
+
+	FVector ToPlayer = PlayerCharacter->GetActorLocation() - GetPawn()->GetActorLocation();
+	ToPlayer.Z = 0.0f;
+
+	FRotator TargetRotation = ToPlayer.Rotation();
+
+	FRotator NewRotation = FMath::RInterpTo
+	(
+		GetControlRotation(),
+		TargetRotation,
+		GetWorld()->GetDeltaSeconds(),
+		5.0f
+	);
+
+	SetControlRotation(NewRotation);
 }
 
 void AEnemyController::RunFindAttackEQS()
 {
-	FindAttackQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::FindAttackQueryRequestFinished);
+	ControlledEnemyCharacter->UnCrouch();
+	bIsAttacking = true;
+	FindAttackQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::MoveToQueryRequest);
 }
 
-void AEnemyController::FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result)
+void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 {
-	//MoveToActor(PlayerCharacter, 500.0f);
-
 	if (Result->IsSuccessful() && Result->Items.Num() > 0)
 	{
 		MoveTo(Result->GetItemAsLocation(0));
 	}
 }
-
-void AEnemyController::FindAttackQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result)
-{
-	MoveTo(Result->GetItemAsLocation(0));
-}
-
-
 
 void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
@@ -191,9 +209,6 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	{
 		if (Result.IsSuccess())
 		{
-			//bIsAttacking = true;
-			ControlledEnemyCharacter->UnCrouch();
-
 			// Set a timer
 			GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
 		}
@@ -203,7 +218,8 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 
 void AEnemyController::OnAttackingTimerComplete()
 {
-	bIsAttacking = false;
+	bIsAttacking = !bIsAttacking;
+	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
 }
 
 
@@ -276,6 +292,7 @@ void AEnemyController::Update()
 	if (FiniteStateMachine)
 		FiniteStateMachine->Update();
 }
+
 
 void AEnemyController::SetID(int val)
 {

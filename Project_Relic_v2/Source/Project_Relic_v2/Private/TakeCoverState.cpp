@@ -18,7 +18,7 @@ void TakeCoverState::Enter(AEnemyController* EnemyController)
 	check(EnemyController);
 	check(EnemyController->ControlledEnemyCharacter);
 
-	//EnemyController->ControlledEnemyCharacter->UnCrouch();
+	EnemyController->ControlledEnemyCharacter->UnCrouch();
 	FEnemyMoveSpeed MoveSpeed;
 	EnemyController->ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
 
@@ -38,6 +38,7 @@ void TakeCoverState::Execute(AEnemyController* EnemyController)
 	if (!(EnemyController->GetIsMovingToCover()))
 	{
 		EnemyController->ControlledEnemyCharacter->Crouch();
+		EnemyController->RotateToFacePlayer();
 		EnemyController->ChangeState(AttackState::Instance());
 		return;
 	}

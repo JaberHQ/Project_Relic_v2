@@ -20,10 +20,8 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-	EnemyController->RunFindAttackEQS();
-	EnemyController->SetIsAttacking(true);
-
-
+	EnemyController->GetToAttackPoint();
+	//EnemyController->SetIsAttacking(true);
 }
 
 void AttackState::Execute(AEnemyController* EnemyController)
@@ -34,19 +32,20 @@ void AttackState::Execute(AEnemyController* EnemyController)
 
 	if (!(EnemyController->GetIsAttacking()))
 	{
-		EnemyController->ChangeState(TakeCoverState::Instance());
+		//EnemyController->ChangeState(TakeCoverState::Instance());
+		EnemyController->ControlledEnemyCharacter->Crouch();
 		return;
 	}
 
 	if (EnemyController->GetIsAttacking())
 	{
 		// Shoot player
-		//EnemyController->ControlledEnemyCharacter->UnCrouch();
+		EnemyController->ControlledEnemyCharacter->UnCrouch();
+		return;
 	}
 }
 
 void AttackState::Exit(AEnemyController* EnemyController)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Attack State.")); // DEBUG -----------------------
-
 }

@@ -140,14 +140,14 @@ protected:
 
 	FEnvQueryRequest FindCoverQueryRequest;
 
-	void FindCoverQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result);
 
 	UPROPERTY(EditAnywhere, Category = "EQS")
 	UEnvQuery* FindAttackQuery;
 
 	FEnvQueryRequest FindAttackQueryRequest;
 
-	void FindAttackQueryRequestFinished(TSharedPtr<FEnvQueryResult> Result);
+
+	void MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result);
 
 public:
 	AEnemyCharacter* ControlledEnemyCharacter;
@@ -216,6 +216,10 @@ public:
 	void SetIsAttacking(bool IsAttacking) { bIsAttacking = IsAttacking; }
 	bool GetIsAttacking() const { return bIsAttacking; }
 
+	void GetToAttackPoint();
+
+	void RotateToFacePlayer();
+
 private:
 	void SetID(int val);
 
@@ -233,6 +237,7 @@ private:
 	StateMachine<AEnemyController>* FiniteStateMachine;
 
 	FTimerHandle AttackingTimerHandle;
+	FTimerHandle GetToAttackingPointHandle;
 
 	bool bIsMovingToPatrolPoint = false;
 	bool bIsMovingToCover = false;
