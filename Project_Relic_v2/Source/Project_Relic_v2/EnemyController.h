@@ -115,6 +115,8 @@ public:
 
 	UFUNCTION()
 	void RunFindAttackEQS();
+
+	void ShootPlayer();
 private:
 	bool bHasLineOfSight = false;
 
@@ -130,7 +132,6 @@ private:
 
 	void Investigate();
 
-	void ShootPlayer();
 
 	void MoveToLastKnownLocation();
 
@@ -214,16 +215,29 @@ public:
 	bool GetIsInCover() const { return bIsInCover; }
 
 	void SetIsAttacking(bool IsAttacking) { bIsAttacking = IsAttacking; }
+
+	UFUNCTION(BlueprintCallable)
 	bool GetIsAttacking() const { return bIsAttacking; }
+
+	void SetIsIdle(bool IsIdle) { bIsIdle = IsIdle; }
+	bool GetIsIdle() const { return bIsIdle; }
 
 	void GetToAttackPoint();
 
 	void RotateToFacePlayer();
 
+	void StartShooting();
+	void StopShooting();
+
+	void SetTimerBeforeAttacking();
+
 private:
 	void SetID(int val);
 
 	void OnAttackingTimerComplete();
+
+	void TimerBeforeAttackingCompleted();
+
 
 private:
 	static int32 NextValidID; // For each enemy instantiated, this will increment
@@ -238,9 +252,12 @@ private:
 
 	FTimerHandle AttackingTimerHandle;
 	FTimerHandle GetToAttackingPointHandle;
+	FTimerHandle ShootingTimerHandle;
+	FTimerHandle TimerBeforeAttackingHandle;
 
 	bool bIsMovingToPatrolPoint = false;
 	bool bIsMovingToCover = false;
 	bool bIsInCover = false;
 	bool bIsAttacking = false;
+	bool bIsIdle = false;
 };

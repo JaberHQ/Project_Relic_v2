@@ -20,8 +20,8 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-	EnemyController->GetToAttackPoint();
-	//EnemyController->SetIsAttacking(true);
+	EnemyController->SetIsIdle(true);
+	EnemyController->SetTimerBeforeAttacking();
 }
 
 void AttackState::Execute(AEnemyController* EnemyController)
@@ -29,20 +29,23 @@ void AttackState::Execute(AEnemyController* EnemyController)
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;
 
-
-	if (!(EnemyController->GetIsAttacking()))
+	if (!EnemyController->GetIsIdle())
 	{
-		//EnemyController->ChangeState(TakeCoverState::Instance());
-		EnemyController->ControlledEnemyCharacter->Crouch();
-		return;
+		if (EnemyController->GetIsAttacking() && !EnemyController->ControlledEnemyCharacter->GetIsShooting())
+		{
+			EnemyController->StartShooting();
+			return;
+		}
+
+		if (!EnemyController->GetIsAttacking() && EnemyController->ControlledEnemyCharacter->GetIsShooting())
+		{
+			EnemyController->StopShooting();
+			EnemyController->ChangeState(TakeCoverState::Instance());
+			return;
+		}
 	}
 
-	if (EnemyController->GetIsAttacking())
-	{
-		// Shoot player
-		EnemyController->ControlledEnemyCharacter->UnCrouch();
-		return;
-	}
+	
 }
 
 void AttackState::Exit(AEnemyController* EnemyController)

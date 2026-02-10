@@ -118,22 +118,43 @@ void AEnemyController::Investigate()
 	GetWorldTimerManager().SetTimer(InvestigateHandle, this, &AEnemyController::MoveToLastKnownLocation, 3.0f, false);
 }
 
+void AEnemyController::StartShooting()
+{
+	/* The enemy will pretend to shoot before raycasting a bullet
+			As we don't want every single bullet to hit the player */
+	RotateToFacePlayer();
+	ControlledEnemyCharacter->UnCrouch();
+	ControlledEnemyCharacter->SetIsShooting(true);
+
+	GetWorld()->GetTimerManager().SetTimer(ShootingTimerHandle, this, &AEnemyController::ShootPlayer, 3.0f, false);
+
+}
+
+void AEnemyController::StopShooting()
+{
+	GetWorld()->GetTimerManager().ClearTimer(ShootingTimerHandle);
+}
+
+void AEnemyController::SetTimerBeforeAttacking()
+{
+	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, 5.0f, false);
+}
+
+void AEnemyController::TimerBeforeAttackingCompleted() 
+{ 
+	bIsAttacking = true; 
+	bIsIdle = false;
+	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 10.0f, false);
+}
+
+
 void AEnemyController::ShootPlayer()
 {
-	/*if shootPlayer
-		bshootPlayer = true; (Play the animation)
-		Raycast bullet to hit the player
-		Player to take damage
-		*/
-	if (ControlledEnemyCharacter && PlayerCharacter)
+	if (ControlledEnemyCharacter)
 	{
-		//ControlledEnemyCharacter->SetActorRotation(TargetLastKnownLocation.Rotation());
-		ControlledEnemyCharacter->SetIsShooting(true);
 		ControlledEnemyCharacter->RaycastShot();
-		//GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemyController::RunStateMachine, 3.0f, false);
-
-		//SetFocus(EnemyActor);
-		//GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemyController::ShootPlayer, 3.0f, false);
+		//ControlledEnemyCharacter->SetIsShooting(true);
+		StartShooting();
 	}
 }
 
@@ -152,24 +173,17 @@ void AEnemyController::GetToAttackPoint()
 	GetWorld()->GetTimerManager().SetTimer(GetToAttackingPointHandle, this, &AEnemyController::RunFindAttackEQS, 5.0f, false);
 }
 
-void AEnemyController::RotateToFacePlayer()
-{
-	if(!PlayerCharacter) return;
 
-	FVector ToPlayer = PlayerCharacter->GetActorLocation() - GetPawn()->GetActorLocation();
-	ToPlayer.Z = 0.0f;
 
-	FRotator TargetRotation = ToPlayer.Rotation();
+void AEnemyController::RotateToFacePlayer() 
+{ 
+	double roll = GetPawn()->GetActorRotation().Roll;
+	double pitch = GetPawn()->GetActorRotation().Pitch;
+	FRotator FindLookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetPawn()->GetActorLocation(), PlayerCharacter->GetActorLocation());
+	FRotator Interp = UKismetMathLibrary::RInterpTo(GetPawn()->GetActorRotation(), FindLookAtRotation, GetWorld()->DeltaTimeSeconds, 1.0f); 
+	FRotator Rotator = FRotator(0.0f, 0.0f, Interp.Yaw); 
 
-	FRotator NewRotation = FMath::RInterpTo
-	(
-		GetControlRotation(),
-		TargetRotation,
-		GetWorld()->GetDeltaSeconds(),
-		5.0f
-	);
-
-	SetControlRotation(NewRotation);
+	GetPawn()->SetActorRotation(FindLookAtRotation); 
 }
 
 void AEnemyController::RunFindAttackEQS()
@@ -209,6 +223,7 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	{
 		if (Result.IsSuccess())
 		{
+			RotateToFacePlayer();
 			// Set a timer
 			GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
 		}
@@ -216,10 +231,11 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 
 }
 
+
 void AEnemyController::OnAttackingTimerComplete()
 {
 	bIsAttacking = !bIsAttacking;
-	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
+	//GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
 }
 
 

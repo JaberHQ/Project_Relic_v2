@@ -35,7 +35,7 @@ void TakeCoverState::Execute(AEnemyController* EnemyController)
 		return;
 
 	// If the ai has found cover
-	if (!(EnemyController->GetIsMovingToCover()))
+	if (!EnemyController->GetIsMovingToCover())
 	{
 		EnemyController->ControlledEnemyCharacter->Crouch();
 		EnemyController->RotateToFacePlayer();
