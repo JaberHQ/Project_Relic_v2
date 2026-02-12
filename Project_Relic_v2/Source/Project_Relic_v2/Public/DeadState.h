@@ -5,6 +5,8 @@
 
 class AEnemyController;
 
+/* State for when AI is dead */
+	
 class PROJECT_RELIC_V2_API DeadState : public State<AEnemyController>
 {
 public:

@@ -18,6 +18,7 @@
 #include "HuntState.h"
 #include "TakeCoverState.h"
 #include "AttackState.h"
+#include "DeadState.h"
 #include "Perception/AIPerceptionComponent.h"
 
 AEnemyController::AEnemyController()
@@ -55,6 +56,9 @@ void AEnemyController::BeginPlay()
 
 void AEnemyController::Death()
 {
+	bIsDead = true;
+	StopMovement();
+	ChangeState(DeadState::Instance());
 }
 
 void AEnemyController::StartChase_Implementation()
@@ -138,29 +142,27 @@ void AEnemyController::StopShooting()
 
 void AEnemyController::SetTimerBeforeAttacking()
 {
-	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, 3.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, TimeBetweenShooting, false);
 }
 
-void AEnemyController::StartAttackingTimer(float AttackDuration)
+void AEnemyController::StartAttackingTimer()
 {
 	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, AttackDuration, false);
 }
 
-void AEnemyController::BeginAttack(float AttackDuration)
+void AEnemyController::BeginAttack()
 {
-	
-	ControlledEnemyCharacter->Crouch();
-
+	RotateToFacePlayer();
 	bIsAttacking = true;
 	bIsIdle = true;
-	AttackTime = AttackDuration;
+	ControlledEnemyCharacter->Crouch();
 	SetTimerBeforeAttacking();
 	
 }
 
 void AEnemyController::TimerBeforeAttackingCompleted() 
 { 
-	StartAttackingTimer(AttackTime);
+	StartAttackingTimer();
 	ControlledEnemyCharacter->UnCrouch();
 	bIsIdle = false;
 }
@@ -183,7 +185,7 @@ void AEnemyController::BeginToTakeCover()
 void AEnemyController::FinishTakingCover()
 {
 	ControlledEnemyCharacter->Crouch();
-	RotateToFacePlayer();
+	//RotateToFacePlayer();
 }
 
 void AEnemyController::OnAttackingTimerComplete()
@@ -241,19 +243,7 @@ void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 	if (Result->IsSuccessful() && Result->Items.Num() > 0)
 	{
 		const FVector TargetLocation = Result->GetItemAsLocation(0);
-		const FVector CurrentLocation = ControlledEnemyCharacter->GetActorLocation();
-
-		if (FVector::DistSquared(CurrentLocation, TargetLocation) > FMath::Square(50.0f))
-		{
-			/*if (ControlledEnemyCharacter->bIsCrouched)
-				ControlledEnemyCharacter->UnCrouch();*/
-			
-			MoveTo(TargetLocation);
-		}
-		else
-		{
-			bIsMovingToCover = false;
-		}
+		MoveTo(TargetLocation);
 	}
 }
 
@@ -268,7 +258,6 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 
 	else if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
 	{
-		ControlledEnemyCharacter->Crouch();
 		if (Result.IsSuccess())
 		{
 			bIsMovingToCover = false;
@@ -277,13 +266,13 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 
 	else if (FiniteStateMachine->GetCurrentState() == AttackState::Instance())
 	{
-		ControlledEnemyCharacter->Crouch();
-		if (Result.IsSuccess())
-		{
-			RotateToFacePlayer();
-			// Set a timer
-			GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
-		}
+		//ControlledEnemyCharacter->Crouch();
+		//if (Result.IsSuccess())
+		//{
+		//	RotateToFacePlayer();
+		//	// Set a timer
+		//	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
+		//}
 	}
 
 }

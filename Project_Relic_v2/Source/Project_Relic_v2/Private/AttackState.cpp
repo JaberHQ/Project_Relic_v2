@@ -20,8 +20,7 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-	float AttackDuration = 10.0f;
-	EnemyController->BeginAttack(AttackDuration);
+	EnemyController->BeginAttack();
 }
 
 void AttackState::Execute(AEnemyController* EnemyController)

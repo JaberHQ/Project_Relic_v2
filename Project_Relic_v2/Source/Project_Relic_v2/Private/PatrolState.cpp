@@ -2,6 +2,7 @@
 #include "EnemyController.h"
 #include "EnemyCharacter.h"
 #include "HuntState.h"
+#include "DeadState.h"
 #include "TakeCoverState.h"
 
 PatrolState::PatrolState()
@@ -28,6 +29,7 @@ void PatrolState::Enter(AEnemyController* EnemyController)
 	
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Patrol State.")); // DEBUG -----------------------
 
+	AvailablePatrolPoints = EnemyController->GetPatrolPoints();
 
 }
 
@@ -50,13 +52,11 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 	}
 
 
-	if(!(EnemyController->GetIsMovingToPatrolPoint()))
+	if(!EnemyController->GetIsMovingToPatrolPoint())
 	{
-		TArray<AActor*> AvailablePatrolPoints = EnemyController->GetPatrolPoints();
+		CurrentPoint = EnemyController->PatrolLocation;
 
-		AAIPatrolPoint* CurrentPoint = EnemyController->PatrolLocation;
-
-		AAIPatrolPoint* NextPatrolPoint = nullptr;
+		NextPatrolPoint = nullptr;
 
 		if(EnemyController->CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
 		{
@@ -71,6 +71,7 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 		EnemyController->PatrolLocation = NextPatrolPoint;
 		EnemyController->SetIsMovingToPatrolPoint(true);
 		EnemyController->MoveToActor(EnemyController->PatrolLocation);
+		return;
 	}
 	
 }

@@ -18,5 +18,9 @@ public:
 private:
 	PatrolState();
 
+private:
+	TArray<AActor*> AvailablePatrolPoints;
+	AAIPatrolPoint* CurrentPoint;
+	AAIPatrolPoint* NextPatrolPoint;
 	//~PatrolState();
 };

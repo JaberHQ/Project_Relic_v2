@@ -2,9 +2,9 @@
 #include "EnemyController.h"
 #include "EnemyCharacter.h"
 
-
 DeadState::DeadState()
 {
+
 }
 
 DeadState* DeadState::Instance()
@@ -17,7 +17,9 @@ void DeadState::Enter(AEnemyController* EnemyController)
 {
 	check(EnemyController);
 	check(EnemyController->ControlledEnemyCharacter);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Dead State.")); // DEBUG -----------------------
 
+	//EnemyController->UnPossess();
 }
 
 void DeadState::Execute(AEnemyController* EnemyController)
@@ -34,4 +36,6 @@ void DeadState::Execute(AEnemyController* EnemyController)
 
 void DeadState::Exit(AEnemyController* EnemyController)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Dead State.")); // DEBUG -----------------------
+
 }

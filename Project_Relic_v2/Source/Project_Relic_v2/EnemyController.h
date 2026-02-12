@@ -232,16 +232,21 @@ public:
 	void SetTimerBeforeAttacking();
 
 	/* Starts the attack timer */
-	void StartAttackingTimer(float AttackDuration);
+	void StartAttackingTimer();
 
 	/* When the Enemy is beginning to attack the player */
-	void BeginAttack(float AttackDuration);
+	void BeginAttack();
 
 	void FinishAttack();
 
 	void BeginToTakeCover();
 
 	void FinishTakingCover();
+
+	void SetAttackDuration(float DurationOfAttack){ AttackDuration = DurationOfAttack; }
+	float GetAttackDuration() const { return AttackDuration; }
+
+	bool GetIsDead() const { return bIsDead; }
 
 private:
 	void SetID(int val);
@@ -267,11 +272,18 @@ private:
 	FTimerHandle ShootingTimerHandle;
 	FTimerHandle TimerBeforeAttackingHandle;
 
-	float AttackTime;
+	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
+	float TimeBetweenShooting = 3.0f;
+
+
+	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
+	float AttackDuration = 3.0f;
+
 
 	bool bIsMovingToPatrolPoint = false;
 	bool bIsMovingToCover = false;
 	bool bIsInCover = false;
 	bool bIsAttacking = false;
 	bool bIsIdle = false;
+	bool bIsDead = false;;
 };
