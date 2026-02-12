@@ -20,8 +20,8 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-	EnemyController->SetIsIdle(true);
-	EnemyController->SetTimerBeforeAttacking();
+	float AttackDuration = 10.0f;
+	EnemyController->BeginAttack(AttackDuration);
 }
 
 void AttackState::Execute(AEnemyController* EnemyController)
@@ -29,26 +29,23 @@ void AttackState::Execute(AEnemyController* EnemyController)
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;
 
-	if (!EnemyController->GetIsIdle())
+	if (!EnemyController->ControlledEnemyCharacter->GetIsShooting() && !EnemyController->GetIsIdle())
 	{
-		if (EnemyController->GetIsAttacking() && !EnemyController->ControlledEnemyCharacter->GetIsShooting())
-		{
-			EnemyController->StartShooting();
-			return;
-		}
-
-		if (!EnemyController->GetIsAttacking() && EnemyController->ControlledEnemyCharacter->GetIsShooting())
-		{
-			EnemyController->StopShooting();
-			EnemyController->ChangeState(TakeCoverState::Instance());
-			return;
-		}
+		EnemyController->StartShooting();
+		return;
 	}
 
+	if (!EnemyController->GetIsAttacking())
+	{
+		EnemyController->ChangeState(TakeCoverState::Instance());
+		return;
+	}
 	
 }
 
 void AttackState::Exit(AEnemyController* EnemyController)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Attack State.")); // DEBUG -----------------------
+	
+	EnemyController->FinishAttack();
 }

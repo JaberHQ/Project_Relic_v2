@@ -123,30 +123,73 @@ void AEnemyController::StartShooting()
 	/* The enemy will pretend to shoot before raycasting a bullet
 			As we don't want every single bullet to hit the player */
 	RotateToFacePlayer();
-	ControlledEnemyCharacter->UnCrouch();
+
 	ControlledEnemyCharacter->SetIsShooting(true);
 
-	GetWorld()->GetTimerManager().SetTimer(ShootingTimerHandle, this, &AEnemyController::ShootPlayer, 3.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(ShootingTimerHandle, this, &AEnemyController::ShootPlayer, 1.0f, false);
 
 }
 
 void AEnemyController::StopShooting()
 {
+	ControlledEnemyCharacter->SetIsShooting(false);
 	GetWorld()->GetTimerManager().ClearTimer(ShootingTimerHandle);
 }
 
 void AEnemyController::SetTimerBeforeAttacking()
 {
-	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, 5.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, 3.0f, false);
+}
+
+void AEnemyController::StartAttackingTimer(float AttackDuration)
+{
+	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, AttackDuration, false);
+}
+
+void AEnemyController::BeginAttack(float AttackDuration)
+{
+	
+	ControlledEnemyCharacter->Crouch();
+
+	bIsAttacking = true;
+	bIsIdle = true;
+	AttackTime = AttackDuration;
+	SetTimerBeforeAttacking();
+	
 }
 
 void AEnemyController::TimerBeforeAttackingCompleted() 
 { 
-	bIsAttacking = true; 
+	StartAttackingTimer(AttackTime);
+	ControlledEnemyCharacter->UnCrouch();
 	bIsIdle = false;
-	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 10.0f, false);
 }
 
+void AEnemyController::FinishAttack()
+{
+	ControlledEnemyCharacter->Crouch();
+	StopShooting();
+}
+
+void AEnemyController::BeginToTakeCover()
+{
+	FEnemyMoveSpeed MoveSpeed;
+	ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Chase);
+
+	SetIsMovingToCover(true);
+	RunFindCoverEQS();
+}
+
+void AEnemyController::FinishTakingCover()
+{
+	ControlledEnemyCharacter->Crouch();
+	RotateToFacePlayer();
+}
+
+void AEnemyController::OnAttackingTimerComplete()
+{
+	bIsAttacking = false;
+}
 
 void AEnemyController::ShootPlayer()
 {
@@ -188,7 +231,7 @@ void AEnemyController::RotateToFacePlayer()
 
 void AEnemyController::RunFindAttackEQS()
 {
-	ControlledEnemyCharacter->UnCrouch();
+	//ControlledEnemyCharacter->UnCrouch();
 	bIsAttacking = true;
 	FindAttackQueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &AEnemyController::MoveToQueryRequest);
 }
@@ -197,7 +240,20 @@ void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 {
 	if (Result->IsSuccessful() && Result->Items.Num() > 0)
 	{
-		MoveTo(Result->GetItemAsLocation(0));
+		const FVector TargetLocation = Result->GetItemAsLocation(0);
+		const FVector CurrentLocation = ControlledEnemyCharacter->GetActorLocation();
+
+		if (FVector::DistSquared(CurrentLocation, TargetLocation) > FMath::Square(50.0f))
+		{
+			/*if (ControlledEnemyCharacter->bIsCrouched)
+				ControlledEnemyCharacter->UnCrouch();*/
+			
+			MoveTo(TargetLocation);
+		}
+		else
+		{
+			bIsMovingToCover = false;
+		}
 	}
 }
 
@@ -212,15 +268,16 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 
 	else if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
 	{
+		ControlledEnemyCharacter->Crouch();
 		if (Result.IsSuccess())
 		{
 			bIsMovingToCover = false;
-			//ControlledEnemyCharacter->Crouch();
 		}
 	}
 
 	else if (FiniteStateMachine->GetCurrentState() == AttackState::Instance())
 	{
+		ControlledEnemyCharacter->Crouch();
 		if (Result.IsSuccess())
 		{
 			RotateToFacePlayer();
@@ -232,11 +289,7 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 }
 
 
-void AEnemyController::OnAttackingTimerComplete()
-{
-	bIsAttacking = !bIsAttacking;
-	//GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, 5.0f, false);
-}
+
 
 
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
@@ -335,3 +388,9 @@ EnemyGlobalState* EnemyGlobalState::Instance()
 	return &Instance;
 }
 
+void AEnemyController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	delete FiniteStateMachine;
+	FiniteStateMachine = nullptr;
+	Super::EndPlay(EndPlayReason);
+}

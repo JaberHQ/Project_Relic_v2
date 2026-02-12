@@ -84,7 +84,7 @@ public:
 	AEnemyController();
 
 	virtual void Tick(float DeltaTime) override;
-
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -231,6 +231,18 @@ public:
 
 	void SetTimerBeforeAttacking();
 
+	/* Starts the attack timer */
+	void StartAttackingTimer(float AttackDuration);
+
+	/* When the Enemy is beginning to attack the player */
+	void BeginAttack(float AttackDuration);
+
+	void FinishAttack();
+
+	void BeginToTakeCover();
+
+	void FinishTakingCover();
+
 private:
 	void SetID(int val);
 
@@ -254,6 +266,8 @@ private:
 	FTimerHandle GetToAttackingPointHandle;
 	FTimerHandle ShootingTimerHandle;
 	FTimerHandle TimerBeforeAttackingHandle;
+
+	float AttackTime;
 
 	bool bIsMovingToPatrolPoint = false;
 	bool bIsMovingToCover = false;
