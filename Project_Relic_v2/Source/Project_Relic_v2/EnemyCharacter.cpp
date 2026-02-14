@@ -40,6 +40,12 @@ AEnemyCharacter::AEnemyCharacter()
 	//UBaseGameEntity* Entity = NewObject<UBaseGameEntity>();
 }
 
+void AEnemyCharacter::SetID(int val)
+{
+	ID = val;
+}
+
+
 // Called when the game starts or when spawned
 void AEnemyCharacter::BeginPlay()
 {

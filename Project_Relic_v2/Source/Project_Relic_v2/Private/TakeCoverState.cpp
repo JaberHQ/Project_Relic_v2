@@ -20,7 +20,7 @@ void TakeCoverState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Take Cover State.")); // DEBUG -----------------------
 
-	EnemyController->BeginToTakeCover();
+	EnemyController->BeginToTakeCover(); 
 	
 }
 
@@ -31,9 +31,19 @@ void TakeCoverState::Execute(AEnemyController* EnemyController)
 		return;
 
 	// If the ai has found cover
-	if (!EnemyController->GetIsMovingToCover())
+	if (!EnemyController->GetIsMovingToCover() && !EnemyController->GetIsIdle())
 	{
-		//EnemyController->ControlledEnemyCharacter->Crouch();
+		EnemyController->FinishTakingCover();
+
+		// Delay enemy going into attack state 
+			// So that AI can sit idle behind cover before trying to shoot
+		EnemyController->SetTimerBeforeAttacking(); 
+														
+		return;
+	}
+
+	if (EnemyController->GetIsAttacking())
+	{
 		EnemyController->ChangeState(AttackState::Instance());
 		return;
 	}
@@ -45,5 +55,5 @@ void TakeCoverState::Exit(AEnemyController* EnemyController)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Take Cover State.")); // DEBUG -----------------------
 
-	EnemyController->FinishTakingCover();
+	
 }

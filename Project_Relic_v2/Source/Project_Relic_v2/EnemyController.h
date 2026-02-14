@@ -81,74 +81,142 @@ class PROJECT_RELIC_V2_API AEnemyController : public AAIController, public IDete
 	GENERATED_BODY()
 
 public:
+	/* Constructor */
 	AEnemyController();
 
+	/** Called every frame */
 	virtual void Tick(float DeltaTime) override;
+
+	/** Called when the game finishes */
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+
 protected:
-	// Called when the game starts or when spawned
+	/** Called when the game starts or when spawned */
 	virtual void BeginPlay() override;
 
+private:
+	/** Called after the controller finishes moving the controlled character to a specified location or actor **/
+	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result);
+
+
+/************* Shooting ************/
 public:
+	/* Fire a raycast line, intended to damage or deteriate the health of another actor or object */
+	void ShootRaycastBullet();
+
+	void StartShooting();
+	void StopShooting();
+/***********************************/
+
+/***************** AI Perception component ************************/
+private:
+	/** Handles the events for when the AI owner is initially controlled by the AI Controller */
+	virtual void OnPossess(APawn* InPawn) override;
+
+	/** Handle the perception component defaults */
+	void InitPerceptionSystem();
+/******************************************************************/
+	
+public:
+	/********************************** Patrol *****************************************/
+	void SetCurrentPatrolPoint(int32 NewPatrolPoint) { CurrentPatrolPoint = NewPatrolPoint; }
+
+	int32 GetCurrentPatrolPoint() const { return CurrentPatrolPoint; }
+
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
 
-	int32 CurrentPatrolPoint;
-	
+	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint) { bIsMovingToPatrolPoint = IsMovingToPatrolPoint; }
+	bool GetIsMovingToPatrolPoint() const { return bIsMovingToPatrolPoint; }
+	/**********************************************************************************/
+
+	/***************** Enemy seeing and sensing player *******************************/
 	UFUNCTION(BlueprintCallable, Category = "AI")
-	void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus);
-
-	void Death();
-
-	virtual void StartChase_Implementation() override;
-
-	virtual void StopChase_Implementation() override;
-
+	void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus); // Called when another actor has been detected by the perception component
+	
 	FVector GetTargetLastKnownLocation() const;
 
 	void ClearTargetLastKnownLocation();
 
 	bool GetHasLineOfSight() { return bHasLineOfSight; }
 	void SetHasLineOfSight(bool HasLineOfSight) { bHasLineOfSight = HasLineOfSight; }
+	/*********************************************************************************/
 
+	/********************************* Cover *******************************************/
+	void SetIsMovingToCover(bool IsMovingToCover) { bIsMovingToCover = IsMovingToCover; }
+	bool GetIsMovingToCover() const { return bIsMovingToCover; }
+
+	void SetIsInCover(bool IsInCover) { bIsInCover = IsInCover; }
+	bool GetIsInCover() const { return bIsInCover; }
+
+	/** Start the events for owning character to take cover behind a wall */
+	void BeginToTakeCover();
+
+	/** Finish the events for owning character to take cover behind a wall */
+	void FinishTakingCover();
+
+	/************************************************************************************/
+
+	/********************************** Attack ******************************************/
+public:
+	void SetIsAttacking(bool IsAttacking) { bIsAttacking = IsAttacking; }
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsAttacking() const { return bIsAttacking; }
+
+	void SetAttackDuration(float DurationOfAttack){ AttackDuration = DurationOfAttack; }
+	float GetAttackDuration() const { return AttackDuration; }
+
+	void SetTimerBeforeAttacking();
+
+	/* Starts the attack timer */
+	void StartAttackingTimer();
+
+	/* When the Enemy is beginning to attack the player */
+	void BeginAttack();
+
+	void FinishAttack();
+
+	void EventsAfterCoverIsFound();
+
+private:
+	void OnAttackingTimerComplete();
+
+	void TimerBeforeAttackingCompleted();
+
+	/************************************************************************************/
+
+public:
+	/***************** Dead ************************/
+	void Death();
+	bool GetIsDead() const { return bIsDead; }
+	/***********************************************/
+
+	/************** Idle ************/
+	void SetIsIdle(bool IsIdle){ bIsIdle = IsIdle; }
+	bool GetIsIdle() const { return bIsIdle; }
+
+/************************************************* EQS ***********************************/
+public:
 	UFUNCTION()
 	void RunFindCoverEQS();
 
 	UFUNCTION()
 	void RunFindAttackEQS();
 
-	void ShootPlayer();
-private:
-	bool bHasLineOfSight = false;
-
-private:
-	virtual void OnPossess(APawn* InPawn) override;
-
-	void SetupPerceptionSystem();
-
-	void OnDetectionDelayComplete();
-
-	/* Run the finite state machine that determines the AI's current behaviour */
-	//void RunStateMachine();
-
-	void Investigate();
-
-
-	void MoveToLastKnownLocation();
-
 protected:
-	UPROPERTY(EditAnywhere, Category = "EQS")
-	UEnvQuery* FindCoverQuery;
-
-	FEnvQueryRequest FindCoverQueryRequest;
-
-
-	UPROPERTY(EditAnywhere, Category = "EQS")
-	UEnvQuery* FindAttackQuery;
-
-	FEnvQueryRequest FindAttackQueryRequest;
-
-
+	/* Move to a winning point, defined by an Environmental Search Query (EQS) */
 	void MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result);
+/***************************************************************************************/
+
+/********************* Detection *******************************************************************/
+public:
+	virtual void StartChase_Implementation() override; /**  Inherited from detection interface */
+
+	virtual void StopChase_Implementation() override; /**  Inherited from detection interface */
+
+private:
+	void OnDetectionDelayComplete();
+/****************************************************************************************************/
 
 public:
 	AEnemyCharacter* ControlledEnemyCharacter;
@@ -163,9 +231,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UAISenseConfig_Player * AISenseConfig_Player;
 
-	/* Blackboard keys */
-	
-
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	AEnemyCharacter* EnemyActor;
 
@@ -178,92 +243,50 @@ private:
 
 	bool bShouldChase;
 
-	//bool bFindCover = false;
-
 	FTimerHandle EQSTimerHandle;
 
 	FTimerHandle DetectionTimerHandle;
-
-	
-
-	//EEnemyState EnemyState;
-
-	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result);
 
 	FTimerHandle InvestigateHandle;
 	FTimerHandle WaitHandle;
 	FTimerHandle ShootHandle;
 
 
-
 public:
-	int32 GetID() const{ return ID; }
-
 	void ChangeState(State<AEnemyController>* NewState);
 
 	void RevertToPreviousState();
 
 	virtual void Update();
 
-	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint) { bIsMovingToPatrolPoint = IsMovingToPatrolPoint; }
-	bool GetIsMovingToPatrolPoint() const { return bIsMovingToPatrolPoint; }
-
-	void SetIsMovingToCover(bool IsMovingToCover) { bIsMovingToCover = IsMovingToCover; }
-	bool GetIsMovingToCover() const { return bIsMovingToCover; }
-
-	void SetIsInCover(bool IsInCover) { bIsInCover = IsInCover; }
-	bool GetIsInCover() const { return bIsInCover; }
-
-	void SetIsAttacking(bool IsAttacking) { bIsAttacking = IsAttacking; }
-
-	UFUNCTION(BlueprintCallable)
-	bool GetIsAttacking() const { return bIsAttacking; }
-
-	void SetIsIdle(bool IsIdle) { bIsIdle = IsIdle; }
-	bool GetIsIdle() const { return bIsIdle; }
-
 	void GetToAttackPoint();
 
 	void RotateToFacePlayer();
 
-	void StartShooting();
-	void StopShooting();
 
-	void SetTimerBeforeAttacking();
+/***** Variables *****/
+public:
 
-	/* Starts the attack timer */
-	void StartAttackingTimer();
+protected:
+	/********************** EQS ******************/
+	UPROPERTY(EditAnywhere, Category = "EQS")
+	UEnvQuery* FindCoverQuery;
 
-	/* When the Enemy is beginning to attack the player */
-	void BeginAttack();
+	FEnvQueryRequest FindCoverQueryRequest;
 
-	void FinishAttack();
+	UPROPERTY(EditAnywhere, Category = "EQS")
+	UEnvQuery* FindAttackQuery;
 
-	void BeginToTakeCover();
-
-	void FinishTakingCover();
-
-	void SetAttackDuration(float DurationOfAttack){ AttackDuration = DurationOfAttack; }
-	float GetAttackDuration() const { return AttackDuration; }
-
-	bool GetIsDead() const { return bIsDead; }
+	FEnvQueryRequest FindAttackQueryRequest;
+	/**********************************************/
 
 private:
-	void SetID(int val);
-
-	void OnAttackingTimerComplete();
-
-	void TimerBeforeAttackingCompleted();
-
-
-private:
-	static int32 NextValidID; // For each enemy instantiated, this will increment
-
-	int32 ID; // The Unique identifier for each enemy instantiated
-	
 	//State<AEnemyController>* CurrentState;
 	//State<AEnemyController>* PreviousState;
 	//State<AEnemyController>* GlobalState;
+
+	int32 CurrentPatrolPoint;
+
 
 	StateMachine<AEnemyController>* FiniteStateMachine;
 
@@ -275,15 +298,15 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
 	float TimeBetweenShooting = 3.0f;
 
-
 	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
 	float AttackDuration = 3.0f;
 
-
+	bool bHasLineOfSight = false;
 	bool bIsMovingToPatrolPoint = false;
 	bool bIsMovingToCover = false;
 	bool bIsInCover = false;
-	bool bIsAttacking = false;
 	bool bIsIdle = false;
+	bool bIsAttacking = false;
 	bool bIsDead = false;;
+
 };

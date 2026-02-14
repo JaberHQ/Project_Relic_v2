@@ -25,7 +25,7 @@ AEnemyController::AEnemyController()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	SetupPerceptionSystem();
+	InitPerceptionSystem();
 
 	/* Initialise AI defaults */
 	PatrolLocation = nullptr;
@@ -90,7 +90,7 @@ void AEnemyController::OnPossess(APawn* InPawn)
 	ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn);
 }
 
-void AEnemyController::SetupPerceptionSystem()
+void AEnemyController::InitPerceptionSystem()
 {
 	AISenseConfig_Player = CreateDefaultSubobject<UAISenseConfig_Player>(TEXT("Sight Config"));
 	
@@ -111,16 +111,16 @@ void AEnemyController::OnDetectionDelayComplete()
 	bIsDetectingPlayer = false;
 }
 
-void AEnemyController::Investigate()
-{
-	/*if investigate
-		Rotate to face TargetLastKnownLocation
-		Wait
-		Move to LastKnownLocation
-		Wait
-		Clear last known location(go back to patrol)*/
-	GetWorldTimerManager().SetTimer(InvestigateHandle, this, &AEnemyController::MoveToLastKnownLocation, 3.0f, false);
-}
+//void AEnemyController::Investigate()
+//{
+//	/*if investigate
+//		Rotate to face TargetLastKnownLocation
+//		Wait
+//		Move to LastKnownLocation
+//		Wait
+//		Clear last known location(go back to patrol)*/
+//	GetWorldTimerManager().SetTimer(InvestigateHandle, this, &AEnemyController::MoveToLastKnownLocation, 3.0f, false);
+//}
 
 void AEnemyController::StartShooting()
 {
@@ -130,7 +130,7 @@ void AEnemyController::StartShooting()
 
 	ControlledEnemyCharacter->SetIsShooting(true);
 
-	GetWorld()->GetTimerManager().SetTimer(ShootingTimerHandle, this, &AEnemyController::ShootPlayer, 1.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(ShootingTimerHandle, this, &AEnemyController::ShootRaycastBullet, 1.0f, false);
 
 }
 
@@ -142,7 +142,8 @@ void AEnemyController::StopShooting()
 
 void AEnemyController::SetTimerBeforeAttacking()
 {
-	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, TimeBetweenShooting, false);
+	bIsIdle = true;
+	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, 3.0f, false);
 }
 
 void AEnemyController::StartAttackingTimer()
@@ -153,18 +154,19 @@ void AEnemyController::StartAttackingTimer()
 void AEnemyController::BeginAttack()
 {
 	RotateToFacePlayer();
-	bIsAttacking = true;
-	bIsIdle = true;
-	ControlledEnemyCharacter->Crouch();
-	SetTimerBeforeAttacking();
-	
+	//StartAttackingTimer();
+	ControlledEnemyCharacter->UnCrouch();
 }
 
 void AEnemyController::TimerBeforeAttackingCompleted() 
 { 
-	StartAttackingTimer();
-	ControlledEnemyCharacter->UnCrouch();
+	bIsAttacking = true;
 	bIsIdle = false;
+}
+
+void AEnemyController::EventsAfterCoverIsFound()
+{
+	SetTimerBeforeAttacking(); // Keep owner behind cover before attacking the player
 }
 
 void AEnemyController::FinishAttack()
@@ -193,7 +195,7 @@ void AEnemyController::OnAttackingTimerComplete()
 	bIsAttacking = false;
 }
 
-void AEnemyController::ShootPlayer()
+void AEnemyController::ShootRaycastBullet()
 {
 	if (ControlledEnemyCharacter)
 	{
@@ -203,10 +205,10 @@ void AEnemyController::ShootPlayer()
 	}
 }
 
-void AEnemyController::MoveToLastKnownLocation()
-{
-	MoveToLocation(TargetLastKnownLocation);
-}
+//void AEnemyController::MoveToLastKnownLocation()
+//{
+//	MoveToLocation(TargetLastKnownLocation);
+//}
 
 void AEnemyController::RunFindCoverEQS()
 {
@@ -350,14 +352,6 @@ void AEnemyController::Update()
 	if (FiniteStateMachine)
 		FiniteStateMachine->Update();
 }
-
-
-void AEnemyController::SetID(int val)
-{
-	ID = val;
-}
-
-
 
 void EnemyGlobalState::Enter(AEnemyController* Enemy)
 {

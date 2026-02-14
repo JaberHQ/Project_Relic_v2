@@ -58,18 +58,20 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 
 		NextPatrolPoint = nullptr;
 
-		if(EnemyController->CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
+		int32 CurrentPatrolPoint = EnemyController->GetCurrentPatrolPoint();
+		if (CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
 		{
-			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[EnemyController->CurrentPatrolPoint++]);
+			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[CurrentPatrolPoint++]);
 		}
 		else
 		{
 			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[0]);
-			EnemyController->CurrentPatrolPoint = 0;
+			CurrentPatrolPoint = 0;
 		}
 
 		EnemyController->PatrolLocation = NextPatrolPoint;
 		EnemyController->SetIsMovingToPatrolPoint(true);
+		EnemyController->SetCurrentPatrolPoint(CurrentPatrolPoint);
 		EnemyController->MoveToActor(EnemyController->PatrolLocation);
 		return;
 	}

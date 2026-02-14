@@ -94,12 +94,22 @@ public:
 
 	void RaycastShot();
 
+/* Getters and setters */
+public:
+	/* Get the unique ID for each instatiated enemy character */
+	int32 GetID() const{ return ID; }
+
+	/* Get the boolean that states if the enemy is shooting or not */
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE bool GetIsShooting() const { return bIsShooting; }
 
+	/* Set the boolean that states if the enemy is shooting or not */
 	void SetIsShooting(bool IsShooting) { bIsShooting = IsShooting; }
 private:
+	/* Set the unique ID for the instatiated enemy character */
+	void SetID(int val);
 
+/* Variables */
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* AnimDeath; // Animation Montage for enemy dying
@@ -108,16 +118,12 @@ public:
 	UAnimMontage* AnimShoot; // Animation Montage for enemy dying
 
 private:
-	/** Line trace distance (how far the player can shoot) */
+	int32 ID; // The unique identifier for each enemy instantiated
+	static int32 NextValidID; // For each enemy instantiated, this will increment
+
+	/** Line trace distance (how far the enemy can shoot) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
-	float ShootingDistance;
+	float ShootingDistance; 
 
-	bool bIsShooting = false;
-
-
-public:
-
-
-private:
-	
+	bool bIsShooting = false; // Flag that tells if the enemy is shooting or not
 };

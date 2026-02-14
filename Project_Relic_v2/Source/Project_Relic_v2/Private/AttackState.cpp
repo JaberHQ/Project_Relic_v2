@@ -20,7 +20,8 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-	EnemyController->BeginAttack();
+	EnemyController->BeginAttack(); 
+	EnemyController->StartAttackingTimer(); // Start the timer that dictates how long the enemy stays in the attack state
 }
 
 void AttackState::Execute(AEnemyController* EnemyController)
@@ -28,15 +29,17 @@ void AttackState::Execute(AEnemyController* EnemyController)
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;
 
-	if (!EnemyController->ControlledEnemyCharacter->GetIsShooting() && !EnemyController->GetIsIdle())
+	// Start shooting (continuously)
+	if (!EnemyController->ControlledEnemyCharacter->GetIsShooting())
 	{
 		EnemyController->StartShooting();
 		return;
 	}
 
+	// Stop attacking
 	if (!EnemyController->GetIsAttacking())
 	{
-		EnemyController->ChangeState(TakeCoverState::Instance());
+		EnemyController->ChangeState(TakeCoverState::Instance()); 
 		return;
 	}
 	
