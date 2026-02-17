@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "BaseCharacter.h"
 #include "Logging/LogMacros.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h" 
@@ -53,7 +53,7 @@ struct FCharacterMoveSpeed
  *  Implements a controllable orbiting camera
  */
 UCLASS(Abstract)
-class AProject_Relic_v2Character : public ACharacter, public IDeathHandlerInterface, public IDetectionInterface
+class AProject_Relic_v2Character : public ABaseCharacter, public IDeathHandlerInterface, public IDetectionInterface
 {
 	GENERATED_BODY()
 
@@ -117,6 +117,9 @@ public:
  	 ** Handles the events of the owning character's death
 	/*********************************************************************/
 	virtual void HandleDeath_Implementation() override;
+
+	virtual bool HandleMessage(const FTelegram& Msg) override;
+
 
 protected:
 	/** Initialize input action bindings */

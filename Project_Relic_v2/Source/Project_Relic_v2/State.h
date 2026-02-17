@@ -3,9 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 /**
  * 
  */
+struct FTelegram;
+
 template<class Entity_Type> 
 class PROJECT_RELIC_V2_API State
 {
@@ -16,6 +19,8 @@ public:
 	virtual void Enter   (Entity_Type* Entity)  = 0;
 	virtual void Execute (Entity_Type* Entity)  = 0;
 	virtual void Exit    (Entity_Type* Entity)  = 0;
+
+	virtual bool OnMessage(Entity_Type*, const FTelegram&) = 0;
 
 
 };

@@ -21,11 +21,18 @@ class EnemyGlobalState : public State<AEnemyController>
 {
 public:
 	// Singleton
-	static EnemyGlobalState* Instance();
+	static EnemyGlobalState* Instance()
+	{
+		static EnemyGlobalState Instance;
+		return &Instance;
+	};
 
-	virtual void Enter(AEnemyController* Enemy) override;
-	virtual void Execute(AEnemyController* Enemy) override;
-	virtual void Exit(AEnemyController* Enemy) override;
+	virtual void Enter(AEnemyController* Enemy) override {};
+	virtual void Execute(AEnemyController* Enemy) override {};
+	virtual void Exit(AEnemyController* Enemy) override {};
+
+	virtual bool OnMessage(AEnemyController* EnemyController, const FTelegram& Msg) override { return false; }
+
 
 private:
 	EnemyGlobalState() {}
@@ -119,6 +126,10 @@ private:
 	
 public:
 	/********************************** Patrol *****************************************/
+
+	/* Starting events for patrol state */
+	void BeginPatrol();
+
 	void SetCurrentPatrolPoint(int32 NewPatrolPoint) { CurrentPatrolPoint = NewPatrolPoint; }
 
 	int32 GetCurrentPatrolPoint() const { return CurrentPatrolPoint; }
@@ -133,7 +144,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AI")
 	void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus); // Called when another actor has been detected by the perception component
 	
-	FVector GetTargetLastKnownLocation() const;
+	FVector GetTargetLastKnownLocation() const { return TargetLastKnownLocation; }
 
 	void ClearTargetLastKnownLocation();
 
@@ -142,11 +153,9 @@ public:
 	/*********************************************************************************/
 
 	/********************************* Cover *******************************************/
+
 	void SetIsMovingToCover(bool IsMovingToCover) { bIsMovingToCover = IsMovingToCover; }
 	bool GetIsMovingToCover() const { return bIsMovingToCover; }
-
-	void SetIsInCover(bool IsInCover) { bIsInCover = IsInCover; }
-	bool GetIsInCover() const { return bIsInCover; }
 
 	/** Start the events for owning character to take cover behind a wall */
 	void BeginToTakeCover();
@@ -171,12 +180,11 @@ public:
 	/* Starts the attack timer */
 	void StartAttackingTimer();
 
-	/* When the Enemy is beginning to attack the player */
+	/* Events that occur when the Enemy is beginning to attack the player in the attack state */
 	void BeginAttack();
 
+	/* Events that occur when the Enemy is stops attacking the player in the attack state */
 	void FinishAttack();
-
-	void EventsAfterCoverIsFound();
 
 private:
 	void OnAttackingTimerComplete();
@@ -187,7 +195,7 @@ private:
 
 public:
 	/***************** Dead ************************/
-	void Death();
+	void Death(); 
 	bool GetIsDead() const { return bIsDead; }
 	/***********************************************/
 
@@ -200,11 +208,8 @@ public:
 	UFUNCTION()
 	void RunFindCoverEQS();
 
-	UFUNCTION()
-	void RunFindAttackEQS();
-
 protected:
-	/* Move to a winning point, defined by an Environmental Search Query (EQS) */
+	/* Move to a winning point, defined by an Environmental Query Search (EQS) */
 	void MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result);
 /***************************************************************************************/
 
@@ -219,94 +224,83 @@ private:
 /****************************************************************************************************/
 
 public:
+	/******************* FSM ****************************/
+	void ChangeState(State<AEnemyController>* NewState);
+
+	bool HandleMessage(const FTelegram& Msg);
+	//void RevertToPreviousState();
+	/*****************************************************/
+
+	/* Face the player's direction */
+	void RotateToFacePlayer();
+
+private:
+	
+
+/***** Variables *****/
+public:
 	AEnemyCharacter* ControlledEnemyCharacter;
 	AProject_Relic_v2Character* PlayerCharacter;
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	AAIPatrolPoint* PatrolLocation;
+	AAIPatrolPoint* PatrolLocation = nullptr;
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UAIPerceptionComponent* AIPerceptionComponent;
 
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UAISenseConfig_Player * AISenseConfig_Player;
-
-	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	AEnemyCharacter* EnemyActor;
+	class UAISenseConfig_Player* AISenseConfig_Player;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	FVector TargetLastKnownLocation;
 
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
+	float ShootingInterval = 1.0f; // Time between enemy shooting a bullet
+
+	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
+	float AttackDuration = 3.0f;
+
+private:
+	/* Booleans */
+	bool bIsDetectingPlayer		= false; 
+	bool bShouldChase			= false;
+	bool bHasLineOfSight		= false;
+	bool bIsMovingToPatrolPoint = false;
+	bool bIsMovingToCover		= false;
+	bool bIsIdle				= false;
+	bool bIsAttacking			= false;
+	bool bIsDead				= false;
+
+	/* Patrol */
 	TArray<AActor*> PatrolPoints;
+	int32 CurrentPatrolPoint;
 
-	bool bIsDetectingPlayer; // If the AI has initially seen the player 
-
-	bool bShouldChase;
-
+	/* Gameplay timer handles */
 	FTimerHandle EQSTimerHandle;
-
 	FTimerHandle DetectionTimerHandle;
-
 	FTimerHandle InvestigateHandle;
 	FTimerHandle WaitHandle;
 	FTimerHandle ShootHandle;
-
-
-public:
-	void ChangeState(State<AEnemyController>* NewState);
-
-	void RevertToPreviousState();
-
-	virtual void Update();
-
-	void GetToAttackPoint();
-
-	void RotateToFacePlayer();
-
-
-/***** Variables *****/
-public:
-
-protected:
-	/********************** EQS ******************/
-	UPROPERTY(EditAnywhere, Category = "EQS")
-	UEnvQuery* FindCoverQuery;
-
-	FEnvQueryRequest FindCoverQueryRequest;
-
-	UPROPERTY(EditAnywhere, Category = "EQS")
-	UEnvQuery* FindAttackQuery;
-
-	FEnvQueryRequest FindAttackQueryRequest;
-	/**********************************************/
-
-private:
-	//State<AEnemyController>* CurrentState;
-	//State<AEnemyController>* PreviousState;
-	//State<AEnemyController>* GlobalState;
-
-	int32 CurrentPatrolPoint;
-
-
-	StateMachine<AEnemyController>* FiniteStateMachine;
-
 	FTimerHandle AttackingTimerHandle;
 	FTimerHandle GetToAttackingPointHandle;
 	FTimerHandle ShootingTimerHandle;
 	FTimerHandle TimerBeforeAttackingHandle;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
-	float TimeBetweenShooting = 3.0f;
+protected:
+	/********************** EQS ******************/
+	UPROPERTY(EditAnywhere, Category = "EQS")
+	UEnvQuery* FindCoverQuery; // Environmental Query Search for finding cover point
 
-	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
-	float AttackDuration = 3.0f;
+	FEnvQueryRequest FindCoverQueryRequest;
+	/**********************************************/
 
-	bool bHasLineOfSight = false;
-	bool bIsMovingToPatrolPoint = false;
-	bool bIsMovingToCover = false;
-	bool bIsInCover = false;
-	bool bIsIdle = false;
-	bool bIsAttacking = false;
-	bool bIsDead = false;;
+/** FSM */
+private:
+	//State<AEnemyController>* CurrentState;
+	//State<AEnemyController>* PreviousState;
+	//State<AEnemyController>* GlobalState;
 
+
+	StateMachine<AEnemyController>* FiniteStateMachine; 
 };

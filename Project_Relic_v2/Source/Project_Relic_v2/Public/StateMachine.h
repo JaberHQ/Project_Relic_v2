@@ -7,6 +7,11 @@
 /**
  * 
  */
+
+
+
+
+
 template<class Entity_Type>
 class StateMachine
 {
@@ -72,6 +77,17 @@ public:
 	bool IsInState(const State<Entity_Type>* State) const
 	{
 		return CurrentState == State;
+	}
+
+	bool HandleMessage(const FTelegram& Msg) const
+	{
+		if (CurrentState && CurrentState->OnMessage(Owner, Msg))
+			return true;
+
+		if (GlobalState && GlobalState->OnMessage(Owner, Msg))
+			return true;
+
+		return false;
 	}
 
 private:

@@ -36,3 +36,9 @@ void AlertState::Execute(AEnemyController* EnemyController)
 void AlertState::Exit(AEnemyController* EnemyController)
 {
 }
+
+bool AlertState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}
+

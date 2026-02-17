@@ -37,13 +37,14 @@ AEnemyCharacter::AEnemyCharacter()
 
 	ShootingDistance = 2000.0f;
 
-	//UBaseGameEntity* Entity = NewObject<UBaseGameEntity>();
+
 }
 
-void AEnemyCharacter::SetID(int val)
+bool AEnemyCharacter::HandleMessage(const FTelegram& Msg)
 {
-	ID = val;
+	return false;
 }
+
 
 
 // Called when the game starts or when spawned

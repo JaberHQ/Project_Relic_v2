@@ -3,39 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "BaseCharacter.h"
 #include "AIController.h"
 #include "Animation/AnimMontage.h"
 #include "HealthComponent.h"
 #include "State.h"
 #include "EnemyCharacter.generated.h"
-
-//UCLASS(Abstract, Blueprintable)
-//class PROJECT_RELIC_V2_API UBaseGameEntity : public UObject
-//{
-//	GENERATED_BODY()
-//
-//public:
-//	
-//	UBaseGameEntity();
-//
-//	void InitializeWithID(int32 BaseID);
-//
-//	virtual ~UBaseGameEntity(){}
-//
-//	virtual void Update() PURE_VIRTUAL(UBaseGameEntity::Update, );
-//
-//	int32 GetID() const { return ID; }
-//
-//protected:
-//	void SetID(int32 val);
-//
-//private:
-//	UPROPERTY()
-//	int32 ID;
-//
-//	static int32 NextValidID;
-//};
 
 USTRUCT(BlueprintType)
 struct FEnemyMoveSpeed
@@ -46,14 +19,14 @@ struct FEnemyMoveSpeed
 	float Patrol = 150.0f; // Slow moving speed
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
-	float Chase = 400.0f; // Default Moving speed
+	float Run = 400.0f; // Default Moving speed
 };
 
 /**
  *  AI character manager
  */
 UCLASS()
-class PROJECT_RELIC_V2_API AEnemyCharacter : public ACharacter, public IDeathHandlerInterface
+class PROJECT_RELIC_V2_API AEnemyCharacter : public ABaseCharacter, public IDeathHandlerInterface
 {
 	GENERATED_BODY()
 
@@ -69,6 +42,8 @@ public:
 	AEnemyCharacter();
 
 	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
+	virtual bool HandleMessage(const FTelegram& Msg) override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -96,9 +71,6 @@ public:
 
 /* Getters and setters */
 public:
-	/* Get the unique ID for each instatiated enemy character */
-	int32 GetID() const{ return ID; }
-
 	/* Get the boolean that states if the enemy is shooting or not */
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE bool GetIsShooting() const { return bIsShooting; }
@@ -106,8 +78,7 @@ public:
 	/* Set the boolean that states if the enemy is shooting or not */
 	void SetIsShooting(bool IsShooting) { bIsShooting = IsShooting; }
 private:
-	/* Set the unique ID for the instatiated enemy character */
-	void SetID(int val);
+	
 
 /* Variables */
 public:
@@ -118,8 +89,6 @@ public:
 	UAnimMontage* AnimShoot; // Animation Montage for enemy dying
 
 private:
-	int32 ID; // The unique identifier for each enemy instantiated
-	static int32 NextValidID; // For each enemy instantiated, this will increment
 
 	/** Line trace distance (how far the enemy can shoot) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))

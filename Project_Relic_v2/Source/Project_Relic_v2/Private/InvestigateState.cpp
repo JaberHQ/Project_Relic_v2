@@ -35,3 +35,8 @@ void InvestigateState::Execute(AEnemyController* EnemyController)
 void InvestigateState::Exit(AEnemyController* EnemyController)
 {
 }
+
+bool InvestigateState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}

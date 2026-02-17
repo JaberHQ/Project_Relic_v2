@@ -39,3 +39,9 @@ void DeadState::Exit(AEnemyController* EnemyController)
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Dead State.")); // DEBUG -----------------------
 
 }
+
+
+bool DeadState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}

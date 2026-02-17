@@ -37,3 +37,9 @@ void HuntState::Exit(AEnemyController* EnemyController)
 {
 
 }
+
+
+bool HuntState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}

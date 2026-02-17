@@ -51,3 +51,8 @@ void AttackState::Exit(AEnemyController* EnemyController)
 	
 	EnemyController->FinishAttack();
 }
+
+bool AttackState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}

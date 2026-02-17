@@ -29,30 +29,25 @@ void PatrolState::Enter(AEnemyController* EnemyController)
 	
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Patrol State.")); // DEBUG -----------------------
 
+	EnemyController->BeginPatrol();
 	AvailablePatrolPoints = EnemyController->GetPatrolPoints();
 
 }
 
 void PatrolState::Execute(AEnemyController* EnemyController)
 {
-	// If heard minor noise -> Alert
-	// If heard major noise -> Investigate
-	// If see player (low visibility) -> Alert
-	// If see player (clear) -> Chase or Attack
-	 
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;
 
-	// For now we're doing if the player is seen
-		// Stripping away the stealth features until it works well
+	// If player is detected
 	if (EnemyController->GetHasLineOfSight())
 	{
 		EnemyController->ChangeState(TakeCoverState::Instance());
 		return;
 	}
 
-
-	if(!EnemyController->GetIsMovingToPatrolPoint())
+	// Move to next patrol point
+	if (!EnemyController->GetIsMovingToPatrolPoint())
 	{
 		CurrentPoint = EnemyController->PatrolLocation;
 
@@ -82,4 +77,9 @@ void PatrolState::Exit(AEnemyController* EnemyController)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Patrol State.")); // DEBUG -----------------------
 
+}
+
+bool PatrolState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
 }

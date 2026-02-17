@@ -35,3 +35,8 @@ void ReloadState::Execute(AEnemyController* EnemyController)
 void ReloadState::Exit(AEnemyController* EnemyController)
 {
 }
+
+bool ReloadState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}

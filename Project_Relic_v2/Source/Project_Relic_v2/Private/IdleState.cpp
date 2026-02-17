@@ -34,3 +34,8 @@ void IdleState::Execute(AEnemyController* EnemyController)
 void IdleState::Exit(AEnemyController* EnemyController)
 {
 }
+
+bool IdleState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}

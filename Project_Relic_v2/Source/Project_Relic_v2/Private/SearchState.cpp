@@ -35,3 +35,8 @@ void SearchState::Execute(AEnemyController* EnemyController)
 void SearchState::Exit(AEnemyController* EnemyController)
 {
 }
+
+bool SearchState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}

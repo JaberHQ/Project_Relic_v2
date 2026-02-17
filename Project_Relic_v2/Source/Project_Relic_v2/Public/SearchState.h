@@ -13,6 +13,7 @@ public:
 	virtual void Enter(AEnemyController* EnemyController);
 	virtual void Execute(AEnemyController* EnemyController);
 	virtual void Exit(AEnemyController* EnemyController);
+	virtual bool OnMessage(AEnemyController* EnemyController, const FTelegram& Msg);
 
 
 private:

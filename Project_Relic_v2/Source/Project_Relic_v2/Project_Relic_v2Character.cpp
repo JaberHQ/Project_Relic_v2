@@ -105,6 +105,11 @@ void AProject_Relic_v2Character::HandleDeath_Implementation()
 		DisableInput(PlayerController);
 }
 
+bool AProject_Relic_v2Character::HandleMessage(const FTelegram& Msg)
+{
+	return false;
+}
+
 void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings

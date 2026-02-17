@@ -57,3 +57,8 @@ void TakeCoverState::Exit(AEnemyController* EnemyController)
 
 	
 }
+
+bool TakeCoverState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}
