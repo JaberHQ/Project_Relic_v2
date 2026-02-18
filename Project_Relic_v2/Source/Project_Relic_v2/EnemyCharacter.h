@@ -8,6 +8,7 @@
 #include "Animation/AnimMontage.h"
 #include "HealthComponent.h"
 #include "State.h"
+#include "AIBehaviourComponent.h"
 #include "EnemyCharacter.generated.h"
 
 USTRUCT(BlueprintType)
@@ -37,11 +38,16 @@ class PROJECT_RELIC_V2_API AEnemyCharacter : public ABaseCharacter, public IDeat
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UAIPerceptionStimuliSourceComponent* PerceptionStimuliSourceComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UAIBehaviourComponent* AIBehaviourComponent;
+
 public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
 
 	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
+	UAIBehaviourComponent* GetAIBehaviourComponent() const { return AIBehaviourComponent; }
 
 	virtual bool HandleMessage(const FTelegram& Msg) override;
 

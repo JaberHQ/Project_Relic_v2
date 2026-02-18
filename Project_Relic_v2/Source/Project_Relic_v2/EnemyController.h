@@ -15,6 +15,7 @@
 class AEnemyCharacter;
 class AProject_Relic_v2Character;
 class AAIPatrolPoint;
+class UAIBehaviourComponent;
 //class UEnvQuery;
 
 class EnemyGlobalState : public State<AEnemyController>
@@ -138,6 +139,9 @@ public:
 
 	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint) { bIsMovingToPatrolPoint = IsMovingToPatrolPoint; }
 	bool GetIsMovingToPatrolPoint() const { return bIsMovingToPatrolPoint; }
+
+	void MoveToNextPatrolPoint();
+
 	/**********************************************************************************/
 
 	/***************** Enemy seeing and sensing player *******************************/
@@ -274,7 +278,8 @@ private:
 
 	/* Patrol */
 	TArray<AActor*> PatrolPoints;
-	int32 CurrentPatrolPoint;
+	int32 CurrentPatrolPoint; // Can delete this now
+	//int32 PatrolPointIndex = 0;
 
 	/* Gameplay timer handles */
 	FTimerHandle EQSTimerHandle;
@@ -301,6 +306,6 @@ private:
 	//State<AEnemyController>* PreviousState;
 	//State<AEnemyController>* GlobalState;
 
-
+	UAIBehaviourComponent* AIBehaviourComponent = nullptr;
 	StateMachine<AEnemyController>* FiniteStateMachine; 
 };

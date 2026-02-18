@@ -215,6 +215,18 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	if (FiniteStateMachine->GetCurrentState() == PatrolState::Instance())
 	{
 		bIsMovingToPatrolPoint = false;
+
+		if (AIBehaviourComponent)
+		{
+			AIBehaviourComponent->IncrementPatrolPointIndex();
+
+			if (AIBehaviourComponent->GetPatrolPointIndex() >= AIBehaviourComponent->GetPatrolPathLength())
+			{
+				AIBehaviourComponent->ResetPatrolPointIndex();
+			}
+		}
+
+
 	}
 
 	else if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
@@ -224,6 +236,20 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 			bIsMovingToCover = false;
 		}
 	}
+}
+
+void AEnemyController::MoveToNextPatrolPoint()
+{
+	AIBehaviourComponent = Cast<UAIBehaviourComponent>(ControlledEnemyCharacter->GetAIBehaviourComponent());
+
+	if (!AIBehaviourComponent)
+		return;
+
+	if (AIBehaviourComponent->GetPatrolPathLength() < 0)
+		return;
+
+	bIsMovingToPatrolPoint = true;
+	MoveToLocation(AIBehaviourComponent->GetNextPatrolPointLocation());
 }
 
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)

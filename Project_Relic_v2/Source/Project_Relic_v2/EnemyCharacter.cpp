@@ -28,6 +28,9 @@ AEnemyCharacter::AEnemyCharacter()
 	// Health defaults
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent" ));
 
+	AIBehaviourComponent = CreateDefaultSubobject<UAIBehaviourComponent>(TEXT("AIBehaviourComponent"));
+
+
 	PerceptionStimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("StimulusComponent"));
 	if (PerceptionStimuliSourceComponent)
 	{

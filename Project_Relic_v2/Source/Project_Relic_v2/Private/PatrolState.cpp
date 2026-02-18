@@ -29,7 +29,7 @@ void PatrolState::Enter(AEnemyController* EnemyController)
 	
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Patrol State.")); // DEBUG -----------------------
 
-	EnemyController->BeginPatrol();
+	//EnemyController->BeginPatrol();
 	AvailablePatrolPoints = EnemyController->GetPatrolPoints();
 
 }
@@ -46,30 +46,35 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 		return;
 	}
 
-	// Move to next patrol point
 	if (!EnemyController->GetIsMovingToPatrolPoint())
 	{
-		CurrentPoint = EnemyController->PatrolLocation;
-
-		NextPatrolPoint = nullptr;
-
-		int32 CurrentPatrolPoint = EnemyController->GetCurrentPatrolPoint();
-		if (CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
-		{
-			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[CurrentPatrolPoint++]);
-		}
-		else
-		{
-			NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[0]);
-			CurrentPatrolPoint = 0;
-		}
-
-		EnemyController->PatrolLocation = NextPatrolPoint;
-		EnemyController->SetIsMovingToPatrolPoint(true);
-		EnemyController->SetCurrentPatrolPoint(CurrentPatrolPoint);
-		EnemyController->MoveToActor(EnemyController->PatrolLocation);
-		return;
+		EnemyController->MoveToNextPatrolPoint();
 	}
+
+	//// Move to next patrol point
+	//if (!EnemyController->GetIsMovingToPatrolPoint())
+	//{
+	//	CurrentPoint = EnemyController->PatrolLocation;
+
+	//	NextPatrolPoint = nullptr;
+
+	//	int32 CurrentPatrolPoint = EnemyController->GetCurrentPatrolPoint();
+	//	if (CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1)
+	//	{
+	//		NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[CurrentPatrolPoint++]);
+	//	}
+	//	else
+	//	{
+	//		NextPatrolPoint = Cast<AAIPatrolPoint>(AvailablePatrolPoints[0]);
+	//		CurrentPatrolPoint = 0;
+	//	}
+
+	//	EnemyController->PatrolLocation = NextPatrolPoint;
+	//	EnemyController->SetIsMovingToPatrolPoint(true);
+	//	EnemyController->SetCurrentPatrolPoint(CurrentPatrolPoint);
+	//	EnemyController->MoveToActor(EnemyController->PatrolLocation);
+	//	return;
+	//}
 	
 }
 
