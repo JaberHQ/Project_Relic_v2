@@ -8,7 +8,6 @@ ABaseCharacter::ABaseCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SetID();
-	CharacterMgr->RegisterCharacter(this);
 
 }
 

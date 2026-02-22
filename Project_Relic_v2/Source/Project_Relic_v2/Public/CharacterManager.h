@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Misc/Guid.h"
 
+// Provide easy access to the instance of the Base Manager
+#define CharacterMgr CharacterManager::Instance()
+
 class ABaseCharacter;
 /**
  * 
@@ -33,8 +36,9 @@ private:
 
 private:
 	CharacterMap BaseCharacterMap;
+
+public:
+	CharacterMap GetCharacterMap() const { return BaseCharacterMap; }
 };
 
 
-// Provide easy access to the instance of the Base Manager
-#define CharacterMgr CharacterManager::Instance()

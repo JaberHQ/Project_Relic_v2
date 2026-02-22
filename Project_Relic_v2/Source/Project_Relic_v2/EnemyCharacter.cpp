@@ -8,6 +8,7 @@
 #include "HealthComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Project_Relic_v2Character.h"
+#include "CharacterManager.h"
 #include "Perception/AISense_Sight.h"
 
 // Sets default values
@@ -45,6 +46,11 @@ AEnemyCharacter::AEnemyCharacter()
 
 bool AEnemyCharacter::HandleMessage(const FTelegram& Msg)
 {
+	AEnemyController* EnemyController = Cast<AEnemyController>(GetController());
+	if (EnemyController)
+	{
+		return EnemyController->HandleMessage(Msg);
+	}
 	return false;
 }
 
@@ -54,6 +60,7 @@ bool AEnemyCharacter::HandleMessage(const FTelegram& Msg)
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	CharacterMgr->RegisterCharacter(this);
 }
 
 // Called every frame

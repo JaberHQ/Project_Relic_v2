@@ -3,6 +3,8 @@
 #include "EnemyCharacter.h"
 #include "TakeCoverState.h"
 
+#include "MessageDispatcher.h"
+
 AttackState::AttackState()
 {
 }
@@ -19,6 +21,15 @@ void AttackState::Enter(AEnemyController* EnemyController)
 	check(EnemyController->ControlledEnemyCharacter);
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
+
+	
+
+	/*Dispatch->DispatchMessage(  SEND_MSG_IMMEDIATELY, 
+								EnemyController->ControlledEnemyCharacter->GetID(), 
+								EnemyController->ControlledEnemyCharacter->GetID(),
+								EMessageType::Msg_PlayerDetected,
+								NO_ADDITIONAL_INFO,
+								EnemyController->GetWorld());*/
 
 	EnemyController->BeginAttack(); 
 	EnemyController->StartAttackingTimer(); // Start the timer that dictates how long the enemy stays in the attack state

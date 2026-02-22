@@ -18,30 +18,31 @@ class AAIPatrolPoint;
 class UAIBehaviourComponent;
 //class UEnvQuery;
 
-class EnemyGlobalState : public State<AEnemyController>
-{
-public:
-	// Singleton
-	static EnemyGlobalState* Instance()
-	{
-		static EnemyGlobalState Instance;
-		return &Instance;
-	};
-
-	virtual void Enter(AEnemyController* Enemy) override {};
-	virtual void Execute(AEnemyController* Enemy) override {};
-	virtual void Exit(AEnemyController* Enemy) override {};
-
-	virtual bool OnMessage(AEnemyController* EnemyController, const FTelegram& Msg) override { return false; }
-
-
-private:
-	EnemyGlobalState() {}
-
-	EnemyGlobalState(const EnemyGlobalState&);
-
-	EnemyGlobalState& operator= (const EnemyGlobalState&);
-};
+//class EnemyGlobalState : public State<AEnemyController>
+//{
+//public:
+//	// Singleton
+//	static EnemyGlobalState* Instance()
+//	{
+//		static EnemyGlobalState Instance;
+//		return &Instance;
+//	};
+//
+//	virtual void Enter(AEnemyController* Enemy) override {};
+//	virtual void Execute(AEnemyController* Enemy) override {};
+//	virtual void Exit(AEnemyController* Enemy) override {};
+//
+//	virtual bool OnMessage(AEnemyController* EnemyController, const FTelegram& Msg) override;
+//	
+//
+//
+//private:
+//	EnemyGlobalState() {}
+//
+//	EnemyGlobalState(const EnemyGlobalState&);
+//
+//	EnemyGlobalState& operator= (const EnemyGlobalState&);
+//};
 
 
 UINTERFACE( Blueprintable )
@@ -238,8 +239,11 @@ public:
 	/* Face the player's direction */
 	void RotateToFacePlayer();
 
+
+	void SendMessageToAllies();
+
+	void OnPlayerDetected();
 private:
-	
 
 /***** Variables *****/
 public:
@@ -267,14 +271,14 @@ private:
 
 private:
 	/* Booleans */
-	bool bIsDetectingPlayer		= false; 
-	bool bShouldChase			= false;
-	bool bHasLineOfSight		= false;
-	bool bIsMovingToPatrolPoint = false;
-	bool bIsMovingToCover		= false;
-	bool bIsIdle				= false;
-	bool bIsAttacking			= false;
-	bool bIsDead				= false;
+	bool bIsDetectingPlayer			= false; 
+	bool bShouldChase				= false;
+	bool bHasLineOfSight			= false;
+	bool bIsMovingToPatrolPoint		= false;
+	bool bIsMovingToCover			= false;
+	bool bIsIdle					= false;
+	bool bIsAttacking				= false;
+	bool bIsDead					= false;
 
 	/* Patrol */
 	TArray<AActor*> PatrolPoints;

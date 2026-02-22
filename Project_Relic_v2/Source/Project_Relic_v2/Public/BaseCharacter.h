@@ -5,18 +5,9 @@
 #include "Misc/Guid.h"
 #include "BaseCharacter.generated.h"
 
-struct FTelegram
-{
-	FGuid Sender;
-	FGuid Receiver;
 
-	int32 Msg;
+struct FTelegram;
 
-	double DispatchTime;
-
-	void* ExtraInfo;
-
-};
 
 UCLASS()
 class PROJECT_RELIC_V2_API ABaseCharacter : public ACharacter

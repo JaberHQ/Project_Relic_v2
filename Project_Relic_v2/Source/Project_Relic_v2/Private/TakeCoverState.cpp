@@ -1,6 +1,8 @@
 #include "TakeCoverState.h"
 #include "EnemyController.h"
 #include "EnemyCharacter.h"
+#include "CharacterManager.h"
+#include "MessageDispatcher.h"
 #include "AttackState.h"
 
 TakeCoverState::TakeCoverState()
@@ -18,7 +20,25 @@ void TakeCoverState::Enter(AEnemyController* EnemyController)
 	check(EnemyController);
 	check(EnemyController->ControlledEnemyCharacter);
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Take Cover State.")); // DEBUG -----------------------
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Take Cover State.")); 
+
+
+	/*for (auto& Elem : CharacterMgr->GetCharacterMap())
+	{
+		if (Elem.Key.IsValid())
+		{
+			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+									EnemyController->ControlledEnemyCharacter->GetID(),
+									Elem.Key,
+									EMessageType::Msg_PlayerDetected,
+									0,
+									EnemyController->GetWorld());
+		}
+		
+
+	}
+	*/
+	
 
 	EnemyController->BeginToTakeCover(); 
 	

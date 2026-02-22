@@ -13,12 +13,13 @@
 #include <Perception/AISenseConfig_Sight.h>
 #include "Perception/AISense_Sight.h"
 #include "Navigation/PathFollowingComponent.h"
-#include "Engine/Canvas.h"
-#include "PatrolState.h"
-#include "HuntState.h"
-#include "TakeCoverState.h"
 #include "AttackState.h"
+#include "PatrolState.h"
 #include "DeadState.h"
+#include "TakeCoverState.h"
+#include "Engine/Canvas.h"
+#include "MessageDispatcher.h"
+#include "CharacterManager.h"
 #include "Perception/AIPerceptionComponent.h"
 
 AEnemyController::AEnemyController()
@@ -46,7 +47,7 @@ void AEnemyController::BeginPlay()
 
 	/* FSM Defaults */
 	FiniteStateMachine = new StateMachine<AEnemyController>(this);
-	FiniteStateMachine->SetGlobalState(EnemyGlobalState::Instance());
+	//FiniteStateMachine->SetGlobalState(EnemyGlobalState::Instance());
 	FiniteStateMachine->ChangeState(PatrolState::Instance());
 }
 
@@ -252,15 +253,47 @@ void AEnemyController::MoveToNextPatrolPoint()
 	MoveToLocation(AIBehaviourComponent->GetNextPatrolPointLocation());
 }
 
+void AEnemyController::SendMessageToAllies()
+{
+	for (auto& Elem : CharacterMgr->GetCharacterMap())
+	{
+		if (Elem.Key.IsValid())
+		{
+			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+				ControlledEnemyCharacter->GetID(),
+				Elem.Key,
+				EMessageType::Msg_PlayerDetected,
+				0,
+				GetWorld());
+		}
+
+
+	}
+}
+
+void AEnemyController::OnPlayerDetected()
+{
+	if (!PlayerCharacter)
+	{
+		PlayerCharacter = Cast<AProject_Relic_v2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	}
+	bHasLineOfSight = true;
+	StopMovement();
+}
+
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
 {
 	if (Stimulus.WasSuccessfullySensed())
 	{
 		if (Stimulus.Type == UAISense::GetSenseID<UAISense_Player>())
 		{
-			PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
-			SetHasLineOfSight(true);
-			StopMovement();
+			if (!bHasLineOfSight)
+			{
+				PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
+				OnPlayerDetected();
+				SendMessageToAllies();
+
+			}
 		}
 	}
 }
@@ -277,3 +310,16 @@ void AEnemyController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	FiniteStateMachine = nullptr;
 	Super::EndPlay(EndPlayReason);
 }
+
+//bool EnemyGlobalState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+//{
+//	switch (Msg.Msg)
+//	{
+//		case EMessageType::Msg_PlayerDetected:
+//		{
+//			EnemyController->ChangeState(AttackState::Instance());
+//		}
+//
+//	}
+//	return true;
+//}
