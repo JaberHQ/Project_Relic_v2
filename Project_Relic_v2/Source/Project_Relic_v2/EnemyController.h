@@ -242,7 +242,7 @@ public:
 
 	void SendMessageToAllies();
 
-	void OnPlayerDetected();
+	void OnPlayerDetected(AActor* PlayerActor);
 private:
 
 /***** Variables *****/

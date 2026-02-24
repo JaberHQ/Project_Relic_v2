@@ -10,6 +10,12 @@ CharacterManager::~CharacterManager()
 {
 }
 
+CharacterManager* CharacterManager::Instance()
+{
+	static CharacterManager Instance;
+	return &Instance;
+}
+
 
 void CharacterManager::RegisterCharacter(ABaseCharacter* NewCharacter)
 {

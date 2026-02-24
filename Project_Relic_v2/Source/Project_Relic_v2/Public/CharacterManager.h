@@ -19,11 +19,7 @@ public:
 	~CharacterManager();
 
 public:
-	static CharacterManager* Instance()
-	{
-		static CharacterManager Instance;
-		return &Instance;
-	}
+	static CharacterManager* Instance();
 
 	void RegisterCharacter(ABaseCharacter* NewCharacter);
 

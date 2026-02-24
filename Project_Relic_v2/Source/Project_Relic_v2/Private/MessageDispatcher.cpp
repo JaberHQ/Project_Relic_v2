@@ -12,7 +12,7 @@ MessageDispatcher::~MessageDispatcher()
 {
 }
 
-void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiver, EMessageType Msg, void* ExtraInfo, UWorld* World)
+void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiver, EMessageType Msg, TWeakObjectPtr<UObject> Player, void* ExtraInfo, UWorld* World)
 {
 	ABaseCharacter* _Sender = CharacterMgr->GetCharacterFromID(Sender);
 	ABaseCharacter* _Receiver = CharacterMgr->GetCharacterFromID(Receiver);
@@ -20,7 +20,7 @@ void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiv
 	if (!_Receiver)
 		return;
 
-	FTelegram Telegram(Delay, Sender, Receiver, Msg, ExtraInfo);
+	FTelegram Telegram(Delay, Sender, Receiver, Msg, Player, ExtraInfo);
 
 	if (Delay <= 0.0)
 	{

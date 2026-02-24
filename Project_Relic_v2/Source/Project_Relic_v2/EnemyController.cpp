@@ -263,20 +263,17 @@ void AEnemyController::SendMessageToAllies()
 				ControlledEnemyCharacter->GetID(),
 				Elem.Key,
 				EMessageType::Msg_PlayerDetected,
+				PlayerCharacter,
 				0,
 				GetWorld());
 		}
-
-
 	}
 }
 
-void AEnemyController::OnPlayerDetected()
+void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 {
-	if (!PlayerCharacter)
-	{
-		PlayerCharacter = Cast<AProject_Relic_v2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	}
+	PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
+
 	bHasLineOfSight = true;
 	StopMovement();
 }
@@ -289,8 +286,8 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 		{
 			if (!bHasLineOfSight)
 			{
-				PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
-				OnPlayerDetected();
+				//PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
+				OnPlayerDetected(Actor);
 				SendMessageToAllies();
 
 			}
@@ -311,15 +308,3 @@ void AEnemyController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
-//bool EnemyGlobalState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
-//{
-//	switch (Msg.Msg)
-//	{
-//		case EMessageType::Msg_PlayerDetected:
-//		{
-//			EnemyController->ChangeState(AttackState::Instance());
-//		}
-//
-//	}
-//	return true;
-//}

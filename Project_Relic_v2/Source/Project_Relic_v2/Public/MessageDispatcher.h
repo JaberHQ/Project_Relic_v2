@@ -29,12 +29,14 @@ struct FTelegram
 
 	double DispatchTime;
 
+	TWeakObjectPtr<UObject> Player;
+
 	void* ExtraInfo;
 
-	FTelegram(double _Time, FGuid _Sender, FGuid _Receiver, EMessageType _Msg, void* _Info = NULL)
+	FTelegram(double _Time, FGuid _Sender, FGuid _Receiver, EMessageType _Msg, TWeakObjectPtr<UObject> _Player, void* _Info = NULL)
 		: DispatchTime(_Time), Sender(_Sender),
 		Receiver(_Receiver), Msg(_Msg),
-		ExtraInfo(_Info)
+		Player(_Player), ExtraInfo(_Info)
 	{}
 
 	//bool operator==(const FTelegram& Other) const
@@ -93,16 +95,14 @@ public:
 	~MessageDispatcher();
 
 	static MessageDispatcher* Instance();
-	/*{
-		static MessageDispatcher Instance;
-		return &Instance;
-	}*/
 
-	void DispatchMessage(double Delay,
-						 FGuid    Sender,
-						 FGuid    Receiver,
-						 EMessageType    Msg,
-						 void*  ExtraInfo, UWorld* World);
+	void DispatchMessage(double					   Delay,
+						 FGuid					   Sender,
+						 FGuid					   Receiver,
+						 EMessageType			   Msg,
+						 TWeakObjectPtr<UObject>   Player,
+						 void*					   ExtraInfo, 
+						 UWorld*				   World);
 
 	void DispatchDelayedMessages(UWorld* World);
 
