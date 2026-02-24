@@ -1,0 +1,68 @@
+#include "AI/FSM/States/Header/AttackState.h"
+#include "AI/Enemy/EnemyController.h"
+#include "AI/Enemy/EnemyCharacter.h"
+#include "AI/FSM/States/Header/TakeCoverState.h"
+#include "AI/FSM/MessageDispatcher.h"
+
+AttackState::AttackState()
+{
+}
+
+AttackState* AttackState::Instance()
+{
+	static AttackState Instance;
+	return &Instance;
+}
+
+void AttackState::Enter(AEnemyController* EnemyController)
+{
+	check(EnemyController);
+	check(EnemyController->ControlledEnemyCharacter);
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
+
+	
+
+	/*Dispatch->DispatchMessage(  SEND_MSG_IMMEDIATELY, 
+								EnemyController->ControlledEnemyCharacter->GetID(), 
+								EnemyController->ControlledEnemyCharacter->GetID(),
+								EMessageType::Msg_PlayerDetected,
+								NO_ADDITIONAL_INFO,
+								EnemyController->GetWorld());*/
+
+	EnemyController->BeginAttack(); 
+	EnemyController->StartAttackingTimer(); // Start the timer that dictates how long the enemy stays in the attack state
+}
+
+void AttackState::Execute(AEnemyController* EnemyController)
+{
+	if (!EnemyController || !EnemyController->GetPawn())
+		return;
+
+	// Start shooting (continuously)
+	if (!EnemyController->ControlledEnemyCharacter->GetIsShooting())
+	{
+		EnemyController->StartShooting();
+		return;
+	}
+
+	// Stop attacking
+	if (!EnemyController->GetIsAttacking())
+	{
+		EnemyController->ChangeState(TakeCoverState::Instance()); 
+		return;
+	}
+	
+}
+
+void AttackState::Exit(AEnemyController* EnemyController)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Attack State.")); // DEBUG -----------------------
+	
+	EnemyController->FinishAttack();
+}
+
+bool AttackState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
+{
+	return false;
+}
