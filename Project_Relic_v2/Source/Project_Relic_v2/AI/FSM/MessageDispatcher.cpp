@@ -12,7 +12,7 @@ MessageDispatcher::~MessageDispatcher()
 {
 }
 
-void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiver, EMessageType Msg, TWeakObjectPtr<UObject> Player, void* ExtraInfo, UWorld* World)
+void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiver, EMessageType Msg, TWeakObjectPtr<UObject> Player, TWeakObjectPtr<UObject> ExtraInfo)
 {
 	ABaseCharacter* _Sender = CharacterMgr->GetCharacterFromID(Sender);
 	ABaseCharacter* _Receiver = CharacterMgr->GetCharacterFromID(Receiver);
@@ -28,6 +28,7 @@ void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiv
 	}
 	else
 	{
+		World = _Receiver->GetWorld();
 		double CurrentTime = World->GetTimeSeconds();
 		Telegram.DispatchTime = CurrentTime + Delay;
 		PriorityQ.insert(Telegram);
@@ -40,7 +41,7 @@ MessageDispatcher* MessageDispatcher::Instance()
 	return &Instance;
 }
 
-void MessageDispatcher::DispatchDelayedMessages(UWorld* World)
+void MessageDispatcher::DispatchDelayedMessages()
 {
 	double CurrentTime = World->GetTimeSeconds();
 
@@ -57,8 +58,9 @@ void MessageDispatcher::DispatchDelayedMessages(UWorld* World)
 
 void MessageDispatcher::Discharge(ABaseCharacter* Receiver, const FTelegram& Msg)
 {
-	if (!Receiver)
+	if (!IsValid(Receiver))
 		return;
+
 
 	if (!Receiver->HandleMessage(Msg))
 	{
@@ -66,10 +68,4 @@ void MessageDispatcher::Discharge(ABaseCharacter* Receiver, const FTelegram& Msg
 
 	}
 
-
-	//if (!Receiver->HandleMessage(Msg))
-	//{
-	//	return;
-	//	// Could not be handled
-	//}
 }

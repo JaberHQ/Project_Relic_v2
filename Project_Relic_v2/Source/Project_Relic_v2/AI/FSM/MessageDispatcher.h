@@ -31,9 +31,9 @@ struct FTelegram
 
 	TWeakObjectPtr<UObject> Player;
 
-	void* ExtraInfo;
+	TWeakObjectPtr<UObject> ExtraInfo;
 
-	FTelegram(double _Time, FGuid _Sender, FGuid _Receiver, EMessageType _Msg, TWeakObjectPtr<UObject> _Player, void* _Info = NULL)
+	FTelegram(double _Time, FGuid _Sender, FGuid _Receiver, EMessageType _Msg, TWeakObjectPtr<UObject> _Player, TWeakObjectPtr<UObject> _Info = nullptr)
 		: DispatchTime(_Time), Sender(_Sender),
 		Receiver(_Receiver), Msg(_Msg),
 		Player(_Player), ExtraInfo(_Info)
@@ -101,10 +101,9 @@ public:
 						 FGuid					   Receiver,
 						 EMessageType			   Msg,
 						 TWeakObjectPtr<UObject>   Player,
-						 void*					   ExtraInfo, 
-						 UWorld*				   World);
+						 TWeakObjectPtr<UObject>   ExtraInfo);
 
-	void DispatchDelayedMessages(UWorld* World);
+	void DispatchDelayedMessages();
 
 private:
 	std::set<FTelegram> PriorityQ;
@@ -112,6 +111,8 @@ private:
 	void Discharge(ABaseCharacter* Receiver, const FTelegram& Msg);
 
 	MessageDispatcher();
+
+	UWorld* World;
 
 };
 

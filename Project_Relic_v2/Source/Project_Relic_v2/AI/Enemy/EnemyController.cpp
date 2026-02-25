@@ -43,7 +43,6 @@ void AEnemyController::BeginPlay()
 	Super::BeginPlay();
 
 	/* EQS Defaults */
-	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, this);
 
 	/* FSM Defaults */
 	FiniteStateMachine = new StateMachine<AEnemyController>(this);
@@ -181,6 +180,8 @@ void AEnemyController::ShootRaycastBullet()
 
 void AEnemyController::RunFindCoverEQS()
 {
+	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, ControlledEnemyCharacter);
+
 	FindCoverQueryRequest.Execute(EEnvQueryRunMode::RandomBest25Pct, this, &AEnemyController::MoveToQueryRequest);
 }
 
@@ -234,7 +235,7 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	{
 		if (Result.IsSuccess())
 		{
-			bIsMovingToCover = false;
+			//bIsMovingToCover = false; 
 		}
 	}
 }
@@ -268,8 +269,7 @@ void AEnemyController::SendMessageToAllies()
 				Elem.Key,
 				EMessageType::Msg_PlayerDetected,
 				PlayerCharacter,
-				0,
-				GetWorld());
+				0);
 		}
 	}
 }
@@ -290,7 +290,6 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 		{
 			if (!bHasLineOfSight)
 			{
-				//PlayerCharacter = Cast<AProject_Relic_v2Character>(Actor);
 				OnPlayerDetected(Actor);
 				SendMessageToAllies();
 
