@@ -191,6 +191,9 @@ public:
 	/* Events that occur when the Enemy is stops attacking the player in the attack state */
 	void FinishAttack();
 
+	void SetShouldAttack(bool ShouldAttack) { bShouldAttack = ShouldAttack; }
+	bool GetShouldAttack() const { return bShouldAttack; }
+
 private:
 	void OnAttackingTimerComplete();
 
@@ -279,6 +282,7 @@ private:
 	bool bIsIdle					= false;
 	bool bIsAttacking				= false;
 	bool bIsDead					= false;
+	bool bShouldAttack				= false;
 
 	/* Patrol */
 	TArray<AActor*> PatrolPoints;

@@ -132,6 +132,7 @@ void AEnemyController::SetTimerBeforeAttacking()
 
 void AEnemyController::StartAttackingTimer()
 {
+	bShouldAttack = true;
 	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, AttackDuration, false);
 }
 
@@ -169,7 +170,8 @@ void AEnemyController::FinishTakingCover()
 
 void AEnemyController::OnAttackingTimerComplete()
 {
-	bIsAttacking = false;
+	bIsAttacking = !bIsAttacking;
+	bShouldAttack = false;
 }
 
 void AEnemyController::ShootRaycastBullet()
@@ -182,7 +184,7 @@ void AEnemyController::RunFindCoverEQS()
 {
 	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, ControlledEnemyCharacter);
 
-	FindCoverQueryRequest.Execute(EEnvQueryRunMode::RandomBest25Pct, this, &AEnemyController::MoveToQueryRequest);
+	FindCoverQueryRequest.Execute(EEnvQueryRunMode::RandomBest5Pct, this, &AEnemyController::MoveToQueryRequest);
 }
 
 void AEnemyController::RotateToFacePlayer() 
@@ -206,6 +208,20 @@ void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 	if (Result->IsSuccessful() && Result->Items.Num() > 0)
 	{
 		const FVector TargetLocation = Result->GetItemAsLocation(0);
+		/*const FVector CurrentLocation = GetPawn()->GetActorLocation();
+
+		constexpr float AcceptanceRadius = 50.0f; 
+
+		if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
+		{
+			if (FVector::DistSquared(TargetLocation, CurrentLocation) < FMath::Square(AcceptanceRadius))
+			{
+				bIsMovingToCover = false;
+				return;
+			}
+
+		}*/
+		
 		MoveTo(TargetLocation);
 	}
 }
@@ -235,7 +251,7 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	{
 		if (Result.IsSuccess())
 		{
-			//bIsMovingToCover = false; 
+			bIsMovingToCover = false; 
 		}
 	}
 }

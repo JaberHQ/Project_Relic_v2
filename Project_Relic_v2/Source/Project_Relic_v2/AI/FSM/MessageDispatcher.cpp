@@ -28,8 +28,7 @@ void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiv
 	}
 	else
 	{
-		World = _Receiver->GetWorld();
-		double CurrentTime = World->GetTimeSeconds();
+		double CurrentTime = _Sender->GetWorld()->GetTimeSeconds();
 		Telegram.DispatchTime = CurrentTime + Delay;
 		PriorityQ.insert(Telegram);
 	}
