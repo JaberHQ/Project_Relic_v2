@@ -292,11 +292,6 @@ void UWeaponComponent::SwitchWeapons(const FInputActionValue& index)
 	{
 		bCanShoot = true;
 	}
-
-	/*if(bIsAiming)
-	{
-		StopADS();
-	}*/
 }
 
 void UWeaponComponent::RaycastShot()
@@ -305,7 +300,7 @@ void UWeaponComponent::RaycastShot()
 	FRotator Rotation;
 	FHitResult Hit;
 
-	Character->GetController()->GetPlayerViewPoint(Location, Rotation); // This can be changed to camera ----
+	Character->GetController()->GetPlayerViewPoint(Location, Rotation);
 
 	FVector Start = Location;
 	FVector End = Start + (Rotation.Vector() * ShootingDistance);
@@ -314,7 +309,7 @@ void UWeaponComponent::RaycastShot()
 	FCollisionQueryParams TraceParams;
 	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
 
-	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 2.0f); // DEBUG -----------------------
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 2.0f);
 
 	// If line trace has hit an object
 	if (bHit)
@@ -323,8 +318,7 @@ void UWeaponComponent::RaycastShot()
 		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(Hit.GetActor());
 		if (EnemyCharacter)
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy has been hit!")); // DEBUG -----------------------
-			DrawDebugBox(GetWorld(), Hit.ImpactPoint, FVector(5, 5, 5), FColor::Blue, false, 2.0f); // DEBUG -----------------------
+			DrawDebugBox(GetWorld(), Hit.ImpactPoint, FVector(5, 5, 5), FColor::Blue, false, 2.0f); 
 			
 			EnemyCharacter->TakeDamage(10.0f);
 		}

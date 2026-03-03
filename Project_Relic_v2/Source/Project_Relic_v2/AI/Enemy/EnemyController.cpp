@@ -206,20 +206,6 @@ void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 	if (Result->IsSuccessful() && Result->Items.Num() > 0)
 	{
 		const FVector TargetLocation = Result->GetItemAsLocation(0);
-		/*const FVector CurrentLocation = GetPawn()->GetActorLocation();
-
-		constexpr float AcceptanceRadius = 50.0f; 
-
-		if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
-		{
-			if (FVector::DistSquared(TargetLocation, CurrentLocation) < FMath::Square(AcceptanceRadius))
-			{
-				bIsMovingToCover = false;
-				return;
-			}
-
-		}*/
-		
 		MoveTo(TargetLocation);
 	}
 }
@@ -228,10 +214,12 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 {
 	Super::OnMoveCompleted(RequestID, Result);
 
+	// Patrol State
 	if (FiniteStateMachine->GetCurrentState() == PatrolState::Instance())
 	{
 		bIsMovingToPatrolPoint = false;
 
+		// Calculate the next patrol point
 		if (AIBehaviourComponent)
 		{
 			AIBehaviourComponent->IncrementPatrolPointIndex();
@@ -241,10 +229,9 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 				AIBehaviourComponent->ResetPatrolPointIndex();
 			}
 		}
-
-
 	}
 
+	// Take cover state
 	else if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
 	{
 		if (Result.IsSuccess())
@@ -261,7 +248,7 @@ void AEnemyController::MoveToNextPatrolPoint()
 	if (!AIBehaviourComponent)
 		return;
 
-	if (AIBehaviourComponent->GetPatrolPathLength() < 0)
+	if (AIBehaviourComponent->GetPatrolPathLength() < 0) // Ensure path exists
 		return;
 
 	if (!bIsMovingToPatrolPoint)
@@ -271,19 +258,19 @@ void AEnemyController::MoveToNextPatrolPoint()
 	}
 }
 
-void AEnemyController::SendMessageToAllies()
+void AEnemyController::SendPlayerDetectedMessageToAllies()
 {
 	for (auto& Elem : CharacterMgr->GetCharacterMap())
 	{
-		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(Elem.Value);
-		if (Elem.Key.IsValid() && IsValid(EnemyCharacter))
+		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(Elem.Value); // Only send it to other enemies
+		if (Elem.Key.IsValid() && IsValid(EnemyCharacter))					
 		{
+			// Send message immediately, including the player reference as extra info
 			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
 				ControlledEnemyCharacter->GetID(),
 				Elem.Key,
 				EMessageType::Msg_PlayerDetected,
-				UGameplayStatics::GetPlayerCharacter(GetWorld(), 0),
-				0);
+				UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		}
 	}
 }
@@ -297,8 +284,7 @@ void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 		bHasLineOfSight = true;
 		StopMovement();
 
-		//OnPlayerDetected(PlayerActor);
-		SendMessageToAllies();
+		SendPlayerDetectedMessageToAllies();
 	}
 }
 

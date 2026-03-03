@@ -239,11 +239,14 @@ public:
 	/* Face the player's direction */
 	void RotateToFacePlayer();
 
+	/* Send a message to other enemies in the level, telling them that the Player has been detected */
+	/** See MessageDispatcher.h */
+	void SendPlayerDetectedMessageToAllies();
 
-	void SendMessageToAllies();
-
+	/* Actions for when player has been detected by the enemy */
 	void OnPlayerDetected(AActor* PlayerActor);
 
+	/* Actions for when the enemy has taken damage by the player */
 	void OnDamageTaken();
 
 private:
