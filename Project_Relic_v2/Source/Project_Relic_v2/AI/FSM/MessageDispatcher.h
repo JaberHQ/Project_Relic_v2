@@ -112,7 +112,7 @@ private:
 
 	MessageDispatcher();
 
-	UWorld* World;
+	UWorld* World = nullptr;
 
 };
 

@@ -130,3 +130,15 @@ void AEnemyCharacter::RaycastShot()
 	}
 }
 
+void AEnemyCharacter::TakeDamage(float DamageAmount)
+{
+	GetHealthComponent()->TakeDamage(DamageAmount);
+
+	// Tell all the other enemy AI in the level that the player has been detected
+	AEnemyController* EnemyController = Cast<AEnemyController>(GetController());
+	if (EnemyController)
+	{
+		EnemyController->OnDamageTaken();
+	}
+}
+

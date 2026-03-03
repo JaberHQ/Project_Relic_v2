@@ -28,7 +28,7 @@ public:
 	void RemoveCharacter(ABaseCharacter* BaseCharacter);
 
 private:
-	typedef TMap<FGuid, ABaseCharacter*> CharacterMap;
+	typedef TMap<FGuid, TWeakObjectPtr<ABaseCharacter>> CharacterMap;
 
 private:
 	CharacterMap BaseCharacterMap;

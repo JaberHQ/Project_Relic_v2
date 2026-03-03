@@ -68,7 +68,7 @@ bool PatrolState::OnMessage(AEnemyController* EnemyController, const FTelegram& 
 		case EMessageType::Msg_PlayerDetected:
 		{
 			AActor* Player = Cast<AActor>(Msg.Player);
-			if (Player)
+			if (IsValid(Player))
 				EnemyController->OnPlayerDetected(Player);
 		}
 	}

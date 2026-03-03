@@ -25,8 +25,8 @@ void CharacterManager::RegisterCharacter(ABaseCharacter* NewCharacter)
 ABaseCharacter* CharacterManager::GetCharacterFromID(FGuid ID) const
 {
 	//CharacterMap.Find(ID);
-	ABaseCharacter* const* FoundCharacter = BaseCharacterMap.Find(ID);
-	return FoundCharacter ? *FoundCharacter : nullptr;
+	const TWeakObjectPtr<ABaseCharacter>* Found = BaseCharacterMap.Find(ID);
+	return (Found && Found->IsValid()) ? Found->Get() : nullptr;
 }
 
 void CharacterManager::RemoveCharacter(ABaseCharacter* BaseCharacter)

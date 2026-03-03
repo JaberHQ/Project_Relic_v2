@@ -132,7 +132,6 @@ void AEnemyController::SetTimerBeforeAttacking()
 
 void AEnemyController::StartAttackingTimer()
 {
-	bShouldAttack = true;
 	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, AttackDuration, false);
 }
 
@@ -158,7 +157,7 @@ void AEnemyController::BeginToTakeCover()
 {
 	FEnemyMoveSpeed MoveSpeed;
 	ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Run);
-
+	ControlledEnemyCharacter->UnCrouch();
 	bIsMovingToCover = true;
 	RunFindCoverEQS();
 }
@@ -170,8 +169,7 @@ void AEnemyController::FinishTakingCover()
 
 void AEnemyController::OnAttackingTimerComplete()
 {
-	bIsAttacking = !bIsAttacking;
-	bShouldAttack = false;
+	bIsAttacking = false;
 }
 
 void AEnemyController::ShootRaycastBullet()
@@ -278,13 +276,13 @@ void AEnemyController::SendMessageToAllies()
 	for (auto& Elem : CharacterMgr->GetCharacterMap())
 	{
 		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(Elem.Value);
-		if (Elem.Key.IsValid() && EnemyCharacter)
+		if (Elem.Key.IsValid() && IsValid(EnemyCharacter))
 		{
 			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
 				ControlledEnemyCharacter->GetID(),
 				Elem.Key,
 				EMessageType::Msg_PlayerDetected,
-				PlayerCharacter,
+				UGameplayStatics::GetPlayerCharacter(GetWorld(), 0),
 				0);
 		}
 	}
@@ -292,10 +290,21 @@ void AEnemyController::SendMessageToAllies()
 
 void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 {
-	PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
+	if (!bHasLineOfSight)
+	{
+		PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
 
-	bHasLineOfSight = true;
-	StopMovement();
+		bHasLineOfSight = true;
+		StopMovement();
+
+		//OnPlayerDetected(PlayerActor);
+		SendMessageToAllies();
+	}
+}
+
+void AEnemyController::OnDamageTaken()
+{
+	OnPlayerDetected(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 }
 
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
@@ -304,12 +313,7 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 	{
 		if (Stimulus.Type == UAISense::GetSenseID<UAISense_Player>())
 		{
-			if (!bHasLineOfSight)
-			{
-				OnPlayerDetected(Actor);
-				SendMessageToAllies();
-
-			}
+			OnPlayerDetected(Actor);
 		}
 	}
 }

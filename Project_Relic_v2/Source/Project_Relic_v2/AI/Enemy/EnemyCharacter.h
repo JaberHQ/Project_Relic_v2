@@ -75,6 +75,8 @@ public:
 
 	void RaycastShot();
 
+	void TakeDamage(float DamageAmount);
+
 /* Getters and setters */
 public:
 	/* Get the boolean that states if the enemy is shooting or not */

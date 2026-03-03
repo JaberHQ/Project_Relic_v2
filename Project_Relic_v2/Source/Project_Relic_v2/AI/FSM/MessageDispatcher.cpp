@@ -17,7 +17,7 @@ void MessageDispatcher::DispatchMessage(double Delay, FGuid Sender, FGuid Receiv
 	ABaseCharacter* _Sender = CharacterMgr->GetCharacterFromID(Sender);
 	ABaseCharacter* _Receiver = CharacterMgr->GetCharacterFromID(Receiver);
 
-	if (!_Receiver)
+	if (!IsValid(_Sender) || !IsValid(_Receiver))
 		return;
 
 	FTelegram Telegram(Delay, Sender, Receiver, Msg, Player, ExtraInfo);
@@ -42,6 +42,9 @@ MessageDispatcher* MessageDispatcher::Instance()
 
 void MessageDispatcher::DispatchDelayedMessages()
 {
+	if (!World)
+		return;
+
 	double CurrentTime = World->GetTimeSeconds();
 
 	while ( !PriorityQ.empty() &&
