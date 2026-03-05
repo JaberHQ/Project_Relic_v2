@@ -78,6 +78,10 @@ void AEnemyController::OnPossess(APawn* InPawn)
 
 	// Create a reference for the owning character
 	ControlledEnemyCharacter = Cast<AEnemyCharacter>(InPawn); 
+	if (ControlledEnemyCharacter)
+	{
+		AIBehaviourComponent = ControlledEnemyCharacter->GetAIBehaviourComponent();
+	}
 }
 
 void AEnemyController::InitPerceptionSystem()
@@ -94,8 +98,8 @@ void AEnemyController::InitPerceptionSystem()
 
 void AEnemyController::BeginPatrol()
 {
-	// Get all the patrol points in the level 
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIPatrolPoint::StaticClass(), PatrolPoints);
+	FEnemyMoveSpeed MoveSpeed;
+	ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
 }
 
 void AEnemyController::OnDetectionDelayComplete()
@@ -146,6 +150,8 @@ void AEnemyController::TimerBeforeAttackingCompleted()
 	bIsAttacking = true;
 	bIsIdle = false;
 }
+
+
 
 void AEnemyController::FinishAttack()
 {
@@ -217,16 +223,11 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	// Patrol State
 	if (FiniteStateMachine->GetCurrentState() == PatrolState::Instance())
 	{
-		bIsMovingToPatrolPoint = false;
-
-		// Calculate the next patrol point
 		if (AIBehaviourComponent)
 		{
-			AIBehaviourComponent->IncrementPatrolPointIndex();
-
-			if (AIBehaviourComponent->GetPatrolPointIndex() >= AIBehaviourComponent->GetPatrolPathLength())
+			if (Result.IsSuccess())
 			{
-				AIBehaviourComponent->ResetPatrolPointIndex();
+				AIBehaviourComponent->Wait();
 			}
 		}
 	}
@@ -241,21 +242,31 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 	}
 }
 
-void AEnemyController::MoveToNextPatrolPoint()
+void AEnemyController::SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint)
 {
-	AIBehaviourComponent = Cast<UAIBehaviourComponent>(ControlledEnemyCharacter->GetAIBehaviourComponent());
-
 	if (!AIBehaviourComponent)
 		return;
 
-	if (AIBehaviourComponent->GetPatrolPathLength() < 0) // Ensure path exists
+	AIBehaviourComponent->SetIsMovingToPatrolPoint(IsMovingToPatrolPoint);
+}
+
+bool AEnemyController::GetIsMovingToPatrolPoint() const
+{
+	if (!AIBehaviourComponent)
+		return false;
+	
+	if (AIBehaviourComponent->GetIsMovingToPatrolPoint())
+		return true;
+
+	return false;
+}
+
+void AEnemyController::MoveToNextPatrolPoint()
+{
+	if (!AIBehaviourComponent)
 		return;
 
-	if (!bIsMovingToPatrolPoint)
-	{
-		bIsMovingToPatrolPoint = true;
-		MoveToLocation(AIBehaviourComponent->GetNextPatrolPointLocation());
-	}
+	AIBehaviourComponent->MoveToNextPatrolPoint(this);
 }
 
 void AEnemyController::SendPlayerDetectedMessageToAllies()

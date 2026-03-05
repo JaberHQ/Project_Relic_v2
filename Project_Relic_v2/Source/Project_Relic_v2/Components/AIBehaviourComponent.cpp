@@ -1,8 +1,6 @@
 
-
-
 #include "AIBehaviourComponent.h"
-
+#include "AI/Enemy/EnemyController.h"
 
 // Sets default values for this component's properties
 UAIBehaviourComponent::UAIBehaviourComponent()
@@ -41,4 +39,46 @@ FVector UAIBehaviourComponent::GetNextPatrolPointLocation()
 	return PatrolPoints[PatrolPointIndex]->GetActorLocation();
 }
 
+float UAIBehaviourComponent::GetTimeToWait()
+{
+	TArray<AAIPatrolPoint*> PatrolPoints;
+	PatrolPath.GenerateKeyArray(PatrolPoints);
 
+	float WaitingTime = *(PatrolPath.Find(PatrolPoints[PatrolPointIndex]));
+	return WaitingTime;
+}
+
+void UAIBehaviourComponent::WaitAtPatrolPointCompleted()
+{
+	bIsMovingToPatrolPoint = false;
+
+	// Calculate the next patrol point
+	IncrementPatrolPointIndex();
+	if (GetPatrolPointIndex() >= GetPatrolPathLength())
+	{
+		ResetPatrolPointIndex();
+	}
+}
+
+bool UAIBehaviourComponent::MoveToNextPatrolPoint(AEnemyController* EnemyController)
+{
+	if (GetPatrolPathLength() < 0) // Ensure path exists
+		return false;
+
+	if (!bIsMovingToPatrolPoint)
+	{
+		bIsMovingToPatrolPoint = true;
+		EnemyController->MoveToLocation(GetNextPatrolPointLocation());
+		return true;
+	}
+
+	return false;
+
+}
+
+void UAIBehaviourComponent::Wait()
+{
+	// Wait at patrol point for a specified amount of time
+	float WaitTime = GetTimeToWait();
+	WaitTime == 0.0f ? WaitAtPatrolPointCompleted() : GetWorld()->GetTimerManager().SetTimer(WaitAtPatrolPointHandle, this, &UAIBehaviourComponent::WaitAtPatrolPointCompleted, WaitTime, false);
+}

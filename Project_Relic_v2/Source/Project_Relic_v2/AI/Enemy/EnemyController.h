@@ -138,8 +138,8 @@ public:
 
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
 
-	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint) { bIsMovingToPatrolPoint = IsMovingToPatrolPoint; }
-	bool GetIsMovingToPatrolPoint() const { return bIsMovingToPatrolPoint; }
+	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint);
+	bool GetIsMovingToPatrolPoint() const;
 
 	void MoveToNextPatrolPoint();
 
@@ -195,6 +195,7 @@ private:
 	void OnAttackingTimerComplete();
 
 	void TimerBeforeAttackingCompleted();
+
 
 	/************************************************************************************/
 
@@ -280,7 +281,6 @@ private:
 	bool bIsDetectingPlayer			= false; 
 	bool bShouldChase				= false;
 	bool bHasLineOfSight			= false;
-	bool bIsMovingToPatrolPoint		= false;
 	bool bIsMovingToCover			= false;
 	bool bIsIdle					= false;
 	bool bIsAttacking				= false;

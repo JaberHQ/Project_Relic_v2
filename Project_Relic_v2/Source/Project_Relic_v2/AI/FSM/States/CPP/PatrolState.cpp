@@ -25,16 +25,8 @@ void PatrolState::Enter(AEnemyController* EnemyController)
 {
 	check(EnemyController);
 	check(EnemyController->ControlledEnemyCharacter);
-
 	
-	FEnemyMoveSpeed MoveSpeed;
-	EnemyController->ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
-	
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Patrol State.")); 
-
-	//EnemyController->BeginPatrol();
-	AvailablePatrolPoints = EnemyController->GetPatrolPoints();
-
+	EnemyController->BeginPatrol();
 }
 
 void PatrolState::Execute(AEnemyController* EnemyController)
@@ -57,8 +49,6 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 
 void PatrolState::Exit(AEnemyController* EnemyController)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Patrol State."));
-
 }
 
 bool PatrolState::OnMessage(AEnemyController* EnemyController, const FTelegram& Msg)
