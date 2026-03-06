@@ -25,12 +25,10 @@ AEnemyCharacter::AEnemyCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 520.0f, 0.0f);
 
-
 	// Health defaults
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent" ));
 
 	AIBehaviourComponent = CreateDefaultSubobject<UAIBehaviourComponent>(TEXT("AIBehaviourComponent"));
-
 
 	PerceptionStimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("StimulusComponent"));
 	if (PerceptionStimuliSourceComponent)
@@ -52,6 +50,11 @@ bool AEnemyCharacter::HandleMessage(const FTelegram& Msg)
 		return EnemyController->HandleMessage(Msg);
 	}
 	return false;
+}
+
+void AEnemyCharacter::DisableMovement()
+{
+	GetCharacterMovement()->DisableMovement();
 }
 
 
@@ -82,13 +85,35 @@ void AEnemyCharacter::UpdateWalkSpeed(float NewWalkSpeed)
 
 void AEnemyCharacter::HandleDeath_Implementation()
 {
-	SetActorEnableCollision(false);
 	PlayAnimMontage(AnimDeath);
+	Death();
+}
 
+void AEnemyCharacter::Death()
+{
+	SetActorEnableCollision(false);
+	
 	AEnemyController* EnemyController = Cast<AEnemyController>(GetController());
 	if (EnemyController)
 	{
 		EnemyController->Death();
+	}
+}
+
+bool AEnemyCharacter::CanTakedown_Implementation()
+{
+	return bCanBeTakenDown;
+	
+}
+
+void AEnemyCharacter::Takedown_Implementation()
+{
+	UnCrouch();
+
+	if (AnimTakedown)
+	{
+		PlayAnimMontage(AnimTakedown);
+		Death();
 	}
 }
 

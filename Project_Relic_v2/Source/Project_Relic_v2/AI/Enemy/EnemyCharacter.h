@@ -9,7 +9,9 @@
 #include "Components/HealthComponent.h"
 #include "AI/FSM/State.h"
 #include "Components/AIBehaviourComponent.h"
+#include "Interfaces/CombatInterface.h"
 #include "EnemyCharacter.generated.h"
+
 
 USTRUCT(BlueprintType)
 struct FEnemyMoveSpeed
@@ -27,7 +29,7 @@ struct FEnemyMoveSpeed
  *  AI character manager
  */
 UCLASS()
-class PROJECT_RELIC_V2_API AEnemyCharacter : public ABaseCharacter, public IDeathHandlerInterface
+class PROJECT_RELIC_V2_API AEnemyCharacter : public ABaseCharacter, public IDeathHandlerInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -50,6 +52,8 @@ public:
 	UAIBehaviourComponent* GetAIBehaviourComponent() const { return AIBehaviourComponent; }
 
 	virtual bool HandleMessage(const FTelegram& Msg) override;
+
+	void DisableMovement();
 
 protected:
 	// Called when the game starts or when spawned
@@ -77,6 +81,10 @@ public:
 
 	void TakeDamage(float DamageAmount);
 
+	virtual bool CanTakedown_Implementation() override;
+
+	virtual void Takedown_Implementation() override;
+
 /* Getters and setters */
 public:
 	/* Get the boolean that states if the enemy is shooting or not */
@@ -85,8 +93,12 @@ public:
 
 	/* Set the boolean that states if the enemy is shooting or not */
 	void SetIsShooting(bool IsShooting) { bIsShooting = IsShooting; }
+
+	void SetCanBeTakenDown(bool CanBeTakenDown) { bCanBeTakenDown = CanBeTakenDown; }
+	bool GetCanBeTakenDown() const { return bCanBeTakenDown; }
+
 private:
-	
+	void Death();
 
 /* Variables */
 public:
@@ -96,6 +108,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* AnimShoot; // Animation Montage for enemy dying
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UAnimMontage* AnimTakedown; // Animation Montage
+
 private:
 
 	/** Line trace distance (how far the enemy can shoot) */
@@ -103,4 +118,7 @@ private:
 	float ShootingDistance; 
 
 	bool bIsShooting = false; // Flag that tells if the enemy is shooting or not
+	bool bCanBeTakenDown = true;
+
+	
 };

@@ -14,6 +14,7 @@
 #include "AI/Enemy/EnemyCharacter.h"
 #include "AI/Enemy/EnemyController.h"
 #include "UI/DetectionHUDWidget.h"
+#include "Project_Relic_v2PlayerController.h"
 #include "Project_Relic_v2.h"
 
 
@@ -100,15 +101,17 @@ void AProject_Relic_v2Character::HandleDeath_Implementation()
 	GetCharacterMovement()->DisableMovement();
 
 	// Disable Player input
-	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-	if(PlayerController)
-		DisableInput(PlayerController);
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+	if(PC)
+		DisableInput(PC);
 }
 
 bool AProject_Relic_v2Character::HandleMessage(const FTelegram& Msg)
 {
 	return false;
 }
+
+
 
 void AProject_Relic_v2Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -148,6 +151,8 @@ void AProject_Relic_v2Character::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PlayerController = Cast<AProject_Relic_v2PlayerController>(GetController());
+
 	// Create a timeline for crouching 
 	InitCrouchTimeline();
 
@@ -156,7 +161,7 @@ void AProject_Relic_v2Character::BeginPlay()
 	// Add Player HUD UI to viewport 
 	if (CharacterHUDWidgetClass)
 	{
-		CharacterHUDWidget = CreateWidget<UUserWidget>(GetWorld(), CharacterHUDWidgetClass);
+		CharacterHUDWidget = CreateWidget<UPlayerHUDWidget>(GetWorld(), CharacterHUDWidgetClass);
 		CharacterHUDWidget->AddToViewport(0);
 	}
 
@@ -362,6 +367,16 @@ void AProject_Relic_v2Character::SetFOV(float FOV)
 	FollowCamera->SetFieldOfView(FOV);
 }
 
+void AProject_Relic_v2Character::DisableMovement()
+{
+	GetCharacterMovement()->DisableMovement();
+}
+
+void AProject_Relic_v2Character::UnPossess()
+{
+	GetController()->UnPossess();
+}
+
 void AProject_Relic_v2Character::InitCrouchTimeline()
 {
 	if (CrouchCurveFloat)
@@ -516,5 +531,24 @@ void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
 		if(EnemyControllerRef)
 			IDetectionInterface::Execute_StopChase(EnemyControllerRef);
 	}
+
+}
+
+void AProject_Relic_v2Character::OnTakedownComplete()
+{
+	if (PlayerController)
+		PlayerController->Possess(this);
+}
+
+void AProject_Relic_v2Character::Takedown_Implementation()
+{
+	if (bIsCrouching)
+		DoCrouch();
+
+	if (AnimTakedown)
+		TakedownAnimationTime = PlayAnimMontage(AnimTakedown);
+
+		GetWorldTimerManager().SetTimer(TakedownFinishedHandle, this, &AProject_Relic_v2Character::OnTakedownComplete, TakedownAnimationTime, false);
+
 
 }

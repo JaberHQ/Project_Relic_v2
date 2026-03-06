@@ -12,6 +12,8 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/HealthComponent.h"
 #include "AI/Enemy/EnemyController.h"
+#include "Animation/AnimMontage.h"
+#include "UI/PlayerHUDWidget.h"
 #include "Project_Relic_v2Character.generated.h"
 
 class USpringArmComponent;
@@ -21,6 +23,7 @@ class UCurveFloat;
 class USkeletalMeshComponent;
 class AEnemyCharacter;
 class UDetectionHUDWidget;
+class AProject_Relic_v2PlayerController;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -53,7 +56,7 @@ struct FCharacterMoveSpeed
  *  Implements a controllable orbiting camera
  */
 UCLASS(Abstract)
-class AProject_Relic_v2Character : public ABaseCharacter, public IDeathHandlerInterface, public IDetectionInterface
+class AProject_Relic_v2Character : public ABaseCharacter, public IDeathHandlerInterface, public IDetectionInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -102,6 +105,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* SprintAction;
 
+	
+
 	UPROPERTY( EditAnywhere, Category = "Input" )
 	UUserWidget* CharacterHudWidgetBP;
 
@@ -117,6 +122,8 @@ public:
  	 ** Handles the events of the owning character's death
 	/*********************************************************************/
 	virtual void HandleDeath_Implementation() override;
+
+	virtual void Takedown_Implementation() override;
 
 	virtual bool HandleMessage(const FTelegram& Msg) override;
 
@@ -214,6 +221,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool GetIsSprinting() const { return bIsSprinting; }
 
+	void DisableMovement();
+
+	void UnPossess();
+
+	float GetTakedownErrorAcceptance() const { return TakedownErrorAcceptance; }
 private:
 	/** Initialise the crouch timeline component */
 	void InitCrouchTimeline();
@@ -257,8 +269,13 @@ private:
 	** for delaying whether the enemy has seen the player or not */
 	void OnDetectionMeterDelayFinished();
 
+	void OnTakedownComplete();
 
 public:
+	UPlayerHUDWidget* CharacterHUDWidget; // Reference to the Characters HUD object
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UAnimMontage* AnimTakedown; // Animation Montage for takedown of enemy
 
 protected:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
@@ -271,8 +288,7 @@ private:
 
 	/***************************** UI *********************************************/
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
-	TSubclassOf<UUserWidget> CharacterHUDWidgetClass;
-	UUserWidget* CharacterHUDWidget; // Reference to the Characters HUD object
+	TSubclassOf<UPlayerHUDWidget> CharacterHUDWidgetClass;
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<UUserWidget> DetectionHUDWidgetClass;
@@ -328,6 +344,16 @@ private:
 	TMap<ECharacterMoveSpeed, float> MoveSpeedMap; // Hashmap, used for setting the movement speed of the player
 	ECharacterMoveSpeed CurrentMoveSpeed; // Used to hold the current move speed of the player
 	/*************************************************************************************/
+
+	UPROPERTY(EditDefaultsOnly, Category = "Takedown", meta = (AllowPrivateAccess = "true"))
+	float TakedownErrorAcceptance = 50.0f; // Holds the current stamina of the player
+
+	//UPROPERTY(EditDefaultsOnly, Category = "Takedown", meta = (AllowPrivateAccess = "true"))
+	float TakedownAnimationTime;
+
+	FTimerHandle TakedownFinishedHandle; // Timer handle for player sprinting
+	
+	AProject_Relic_v2PlayerController* PlayerController;
 
 	AEnemyCharacter* EnemyCharacterRef; // Reference to enemy character
 

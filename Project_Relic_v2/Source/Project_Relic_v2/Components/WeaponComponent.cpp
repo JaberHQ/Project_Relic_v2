@@ -21,7 +21,7 @@ UWeaponComponent::UWeaponComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 
 	/* Find the blueprint Primary Gun Class through reference */
 	static ConstructorHelpers::FClassFinder<ABaseWeapon> PrimaryWeaponFinder(TEXT("/Game/Blueprints/Weapon/BP_AutomaticRifle"));
@@ -75,6 +75,8 @@ void UWeaponComponent::BeginPlay()
 void UWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	TakedownTrace();
 
 	// ...
 }
@@ -171,6 +173,9 @@ void UWeaponComponent::InitInputs()
 			/* Weapon input actions */
 			EnhancedInputComponent->BindAction( SwitchWeaponsAction, ETriggerEvent::Triggered, this, &UWeaponComponent::SwitchWeapons );
 			EnhancedInputComponent->BindAction( ReloadAction, ETriggerEvent::Triggered, this, &UWeaponComponent::StartReloadWeaponTimer );
+
+			/* Takedown input actions */
+			EnhancedInputComponent->BindAction(TakedownAction, ETriggerEvent::Triggered, this, &UWeaponComponent::EnemyTakedown);
 		}
 	}
 }
@@ -413,6 +418,97 @@ void UWeaponComponent::PlayGunShotSFX()
 		UGameplayStatics::PlaySoundAtLocation(this, WeaponArray[WeaponIndex]->FireSound, Character->GetActorLocation());*/
 }
 
+#include "Player/TakedownController.h"
+
+void UWeaponComponent::PrepareTakedown(AEnemyCharacter* Enemy)
+{
+	if (!Enemy)
+		return;
+
+	// Disable movement of player and target
+	Enemy->DisableMovement();
+	Character->DisableMovement();
+
+	// Unpossess player controller 
+	Character->UnPossess();
+
+	// Create Takedown Controller and possess player
+	FActorSpawnParameters SpawnParams;
+	ATakedownController* TakedownController = GetWorld()->SpawnActor<ATakedownController>(Character->GetActorLocation(), Character->GetActorRotation(), SpawnParams);
+	
+	if (!TakedownController)
+		return;
+
+	TakedownController->Possess(Character);
+
+	// Let the Takedown Controller handle the takedown events
+	TakedownController->PrepareTakedown(Character,Enemy);
+	
+}
+
+void UWeaponComponent::EnemyTakedown()
+{
+	if (!TakedownEnemyActor)
+		return;
+
+	AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(TakedownEnemyActor);
+	if (EnemyCharacter)
+		PrepareTakedown(EnemyCharacter);
+
+	
+	
+	
+}
+
+AActor* UWeaponComponent::TakedownTrace()
+{
+	// Set up a line trace from the owner
+	FHitResult Hit;
+	FVector CharacterForwardVector = Character->GetActorForwardVector();
+	FVector Start = Character->GetActorLocation();
+	FVector End = Start + (CharacterForwardVector * TakedownDistance);
+
+	FCollisionQueryParams TraceParams;
+	TraceParams.AddIgnoredActor(Character); // Make sure the owner isnt hit
+	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Camera, TraceParams); 
+
+	//DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 2.0f);
+	if (bHit)
+	{
+		// Make sure the owner and the hit actor are facing the same direction
+		float DirectionFacing = DotProduct(CharacterForwardVector, Hit.GetActor()->GetActorForwardVector()); // Note: you can also use FVector::DotProduct, I just created my own function for fun
+
+		// If the two actors are facing the same way (or close enough to)
+		if (IsNearlyEqual(DirectionFacing, 1.0f, 0.1f)) 
+		{
+			// Make sure its taking down an enemy actor,
+				// if so, make sure the enemy is able to be taken down (using the combat interface)
+			TakedownEnemyActor = Hit.GetActor();
+			if (TakedownEnemyActor->Implements<UCombatInterface>() && ICombatInterface::Execute_CanTakedown(TakedownEnemyActor))
+			{
+				// Show text on screen
+				Character->CharacterHUDWidget->TakedownWidget->ShowTakedownText(true); 
+				return TakedownEnemyActor;
+			}
+		}
+	}
+	Character->CharacterHUDWidget->TakedownWidget->ShowTakedownText(false);
+	return nullptr;
+
+}
+
+float UWeaponComponent::DotProduct(const FVector& A, const FVector& B)
+{
+	return ((A.X * B.X) + (A.Y * B.Y) + (A.Z * B.Z));
+}
+
+bool UWeaponComponent::IsNearlyEqual(const float& A, const float& B, const float& ErrorTolerance)
+{
+	return (abs(A - B) <= ErrorTolerance);
+}
+
+
+
 int32 UWeaponComponent::GetMaxAmmoCatridgeOfCurrentWeapon() const
 {
 	return InventoryComponent->GetMaxAmmoInCatridgeCount(CurrentWeapon);
@@ -465,3 +561,4 @@ void UWeaponComponent::StopAiming()
 		bIsAiming = false;
 	}
 }
+

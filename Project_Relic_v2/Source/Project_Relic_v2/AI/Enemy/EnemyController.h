@@ -132,16 +132,11 @@ public:
 	/* Starting events for patrol state */
 	void BeginPatrol();
 
-	void SetCurrentPatrolPoint(int32 NewPatrolPoint) { CurrentPatrolPoint = NewPatrolPoint; }
-
-	int32 GetCurrentPatrolPoint() const { return CurrentPatrolPoint; }
-
-	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
+	void MoveToNextPatrolPoint();
 
 	void SetIsMovingToPatrolPoint(bool IsMovingToPatrolPoint);
 	bool GetIsMovingToPatrolPoint() const;
 
-	void MoveToNextPatrolPoint();
 
 	/**********************************************************************************/
 

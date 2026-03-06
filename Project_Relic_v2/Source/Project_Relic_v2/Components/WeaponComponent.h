@@ -10,10 +10,13 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Weapons/BaseWeapon.h"
 #include "InventoryComponent.h"
+#include "Interfaces/CombatInterface.h"
 #include "WeaponComponent.generated.h"
 
 class AProject_Relic_v2Character;
+class AEnemyCharacter;
 class UCurveFloat;
+class AAIController;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECT_RELIC_V2_API UWeaponComponent : public UActorComponent
@@ -50,6 +53,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void StopAiming();
 
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -60,7 +64,6 @@ protected:
 	/** Handles the Aim down sights (ADS) actions */
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void StartAiming();
-
 
 public:	
 	// Called every frame
@@ -128,6 +131,19 @@ private:
 	/* Play sound effects for shooting the weapon */
 	void PlayGunShotSFX();
 
+	void EnemyTakedown();
+
+	AActor* TakedownTrace();
+	
+	/* Calculate the dot product of two vectors */
+	float DotProduct(const FVector& A, const FVector& B );
+
+	bool IsNearlyEqual(const float& A, const float& B, const float& ErrorTolerance);
+
+	void PrepareTakedown(AEnemyCharacter* Enemy);
+
+	
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* AimAction;
@@ -138,6 +154,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* ReloadAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* TakedownAction;
+
 	/** Fire Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	class UInputAction* SwitchWeaponsAction;
@@ -147,6 +166,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	UCurveFloat* AimingFieldOfViewCurveFloat;
+
+	AActor* TakedownEnemyActor = nullptr;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -198,6 +219,10 @@ private:
 	/** Line trace distance (how far the player can shoot) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
 	float ShootingDistance;
+
+	/** Line trace distance for how far the player can take down an enemy */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
+	float TakedownDistance = 200.0f;
 
 	FTimerHandle HandleReload;
 

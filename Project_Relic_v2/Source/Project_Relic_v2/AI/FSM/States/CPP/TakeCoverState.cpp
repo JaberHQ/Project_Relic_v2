@@ -52,7 +52,7 @@ void TakeCoverState::Execute(AEnemyController* EnemyController)
 
 void TakeCoverState::Exit(AEnemyController* EnemyController)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Take Cover State.")); // DEBUG -----------------------
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Leaving Take Cover State.")); // DEBUG -----------------------
 
 	
 }

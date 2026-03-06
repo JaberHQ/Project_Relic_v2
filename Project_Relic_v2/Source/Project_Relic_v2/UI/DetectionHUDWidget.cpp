@@ -20,7 +20,8 @@ void UDetectionHUDWidget::NativeConstruct()
 
 void UDetectionHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	
+	Super::NativeTick(MyGeometry, InDeltaTime);
+
 	if(PlayerCharacter && EnemyCharacter)
 	{
 		FVector PlayerLocation = PlayerCharacter->GetActorLocation();

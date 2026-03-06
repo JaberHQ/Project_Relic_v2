@@ -54,7 +54,9 @@ void AEnemyController::Death()
 {
 	bIsDead = true;
 	StopMovement();
+	
 	FiniteStateMachine->ChangeState(DeadState::Instance());
+
 }
 
 void AEnemyController::StartChase_Implementation()
@@ -150,8 +152,6 @@ void AEnemyController::TimerBeforeAttackingCompleted()
 	bIsAttacking = true;
 	bIsIdle = false;
 }
-
-
 
 void AEnemyController::FinishAttack()
 {
@@ -288,6 +288,9 @@ void AEnemyController::SendPlayerDetectedMessageToAllies()
 
 void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 {
+	if (bIsDead)
+		return;
+
 	if (!bHasLineOfSight)
 	{
 		PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);

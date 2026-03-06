@@ -21,8 +21,6 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-	
-
 	/*Dispatch->DispatchMessage(  SEND_MSG_IMMEDIATELY, 
 								EnemyController->ControlledEnemyCharacter->GetID(), 
 								EnemyController->ControlledEnemyCharacter->GetID(),
