@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include <Kismet/KismetMathLibrary.h>
 #include "AI/Enemy/EnemyCharacter.h"
+#include "Player/TakedownController.h"
 #include "Player/Project_Relic_v2Character.h"
 
 // Sets default values for this component's properties
@@ -418,7 +419,6 @@ void UWeaponComponent::PlayGunShotSFX()
 		UGameplayStatics::PlaySoundAtLocation(this, WeaponArray[WeaponIndex]->FireSound, Character->GetActorLocation());*/
 }
 
-#include "Player/TakedownController.h"
 
 void UWeaponComponent::PrepareTakedown(AEnemyCharacter* Enemy)
 {
