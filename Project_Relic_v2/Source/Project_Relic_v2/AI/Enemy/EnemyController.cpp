@@ -17,6 +17,7 @@
 #include "AI/FSM/States/Header/PatrolState.h"
 #include "AI/FSM/States/Header/DeadState.h"
 #include "AI/FSM/States/Header/TakeCoverState.h"
+#include "AI/FSM/States/Header/InvestigateState.h"
 #include "Engine/Canvas.h"
 #include "AI/FSM/MessageDispatcher.h"
 #include "Character/CharacterManager.h"
@@ -104,13 +105,48 @@ void AEnemyController::BeginPatrol()
 	ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
 }
 
+void AEnemyController::StartDetection()
+{
+	if (!bIsDetectingPlayer)
+	{
+		bIsDetectingPlayer = true;
+		if (PlayerCharacter)
+		{
+			IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
+		}
+	}
+
+	GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
+	GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
+
+	/*if (!bIsDetectingPlayer)
+	{
+		GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
+		GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
+		if (PlayerCharacter)
+		{
+			IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
+		}
+
+		bIsDetectingPlayer = true;
+	}*/
+	
+}
+
 void AEnemyController::OnDetectionDelayComplete()
 {
-	if (PlayerCharacter)
+	if (!bHasLineOfSight)
 	{
-		IDetectionInterface::Execute_StopDetection(PlayerCharacter);
+		if (PlayerCharacter)
+		{
+			//MoveToActor(PlayerCharacter);
+			IDetectionInterface::Execute_StopDetection(PlayerCharacter);
+		}
+		bIsDetectingPlayer = false;
 	}
-	bIsDetectingPlayer = false;
+
+	
+	bHasLineOfSight = false;
 }
 
 void AEnemyController::StartShooting()
@@ -216,6 +252,7 @@ void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 	}
 }
 
+
 void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
 	Super::OnMoveCompleted(RequestID, Result);
@@ -229,6 +266,15 @@ void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollow
 			{
 				AIBehaviourComponent->Wait();
 			}
+		}
+	}
+
+	else if (FiniteStateMachine->GetCurrentState() == InvestigateState::Instance())
+	{
+		if (Result.IsSuccess())
+		{
+			bIsDetectingPlayer = false;
+			bHasLineOfSight = false;
 		}
 	}
 
@@ -291,20 +337,43 @@ void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 	if (bIsDead)
 		return;
 
+	PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
+
+	/*if (!bIsDetectingPlayer && PlayerCharacter)
+	{
+		TargetLastKnownLocation = PlayerCharacter->GetActorLocation();
+		StartDetection();
+		StopMovement();
+	}*/
+
 	if (!bHasLineOfSight)
 	{
 		PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
-
+		if (PlayerCharacter)
+		{
+			TargetLastKnownLocation = PlayerCharacter->GetActorLocation();
+		}
 		bHasLineOfSight = true;
 		StopMovement();
 
-		SendPlayerDetectedMessageToAllies();
 	}
+	//SendPlayerDetectedMessageToAllies();
 }
 
 void AEnemyController::OnDamageTaken()
 {
 	OnPlayerDetected(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+}
+
+void AEnemyController::StartInvestigateTimer()
+{
+	float WaitBeforeInvestigateTimer = 5.0f;
+	GetWorld()->GetTimerManager().SetTimer(InvesigateTimerHandle, this, &AEnemyController::InvestigateLastKnownLocation, WaitBeforeInvestigateTimer, false);
+}
+
+void AEnemyController::InvestigateLastKnownLocation()
+{
+	MoveToLocation(TargetLastKnownLocation);
 }
 
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)

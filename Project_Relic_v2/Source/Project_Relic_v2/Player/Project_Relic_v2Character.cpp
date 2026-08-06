@@ -403,41 +403,45 @@ void AProject_Relic_v2Character::CrouchTimelineProgress(float Value)
 void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* EnemyCharacter)
 {
 	EnemyCharacterRef = EnemyCharacter;
-
 	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
 
-	if (DetectionHUD && EnemyCharacterRef)
+	if (!DetectionHUD || !EnemyCharacterRef)
+		return;
+
+	// Set detection hud to visible
+	if (DetectionHUD->GetDetectionMeter()->GetVisibility() != ESlateVisibility::Visible)
 	{
-		// Set detection hud to visible
-		if (DetectionHUD->GetDetectionMeter()->GetVisibility() != ESlateVisibility::Visible)
-		{
-			DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
-		}
-
-		// Send enemy character reference to UI
-		DetectionHUD->SetEnemyCharacter(EnemyCharacter); 
-
-		FVector PlayerLocation = GetActorLocation();
-		FVector EnemyLocation = EnemyCharacterRef->GetActorLocation();
-		float Distance = FVector::Distance(PlayerLocation, EnemyLocation);
-		
-
-		// If player is too close to enemy when seen, instantly detect the player
-		if (Distance <= InstantDetection)
-		{
-			DetectionHUD->SetDetectionMeterPercent(1.0f);
-			OnDetected();
-		}
-		else
-		{
-			if (DetectionCurveTimelineComponent)
-			{
-				// Play the detection meter timeline
-				DetectionCurveTimelineComponent->Play(); 
-			}
-		}
-		
+		DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
 	}
+
+	// Send enemy character reference to UI
+	DetectionHUD->SetEnemyCharacter(EnemyCharacter);
+
+	FVector PlayerLocation = GetActorLocation();
+	FVector EnemyLocation = EnemyCharacterRef->GetActorLocation();
+	float Distance = FVector::Distance(PlayerLocation, EnemyLocation);
+
+	if (DetectionCurveTimelineComponent)
+	{
+		// Play the detection meter timeline
+		DetectionCurveTimelineComponent->Play();
+	}
+
+	//// If player is too close to enemy when seen, instantly detect the player
+	//if (Distance <= InstantDetection)
+	//{
+	//	DetectionHUD->SetDetectionMeterPercent(1.0f);
+	//	OnDetected();
+	//}
+	//else
+	//{
+	//	if (DetectionCurveTimelineComponent)
+	//	{
+	//		// Play the detection meter timeline
+	//		DetectionCurveTimelineComponent->Play();
+	//	}
+	//}
+	
 }
 
 void AProject_Relic_v2Character::StopDetection_Implementation()
@@ -446,6 +450,7 @@ void AProject_Relic_v2Character::StopDetection_Implementation()
 	{
 		DetectionCurveTimelineComponent->Stop();
 		DetectionCurveTimelineComponent->Reverse();
+
 	}
 }
 
@@ -509,7 +514,7 @@ void AProject_Relic_v2Character::OnDetected()
 			IDetectionInterface::Execute_StartChase(EnemyControllerRef);
 	}
 
-	if( DetectionHUD )
+	if (DetectionHUD)
 	{
 		// Set the meter colour to indicate that the player has been fully detected 
 		DetectionHUD->SetDetectionMeterColour(FLinearColor::Red);
@@ -519,18 +524,18 @@ void AProject_Relic_v2Character::OnDetected()
 void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
 {
 	/* If the player has not been fully detected */
-	if (DetectionHUD && EnemyCharacterRef)
-	{
-		/* Reset the Detection HUD back to default */
-		DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Hidden);
-		DetectionHUD->SetDetectionMeterColour(FLinearColor::Yellow);
-		DetectionHUD->SetEnemyCharacter(nullptr);
+	if (!DetectionHUD || !EnemyCharacterRef)
+		return;
 
-		/* Communicate with the interface and tell the enemy to stop chasing the player */
-		AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
-		if(EnemyControllerRef)
-			IDetectionInterface::Execute_StopChase(EnemyControllerRef);
-	}
+	/* Reset the Detection HUD back to default */
+	DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Hidden);
+	DetectionHUD->SetDetectionMeterColour(FLinearColor::Yellow);
+	DetectionHUD->SetEnemyCharacter(nullptr);
+
+	/* Communicate with the interface and tell the enemy to stop chasing the player */
+	AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
+	if (EnemyControllerRef)
+		IDetectionInterface::Execute_StopChase(EnemyControllerRef);
 
 }
 

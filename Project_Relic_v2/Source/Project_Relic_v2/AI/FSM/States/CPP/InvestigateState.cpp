@@ -1,4 +1,6 @@
 #include "AI/FSM/States/Header/InvestigateState.h"
+#include "AI/FSM/States/Header/TakeCoverState.h"
+#include "AI/FSM/States/Header/PatrolState.h"
 #include "AI/Enemy/EnemyController.h"
 #include "AI/Enemy/EnemyCharacter.h"
 
@@ -17,19 +19,46 @@ void InvestigateState::Enter(AEnemyController* EnemyController)
 {
 	check(EnemyController);
 	check(EnemyController->ControlledEnemyCharacter);
+	check(EnemyController->PlayerCharacter)
 
+	// If player last known location
+	if (!EnemyController->GetTargetLastKnownLocation().IsZero())
+	{
+		EnemyController->StartDetection();
+		//EnemyController->RotateToFacePlayer();
+		//EnemyController->StartInvestigateTimer();
+	}
+	// rotate to face last known location
 }
 
 void InvestigateState::Execute(AEnemyController* EnemyController)
 {
-	// Time to patrol -> Patrol
-	// If heard minor noise -> Alert
-	// If heard major noise -> Investigate
-	// If see player (low visibility) -> Alert
-	// If see player (clear) -> Chase or Attack
+	// Move to last known location
+	// if player is seen again
+	// go to attack state
+	// otherwise go to patrol state
 
 	if (!EnemyController || !EnemyController->GetPawn())
 		return;
+
+	//if (!EnemyController->GetHasLineOfSight())
+	//{
+	//	EnemyController->StopDetection();
+	//}
+
+	// Player fully detected
+	if (EnemyController->GetShouldChase())
+	{
+		EnemyController->ChangeState(TakeCoverState::Instance());
+		return;
+	}
+
+	// Stop trying to detect player
+	if (!EnemyController->GetIsDetectingPlayer())
+	{
+		EnemyController->ChangeState(PatrolState::Instance());
+		return;
+	}
 }
 
 void InvestigateState::Exit(AEnemyController* EnemyController)

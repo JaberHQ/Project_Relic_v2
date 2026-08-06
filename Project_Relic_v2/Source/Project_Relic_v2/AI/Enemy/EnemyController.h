@@ -216,9 +216,16 @@ protected:
 
 /********************* Detection *******************************************************************/
 public:
+	void StartDetection();
+
 	virtual void StartChase_Implementation() override; /**  Inherited from detection interface */
 
 	virtual void StopChase_Implementation() override; /**  Inherited from detection interface */
+
+	void SetShouldChase(bool ShouldChase) { bShouldChase = ShouldChase; }
+	bool GetShouldChase() const { return bShouldChase; }
+
+	bool GetIsDetectingPlayer() const { return bIsDetectingPlayer; }
 
 private:
 	void OnDetectionDelayComplete();
@@ -244,6 +251,10 @@ public:
 
 	/* Actions for when the enemy has taken damage by the player */
 	void OnDamageTaken();
+
+
+	void StartInvestigateTimer();
+	void InvestigateLastKnownLocation();
 
 private:
 
@@ -296,6 +307,7 @@ private:
 	FTimerHandle GetToAttackingPointHandle;
 	FTimerHandle ShootingTimerHandle;
 	FTimerHandle TimerBeforeAttackingHandle;
+	FTimerHandle InvesigateTimerHandle;
 
 protected:
 	/********************** EQS ******************/

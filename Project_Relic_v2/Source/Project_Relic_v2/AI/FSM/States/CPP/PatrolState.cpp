@@ -5,6 +5,7 @@
 #include "AI/FSM/States/Header/DeadState.h"
 #include "AI/FSM/States/Header/AttackState.h"
 #include "AI/FSM/States/Header/TakeCoverState.h"
+#include "AI/FSM/States/Header/InvestigateState.h"
 #include "Player/Project_Relic_v2Character.h"
 #include "AI/FSM/MessageDispatcher.h"
 
@@ -35,9 +36,15 @@ void PatrolState::Execute(AEnemyController* EnemyController)
 		return;
 
 	// If player is detected
+	/*if (EnemyController->GetIsDetectingPlayer())
+	{
+		EnemyController->ChangeState(InvestigateState::Instance());
+		return;
+	}*/
+
 	if (EnemyController->GetHasLineOfSight())
 	{
-		EnemyController->ChangeState(TakeCoverState::Instance());
+		EnemyController->ChangeState(InvestigateState::Instance());
 		return;
 	}
 

@@ -21,7 +21,6 @@ void AttackState::Enter(AEnemyController* EnemyController)
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Entering Attack State.")); // DEBUG -----------------------
 
-
 	EnemyController->BeginAttack(); 
 	EnemyController->StartAttackingTimer(); // Start the timer that dictates how long the enemy stays in the attack state
 }
@@ -44,7 +43,6 @@ void AttackState::Execute(AEnemyController* EnemyController)
 		EnemyController->ChangeState(TakeCoverState::Instance()); 
 		return;
 	}
-	
 }
 
 void AttackState::Exit(AEnemyController* EnemyController)
