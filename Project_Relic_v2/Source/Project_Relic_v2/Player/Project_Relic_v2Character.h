@@ -56,7 +56,7 @@ struct FCharacterMoveSpeed
  *  Implements a controllable orbiting camera
  */
 UCLASS(Abstract)
-class AProject_Relic_v2Character : public ABaseCharacter, public IDeathHandlerInterface, public IDetectionInterface, public ICombatInterface
+class AProject_Relic_v2Character : public ABaseCharacter, public IDeathHandlerInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -240,15 +240,15 @@ private:
 	 **		(See Project_Relic_v2Character.h and EnemyController.h)
 	 ** Handles the start of the AI detection of the enemy
 	/*********************************************************************/
-	virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
+	//virtual void StartDetection_Implementation(AEnemyCharacter* EnemyCharacter) override;
 
-	/*********************************************************************
-	/** Interface function: IDetectionInterface (See EnemyController.h)
-	 ** For communication between the player and enemy
-	 **		(See Project_Relic_v2Character.h and EnemyController.h)
-	 ** Handles the stopping of the AI detection of the enemy
-	/*********************************************************************/
-	virtual void StopDetection_Implementation() override;
+	///*********************************************************************
+	///** Interface function: IDetectionInterface (See EnemyController.h)
+	// ** For communication between the player and enemy
+	// **		(See Project_Relic_v2Character.h and EnemyController.h)
+	// ** Handles the stopping of the AI detection of the enemy
+	///*********************************************************************/
+	//virtual void StopDetection_Implementation() override;
 
 	/* Initialise the detection curve timeline component */
 	void InitDetectionMeterTimeline();

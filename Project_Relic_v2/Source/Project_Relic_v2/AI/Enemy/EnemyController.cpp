@@ -2,8 +2,8 @@
 
 
 #include "EnemyController.h"
-#include "AI/AIPatrolPoint.h"
 #include "EnemyCharacter.h"
+#include "AI/AIPatrolPoint.h"
 #include "Kismet/GameplayStatics.h"
 #include <Kismet/KismetMathLibrary.h>
 #include "BehaviorTree/BehaviorTree.h"
@@ -13,13 +13,7 @@
 #include <Perception/AISenseConfig_Sight.h>
 #include "Perception/AISense_Sight.h"
 #include "Navigation/PathFollowingComponent.h"
-#include "AI/FSM/States/Header/AttackState.h"
-#include "AI/FSM/States/Header/PatrolState.h"
-#include "AI/FSM/States/Header/DeadState.h"
-#include "AI/FSM/States/Header/TakeCoverState.h"
-#include "AI/FSM/States/Header/InvestigateState.h"
 #include "Engine/Canvas.h"
-#include "AI/FSM/MessageDispatcher.h"
 #include "Character/CharacterManager.h"
 #include "Perception/AIPerceptionComponent.h"
 
@@ -30,49 +24,28 @@ AEnemyController::AEnemyController()
 	InitPerceptionSystem();
 
 	CurrentPatrolPoint = 0;
+
+	BehaviourTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviourComponent"));
+	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
+
+	PatrolLocationKey = "PatrolLocation";
+	PlayerKey = "EnemyActor";
+
 }
 
 void AEnemyController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	FiniteStateMachine->Update();
 }
 
 void AEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	/* EQS Defaults */
-
-	/* FSM Defaults */
-	FiniteStateMachine = new StateMachine<AEnemyController>(this);
-	//FiniteStateMachine->SetGlobalState(EnemyGlobalState::Instance());
-	FiniteStateMachine->ChangeState(PatrolState::Instance());
 }
 
 void AEnemyController::Death()
 {
-	bIsDead = true;
-	StopMovement();
-	
-	FiniteStateMachine->ChangeState(DeadState::Instance());
-
-}
-
-void AEnemyController::StartChase_Implementation()
-{
-	bShouldChase = true;
-}
-
-void AEnemyController::StopChase_Implementation()
-{
-	bShouldChase = false;
-}
-
-void AEnemyController::ClearTargetLastKnownLocation()
-{
-	TargetLastKnownLocation = FVector::Zero();
 }
 
 void AEnemyController::OnPossess(APawn* InPawn)
@@ -84,6 +57,12 @@ void AEnemyController::OnPossess(APawn* InPawn)
 	if (ControlledEnemyCharacter)
 	{
 		AIBehaviourComponent = ControlledEnemyCharacter->GetAIBehaviourComponent();
+
+		if (BehaviourTree && BehaviourTree->BlackboardAsset)
+		{
+			BlackboardComponent->InitializeBlackboard(*(BehaviourTree->BlackboardAsset));
+		}
+		BehaviourTreeComponent->StartTree(*BehaviourTree);
 	}
 }
 
@@ -101,123 +80,7 @@ void AEnemyController::InitPerceptionSystem()
 
 void AEnemyController::BeginPatrol()
 {
-	FEnemyMoveSpeed MoveSpeed;
-	ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Patrol);
-}
-
-void AEnemyController::StartDetection()
-{
-	if (!bIsDetectingPlayer)
-	{
-		bIsDetectingPlayer = true;
-		if (PlayerCharacter)
-		{
-			IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
-		}
-	}
-
-	GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
-	GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
-
-	/*if (!bIsDetectingPlayer)
-	{
-		GetWorld()->GetTimerManager().ClearTimer(DetectionTimerHandle);
-		GetWorld()->GetTimerManager().SetTimer(DetectionTimerHandle, this, &AEnemyController::OnDetectionDelayComplete, 0.5f, false);
-		if (PlayerCharacter)
-		{
-			IDetectionInterface::Execute_StartDetection(PlayerCharacter, ControlledEnemyCharacter);
-		}
-
-		bIsDetectingPlayer = true;
-	}*/
-	
-}
-
-void AEnemyController::OnDetectionDelayComplete()
-{
-	if (!bHasLineOfSight)
-	{
-		if (PlayerCharacter)
-		{
-			//MoveToActor(PlayerCharacter);
-			IDetectionInterface::Execute_StopDetection(PlayerCharacter);
-		}
-		bIsDetectingPlayer = false;
-	}
-
-	
-	bHasLineOfSight = false;
-}
-
-void AEnemyController::StartShooting()
-{
-	/* The enemy will pretend to shoot before raycasting a bullet
-			As we don't want every single bullet to hit the player */
-	RotateToFacePlayer();
-
-	ControlledEnemyCharacter->SetIsShooting(true);
-
-	GetWorld()->GetTimerManager().SetTimer(ShootingTimerHandle, this, &AEnemyController::ShootRaycastBullet, ShootingInterval, false);
-}
-
-void AEnemyController::StopShooting()
-{
-	ControlledEnemyCharacter->SetIsShooting(false);
-	GetWorld()->GetTimerManager().ClearTimer(ShootingTimerHandle);
-}
-
-void AEnemyController::SetTimerBeforeAttacking()
-{
-	bIsIdle = true;
-	GetWorld()->GetTimerManager().SetTimer(TimerBeforeAttackingHandle, this, &AEnemyController::TimerBeforeAttackingCompleted, 3.0f, false);
-}
-
-void AEnemyController::StartAttackingTimer()
-{
-	GetWorld()->GetTimerManager().SetTimer(AttackingTimerHandle, this, &AEnemyController::OnAttackingTimerComplete, AttackDuration, false);
-}
-
-void AEnemyController::BeginAttack()
-{
-	RotateToFacePlayer();
-	ControlledEnemyCharacter->UnCrouch();
-}
-
-void AEnemyController::TimerBeforeAttackingCompleted() 
-{ 
-	bIsAttacking = true;
-	bIsIdle = false;
-}
-
-void AEnemyController::FinishAttack()
-{
-	ControlledEnemyCharacter->Crouch();
-	StopShooting();
-}
-
-void AEnemyController::BeginToTakeCover()
-{
-	FEnemyMoveSpeed MoveSpeed;
-	ControlledEnemyCharacter->UpdateWalkSpeed(MoveSpeed.Run);
-	ControlledEnemyCharacter->UnCrouch();
-	bIsMovingToCover = true;
-	RunFindCoverEQS();
-}
-
-void AEnemyController::FinishTakingCover()
-{
-	ControlledEnemyCharacter->Crouch();
-}
-
-void AEnemyController::OnAttackingTimerComplete()
-{
-	bIsAttacking = false;
-}
-
-void AEnemyController::ShootRaycastBullet()
-{
-	ControlledEnemyCharacter->RaycastShot();
-	StartShooting();
+	ControlledEnemyCharacter->UpdateWalkSpeed(ControlledEnemyCharacter->MoveSpeed.Patrol);
 }
 
 void AEnemyController::RunFindCoverEQS()
@@ -225,22 +88,6 @@ void AEnemyController::RunFindCoverEQS()
 	FindCoverQueryRequest = FEnvQueryRequest(FindCoverQuery, ControlledEnemyCharacter);
 
 	FindCoverQueryRequest.Execute(EEnvQueryRunMode::RandomBest5Pct, this, &AEnemyController::MoveToQueryRequest);
-}
-
-void AEnemyController::RotateToFacePlayer() 
-{ 
-	/*double roll = GetPawn()->GetActorRotation().Roll;
-	double pitch = GetPawn()->GetActorRotation().Pitch;*/
-	/*FRotator Interp = UKismetMathLibrary::RInterpTo(GetPawn()->GetActorRotation(), FindLookAtRotation, GetWorld()->DeltaTimeSeconds, 1.0f); 
-	FRotator Rotator = FRotator(0.0f, 0.0f, Interp.Yaw); */
-
-	FRotator FindLookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetPawn()->GetActorLocation(), PlayerCharacter->GetActorLocation());
-	GetPawn()->SetActorRotation(FindLookAtRotation); 
-}
-
-bool AEnemyController::HandleMessage(const FTelegram& Msg)
-{
-	return FiniteStateMachine->HandleMessage(Msg);
 }
 
 void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
@@ -252,39 +99,13 @@ void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 	}
 }
 
-
 void AEnemyController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
 	Super::OnMoveCompleted(RequestID, Result);
 
-	// Patrol State
-	if (FiniteStateMachine->GetCurrentState() == PatrolState::Instance())
+	if (Result.IsSuccess() && AIBehaviourComponent && GetIsMovingToPatrolPoint())
 	{
-		if (AIBehaviourComponent)
-		{
-			if (Result.IsSuccess())
-			{
-				AIBehaviourComponent->Wait();
-			}
-		}
-	}
-
-	else if (FiniteStateMachine->GetCurrentState() == InvestigateState::Instance())
-	{
-		if (Result.IsSuccess())
-		{
-			bIsDetectingPlayer = false;
-			bHasLineOfSight = false;
-		}
-	}
-
-	// Take cover state
-	else if (FiniteStateMachine->GetCurrentState() == TakeCoverState::Instance())
-	{
-		if (Result.IsSuccess())
-		{
-			bIsMovingToCover = false; 
-		}
+		AIBehaviourComponent->Wait();
 	}
 }
 
@@ -315,65 +136,11 @@ void AEnemyController::MoveToNextPatrolPoint()
 	AIBehaviourComponent->MoveToNextPatrolPoint(this);
 }
 
-void AEnemyController::SendPlayerDetectedMessageToAllies()
-{
-	for (auto& Elem : CharacterMgr->GetCharacterMap())
-	{
-		AEnemyCharacter* EnemyCharacter = Cast<AEnemyCharacter>(Elem.Value); // Only send it to other enemies
-		if (Elem.Key.IsValid() && IsValid(EnemyCharacter))					
-		{
-			// Send message immediately, including the player reference as extra info
-			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
-				ControlledEnemyCharacter->GetID(),
-				Elem.Key,
-				EMessageType::Msg_PlayerDetected,
-				UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-		}
-	}
-}
 
-void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
-{
-	if (bIsDead)
-		return;
-
-	PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
-
-	/*if (!bIsDetectingPlayer && PlayerCharacter)
-	{
-		TargetLastKnownLocation = PlayerCharacter->GetActorLocation();
-		StartDetection();
-		StopMovement();
-	}*/
-
-	if (!bHasLineOfSight)
-	{
-		PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
-		if (PlayerCharacter)
-		{
-			TargetLastKnownLocation = PlayerCharacter->GetActorLocation();
-		}
-		bHasLineOfSight = true;
-		StopMovement();
-
-	}
-	//SendPlayerDetectedMessageToAllies();
-}
 
 void AEnemyController::OnDamageTaken()
 {
 	OnPlayerDetected(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-}
-
-void AEnemyController::StartInvestigateTimer()
-{
-	float WaitBeforeInvestigateTimer = 5.0f;
-	GetWorld()->GetTimerManager().SetTimer(InvesigateTimerHandle, this, &AEnemyController::InvestigateLastKnownLocation, WaitBeforeInvestigateTimer, false);
-}
-
-void AEnemyController::InvestigateLastKnownLocation()
-{
-	MoveToLocation(TargetLastKnownLocation);
 }
 
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
@@ -387,16 +154,21 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulu
 	}
 }
 
-void AEnemyController::ChangeState(State<AEnemyController>* NewState)
+void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 {
-	FiniteStateMachine->ChangeState(NewState);
+	PlayerCharacter = Cast<AProject_Relic_v2Character>(PlayerActor);
+	if (PlayerCharacter)
+	{
+		if (BlackboardComponent)
+		{
+			BlackboardComponent->SetValueAsObject(PlayerKey, PlayerCharacter);
+		}
+	}
 }
 
 
 void AEnemyController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	delete FiniteStateMachine;
-	FiniteStateMachine = nullptr;
 	Super::EndPlay(EndPlayReason);
 }
 

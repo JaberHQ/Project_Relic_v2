@@ -7,7 +7,6 @@
 #include "AIController.h"
 #include "Animation/AnimMontage.h"
 #include "Components/HealthComponent.h"
-#include "AI/FSM/State.h"
 #include "Components/AIBehaviourComponent.h"
 #include "Interfaces/CombatInterface.h"
 #include "EnemyCharacter.generated.h"
@@ -23,6 +22,8 @@ struct FEnemyMoveSpeed
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
 	float Run = 400.0f; // Default Moving speed
+
+
 };
 
 /**
@@ -42,6 +43,7 @@ class PROJECT_RELIC_V2_API AEnemyCharacter : public ABaseCharacter, public IDeat
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UAIBehaviourComponent* AIBehaviourComponent;
+
 
 public:
 	// Sets default values for this character's properties
@@ -110,6 +112,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* AnimTakedown; // Animation Montage
+
+	/*** Movement ***/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
+	FEnemyMoveSpeed MoveSpeed;
+
 
 private:
 

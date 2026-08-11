@@ -400,59 +400,43 @@ void AProject_Relic_v2Character::CrouchTimelineProgress(float Value)
 	CameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, Value));
 }
 
-void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* EnemyCharacter)
-{
-	EnemyCharacterRef = EnemyCharacter;
-	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
+//void AProject_Relic_v2Character::StartDetection_Implementation(AEnemyCharacter* EnemyCharacter)
+//{
+//	EnemyCharacterRef = EnemyCharacter;
+//	DetectionHUD = Cast<UDetectionHUDWidget>(DetectionHUDWidget);
+//
+//	if (!DetectionHUD || !EnemyCharacterRef)
+//		return;
+//
+//	// Set detection hud to visible
+//	if (DetectionHUD->GetDetectionMeter()->GetVisibility() != ESlateVisibility::Visible)
+//	{
+//		DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
+//	}
+//
+//	// Send enemy character reference to UI
+//	DetectionHUD->SetEnemyCharacter(EnemyCharacter);
+//
+//	FVector PlayerLocation = GetActorLocation();
+//	FVector EnemyLocation = EnemyCharacterRef->GetActorLocation();
+//	float Distance = FVector::Distance(PlayerLocation, EnemyLocation);
+//
+//	if (DetectionCurveTimelineComponent)
+//	{
+//		// Play the detection meter timeline
+//		DetectionCurveTimelineComponent->Play();
+//	}
+//}
 
-	if (!DetectionHUD || !EnemyCharacterRef)
-		return;
-
-	// Set detection hud to visible
-	if (DetectionHUD->GetDetectionMeter()->GetVisibility() != ESlateVisibility::Visible)
-	{
-		DetectionHUD->SetDetectionMeterVisiblity(ESlateVisibility::Visible);
-	}
-
-	// Send enemy character reference to UI
-	DetectionHUD->SetEnemyCharacter(EnemyCharacter);
-
-	FVector PlayerLocation = GetActorLocation();
-	FVector EnemyLocation = EnemyCharacterRef->GetActorLocation();
-	float Distance = FVector::Distance(PlayerLocation, EnemyLocation);
-
-	if (DetectionCurveTimelineComponent)
-	{
-		// Play the detection meter timeline
-		DetectionCurveTimelineComponent->Play();
-	}
-
-	//// If player is too close to enemy when seen, instantly detect the player
-	//if (Distance <= InstantDetection)
-	//{
-	//	DetectionHUD->SetDetectionMeterPercent(1.0f);
-	//	OnDetected();
-	//}
-	//else
-	//{
-	//	if (DetectionCurveTimelineComponent)
-	//	{
-	//		// Play the detection meter timeline
-	//		DetectionCurveTimelineComponent->Play();
-	//	}
-	//}
-	
-}
-
-void AProject_Relic_v2Character::StopDetection_Implementation()
-{
-	if (DetectionCurveTimelineComponent)
-	{
-		DetectionCurveTimelineComponent->Stop();
-		DetectionCurveTimelineComponent->Reverse();
-
-	}
-}
+//void AProject_Relic_v2Character::StopDetection_Implementation()
+//{
+//	if (DetectionCurveTimelineComponent)
+//	{
+//		DetectionCurveTimelineComponent->Stop();
+//		DetectionCurveTimelineComponent->Reverse();
+//
+//	}
+//}
 
 void AProject_Relic_v2Character::InitDetectionMeterTimeline()
 {
@@ -511,7 +495,9 @@ void AProject_Relic_v2Character::OnDetected()
 		/* Communicate with the interface and tell the enemy to start chasing the player */
 		AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
 		if( EnemyControllerRef )
-			IDetectionInterface::Execute_StartChase(EnemyControllerRef);
+		{
+			//IDetectionInterface::Execute_StartChase(EnemyControllerRef);
+		}
 	}
 
 	if (DetectionHUD)
@@ -535,7 +521,9 @@ void AProject_Relic_v2Character::OnDetectionMeterDelayFinished()
 	/* Communicate with the interface and tell the enemy to stop chasing the player */
 	AEnemyController* EnemyControllerRef = Cast<AEnemyController>(EnemyCharacterRef->GetController());
 	if (EnemyControllerRef)
-		IDetectionInterface::Execute_StopChase(EnemyControllerRef);
+	{
+	//	IDetectionInterface::Execute_StopChase(EnemyControllerRef);
+	}
 
 }
 
@@ -554,6 +542,4 @@ void AProject_Relic_v2Character::Takedown_Implementation()
 		TakedownAnimationTime = PlayAnimMontage(AnimTakedown);
 
 		GetWorldTimerManager().SetTimer(TakedownFinishedHandle, this, &AProject_Relic_v2Character::OnTakedownComplete, TakedownAnimationTime, false);
-
-
 }
