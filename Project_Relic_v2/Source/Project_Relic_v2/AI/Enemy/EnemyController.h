@@ -109,6 +109,10 @@ public:
 public:
 	FORCEINLINE UBlackboardComponent* GetBlackboardComponent() const { return BlackboardComponent; }
 
+public:
+	void SetIsMovingToCover(bool IsMovingToCover);
+	bool GetIsMovingToCover() const;
+
 private:
 	UBehaviorTreeComponent* BehaviourTreeComponent;
 
@@ -122,7 +126,13 @@ private:
 	FName PlayerKey;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	FName bHasLineofSightKey;
+	FName bHasLineOfSightKey;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName bIsMovingToCoverKey;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName CoverLocationKey;
 
 public:
 	UPROPERTY(EditAnywhere, Category = "AI")

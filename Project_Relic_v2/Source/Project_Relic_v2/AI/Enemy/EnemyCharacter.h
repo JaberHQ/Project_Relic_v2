@@ -99,6 +99,7 @@ public:
 	void SetCanBeTakenDown(bool CanBeTakenDown) { bCanBeTakenDown = CanBeTakenDown; }
 	bool GetCanBeTakenDown() const { return bCanBeTakenDown; }
 
+	bool GetIsCrouched() const { return bIsCrouched; }
 private:
 	void Death();
 

@@ -30,8 +30,9 @@ AEnemyController::AEnemyController()
 
 	PatrolLocationKey = "PatrolLocation";
 	PlayerKey = "EnemyActor";
-	bHasLineofSightKey = "HasLineofSight";
-
+	bHasLineOfSightKey = "HasLineOfSight";
+	bIsMovingToCoverKey = "IsMovingToCover";
+	CoverLocationKey = "CoverLocation";
 }
 
 void AEnemyController::Tick(float DeltaTime)
@@ -100,7 +101,8 @@ void AEnemyController::MoveToQueryRequest(TSharedPtr<FEnvQueryResult> Result)
 	if (Result->IsSuccessful() && Result->Items.Num() > 0)
 	{
 		const FVector TargetLocation = Result->GetItemAsLocation(0);
-		MoveTo(TargetLocation);
+		BlackboardComponent->SetValueAsVector(CoverLocationKey, TargetLocation);
+		//MoveTo(TargetLocation);
 	}
 }
 
@@ -142,10 +144,19 @@ void AEnemyController::MoveToNextPatrolPoint()
 }
 
 
-
 void AEnemyController::OnDamageTaken()
 {
 	OnPlayerDetected(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+}
+
+void AEnemyController::SetIsMovingToCover(bool IsMovingToCover)
+{
+	BlackboardComponent->SetValueAsBool(bIsMovingToCoverKey, IsMovingToCover);
+}
+
+bool AEnemyController::GetIsMovingToCover() const
+{
+	return BlackboardComponent->GetValueAsBool(bIsMovingToCoverKey);
 }
 
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
@@ -167,7 +178,11 @@ void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 		if (BlackboardComponent)
 		{
 			BlackboardComponent->SetValueAsObject(PlayerKey, PlayerCharacter);
-			BlackboardComponent->SetValueAsBool(bHasLineofSightKey, true);
+			BlackboardComponent->SetValueAsBool(bHasLineOfSightKey, true);
+			//BlackboardComponent->SetValueAsBool(bIsMovingToCoverKey, true); // When adding delayed detection, move this so that it only called when player has been fully detected
+																			// ----> Therefore hasLineOfSight = enemy has literally been seen (partially detected)
+																			// ----> isMovingToCover -> called when player is fully detected	
+
 		}
 	}
 }
