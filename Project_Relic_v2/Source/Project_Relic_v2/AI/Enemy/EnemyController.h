@@ -121,6 +121,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName PlayerKey;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName bHasLineofSightKey;
+
 public:
 	UPROPERTY(EditAnywhere, Category = "AI")
 	class UBehaviorTree* BehaviourTree;
@@ -146,7 +149,7 @@ private:
 	/* Booleans */
 	bool bIsDetectingPlayer			= false; 
 	bool bShouldChase				= false;
-	bool bHasLineOfSight			= false;
+	//bool bHasLineOfSight			= false;
 	bool bIsMovingToCover			= false;
 	bool bIsIdle					= false;
 	bool bIsAttacking				= false;

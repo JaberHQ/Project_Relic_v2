@@ -30,6 +30,7 @@ AEnemyController::AEnemyController()
 
 	PatrolLocationKey = "PatrolLocation";
 	PlayerKey = "EnemyActor";
+	bHasLineofSightKey = "HasLineofSight";
 
 }
 
@@ -72,9 +73,13 @@ void AEnemyController::InitPerceptionSystem()
 	
 	if (AISenseConfig_Player)
 	{
-		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-
+		PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component"));
+		SetPerceptionComponent(*PerceptionComponent);
 		AISenseConfig_Player->TargetRadius = 1000.0f;
+		PerceptionComponent->ConfigureSense(*AISenseConfig_Player);
+		PerceptionComponent->SetDominantSense(UAISenseConfig_Player::StaticClass());
+		
+		PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyController::OnTargetDetected);
 	}
 }
 
@@ -162,6 +167,7 @@ void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 		if (BlackboardComponent)
 		{
 			BlackboardComponent->SetValueAsObject(PlayerKey, PlayerCharacter);
+			BlackboardComponent->SetValueAsBool(bHasLineofSightKey, true);
 		}
 	}
 }
