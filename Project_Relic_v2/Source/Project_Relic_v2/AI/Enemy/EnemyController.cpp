@@ -31,7 +31,7 @@ AEnemyController::AEnemyController()
 	PatrolLocationKey = "PatrolLocation";
 	PlayerKey = "EnemyActor";
 	bHasLineOfSightKey = "HasLineOfSight";
-	bIsMovingToCoverKey = "IsMovingToCover";
+	bHasFoundCover = "HasFoundCover";
 	CoverLocationKey = "CoverLocation";
 }
 
@@ -149,14 +149,14 @@ void AEnemyController::OnDamageTaken()
 	OnPlayerDetected(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 }
 
-void AEnemyController::SetIsMovingToCover(bool IsMovingToCover)
+void AEnemyController::SetHasFoundCover(bool IsMovingToCover)
 {
-	BlackboardComponent->SetValueAsBool(bIsMovingToCoverKey, IsMovingToCover);
+	BlackboardComponent->SetValueAsBool(bHasFoundCover, IsMovingToCover);
 }
 
-bool AEnemyController::GetIsMovingToCover() const
+bool AEnemyController::GetHasFoundCover() const
 {
-	return BlackboardComponent->GetValueAsBool(bIsMovingToCoverKey);
+	return BlackboardComponent->GetValueAsBool(bHasFoundCover);
 }
 
 void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
@@ -179,9 +179,6 @@ void AEnemyController::OnPlayerDetected(AActor* PlayerActor)
 		{
 			BlackboardComponent->SetValueAsObject(PlayerKey, PlayerCharacter);
 			BlackboardComponent->SetValueAsBool(bHasLineOfSightKey, true);
-			//BlackboardComponent->SetValueAsBool(bIsMovingToCoverKey, true); // When adding delayed detection, move this so that it only called when player has been fully detected
-																			// ----> Therefore hasLineOfSight = enemy has literally been seen (partially detected)
-																			// ----> isMovingToCover -> called when player is fully detected	
 
 		}
 	}

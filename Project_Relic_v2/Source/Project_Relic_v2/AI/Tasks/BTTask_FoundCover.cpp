@@ -18,10 +18,9 @@ EBTNodeResult::Type UBTTask_FoundCover::ExecuteTask(UBehaviorTreeComponent& owne
 		{
 			
 			EnemyCharacter->Crouch();
-			
 			EnemyCharacter->UpdateWalkSpeed(EnemyCharacter->MoveSpeed.Patrol);
-			EnemyController->SetIsMovingToCover(false);
-			//EnemyController->RunFindCoverEQS();
+			EnemyController->SetHasFoundCover(true);
+
 			// Return node has succeeded
 			return EBTNodeResult::Succeeded;
 		}

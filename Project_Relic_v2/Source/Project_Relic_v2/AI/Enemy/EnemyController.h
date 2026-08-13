@@ -110,8 +110,8 @@ public:
 	FORCEINLINE UBlackboardComponent* GetBlackboardComponent() const { return BlackboardComponent; }
 
 public:
-	void SetIsMovingToCover(bool IsMovingToCover);
-	bool GetIsMovingToCover() const;
+	void SetHasFoundCover(bool HasFoundCover);
+	bool GetHasFoundCover() const;
 
 private:
 	UBehaviorTreeComponent* BehaviourTreeComponent;
@@ -129,7 +129,7 @@ private:
 	FName bHasLineOfSightKey;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	FName bIsMovingToCoverKey;
+	FName bHasFoundCover;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName CoverLocationKey;

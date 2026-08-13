@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AI/Tasks/BTTask_FindCover.h"
-#include "BTTask_FindCover.h"
+#include "AI/Tasks/BTTask_StartShootingAtPlayer.h"
+#include "BTTask_StartShootingAtPlayer.h"
 #include "AI/Enemy/EnemyController.h"
 #include "AI/Enemy/EnemyCharacter.h"
 
-EBTNodeResult::Type UBTTask_FindCover::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
+EBTNodeResult::Type UBTTask_StartShootingAtPlayer::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory)
 {
 	// Get AI controller
 	AEnemyController* EnemyController = Cast<AEnemyController>(ownerComp.GetAIOwner());
@@ -21,12 +21,9 @@ EBTNodeResult::Type UBTTask_FindCover::ExecuteTask(UBehaviorTreeComponent& owner
 			EnemyCharacter->UnCrouch();
 			EnemyCharacter->UpdateWalkSpeed(EnemyCharacter->MoveSpeed.Run);
 
-			
-			//EnemyController->SetHasFoundCover(false);
-			
-			//EnemyController->RunFindCoverEQS();
-			// Return node has succeeded
-			return EBTNodeResult::Succeeded;
+			EnemyController->StartShooting();
+
+
 		}
 	}
 	// Return node has failed
