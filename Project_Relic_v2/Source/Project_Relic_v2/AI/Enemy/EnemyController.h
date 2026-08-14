@@ -97,6 +97,11 @@ public:
 	/* Actions for when the enemy has taken damage by the player */
 	void OnDamageTaken();
 
+public:
+	void StartShooting(float ShootingDuration); // Shooting duration is how long the enemy shoots for before they go back into cover
+	void StopShooting();
+
+	void SetIsShooting(bool IsShooting);
 private:
 
 /***** Variables *****/
@@ -134,6 +139,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	FName CoverLocationKey;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName bIsShootingKey;
+
 public:
 	UPROPERTY(EditAnywhere, Category = "AI")
 	class UBehaviorTree* BehaviourTree;
@@ -164,6 +172,7 @@ private:
 	bool bIsIdle					= false;
 	bool bIsAttacking				= false;
 	bool bIsDead					= false;
+	bool bShootingTimer				= false;
 
 	/* Patrol */
 	TArray<AActor*> PatrolPoints;

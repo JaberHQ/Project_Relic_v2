@@ -33,6 +33,7 @@ AEnemyController::AEnemyController()
 	bHasLineOfSightKey = "HasLineOfSight";
 	bHasFoundCover = "HasFoundCover";
 	CoverLocationKey = "CoverLocation";
+	bIsShootingKey = "IsShooting";
 }
 
 void AEnemyController::Tick(float DeltaTime)
@@ -147,6 +148,34 @@ void AEnemyController::MoveToNextPatrolPoint()
 void AEnemyController::OnDamageTaken()
 {
 	OnPlayerDetected(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+}
+
+void AEnemyController::StartShooting(float ShootingDuration)
+{
+	if (ControlledEnemyCharacter)
+	{
+		ControlledEnemyCharacter->RaycastShot();
+		ControlledEnemyCharacter->SetIsShooting(true);
+
+		if (!bShootingTimer)
+		{
+			bShootingTimer = true;
+			GetWorld()->GetTimerManager().SetTimer(ShootingTimerHandle, this, &AEnemyController::StopShooting, ShootingDuration, false);
+		}
+
+	}
+}
+
+void AEnemyController::StopShooting()
+{
+	bShootingTimer = false;
+	ControlledEnemyCharacter->SetIsShooting(false);
+	BlackboardComponent->SetValueAsBool(bIsShootingKey, false);
+}
+
+void AEnemyController::SetIsShooting(bool IsShooting)
+{
+	BlackboardComponent->SetValueAsBool(bIsShootingKey, IsShooting);
 }
 
 void AEnemyController::SetHasFoundCover(bool IsMovingToCover)

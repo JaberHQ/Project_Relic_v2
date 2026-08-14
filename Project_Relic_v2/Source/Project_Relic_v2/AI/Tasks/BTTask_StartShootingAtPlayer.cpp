@@ -21,8 +21,8 @@ EBTNodeResult::Type UBTTask_StartShootingAtPlayer::ExecuteTask(UBehaviorTreeComp
 			EnemyCharacter->UnCrouch();
 			EnemyCharacter->UpdateWalkSpeed(EnemyCharacter->MoveSpeed.Run);
 
-			EnemyController->StartShooting();
-
+			EnemyController->StartShooting(ShootingDuration);
+			return EBTNodeResult::Succeeded;
 
 		}
 	}

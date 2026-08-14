@@ -4,18 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "BTTask_StartShootingAtPlayer.generated.h"
+#include "BTTask_StartAttack.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECT_RELIC_V2_API UBTTask_StartShootingAtPlayer : public UBTTaskNode
+class PROJECT_RELIC_V2_API UBTTask_StartAttack : public UBTTaskNode
 {
 	GENERATED_BODY()
-
+	
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMemory) override;
 
-	UPROPERTY(EditAnywhere, Category = "AI")
-	float ShootingDuration = 0.0f;
 };
