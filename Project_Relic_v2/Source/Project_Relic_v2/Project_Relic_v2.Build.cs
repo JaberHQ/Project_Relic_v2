@@ -18,7 +18,13 @@ public class Project_Relic_v2 : ModuleRules
 			"StateTreeModule",
 			"GameplayStateTreeModule",
 			"UMG",
+<<<<<<< Updated upstream
 			"Slate"
+=======
+			"Slate",
+			"GameplayDebugger",
+			"NavigationSystem",
+>>>>>>> Stashed changes
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
