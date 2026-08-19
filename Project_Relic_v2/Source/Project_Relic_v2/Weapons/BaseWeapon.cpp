@@ -3,6 +3,7 @@
 
 #include "BaseWeapon.h"
 
+
 // Sets default values
 ABaseWeapon::ABaseWeapon()
 {
@@ -11,6 +12,9 @@ ABaseWeapon::ABaseWeapon()
 
 	WeaponSkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMeshComponent"));
 	SetRootComponent(WeaponSkeletalMeshComponent);
+
+	WeaponMuzzleComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMuzzleComponent"));
+	WeaponMuzzleComponent->SetupAttachment(WeaponSkeletalMeshComponent);
 }
 
 USkeletalMeshComponent* ABaseWeapon::GetWeaponSkeletalMeshComponent() const
@@ -29,5 +33,19 @@ void ABaseWeapon::BeginPlay()
 void ABaseWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void ABaseWeapon::PlayMuzzleFlash()
+{
+	if (FireEffectMuzzle)
+	{
+		// This spawns the chosen effect on the owning WeaponMuzzle SceneComponent
+		UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAttached
+		(
+			FireEffectMuzzle, WeaponMuzzleComponent, NAME_None, FVector(0.f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true, true, ENCPoolMethod::AutoRelease
+		);
+		// Parameters can be set like this (see documentation for further info) - the names and type must match the user exposed parameter in the Niagara System
+		NiagaraComp->SetNiagaraVariableFloat(FString("StrengthCoef"), CoefStrength);
+	}
 }
 

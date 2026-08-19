@@ -130,6 +130,9 @@ private:
 
 	/* Play sound effects for shooting the weapon */
 	void PlayGunShotSFX();
+	
+	/* Play visual effects for shooting the weapon */
+	void PlayGunShotVFX();
 
 	void EnemyTakedown();
 

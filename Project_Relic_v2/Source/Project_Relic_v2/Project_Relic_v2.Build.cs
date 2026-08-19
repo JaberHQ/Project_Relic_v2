@@ -20,7 +20,8 @@ public class Project_Relic_v2 : ModuleRules
 			"UMG",
 			"Slate",
 			"GameplayDebugger",
-			"NavigationSystem"
+			"NavigationSystem",
+			"Niagara"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });

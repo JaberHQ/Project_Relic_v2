@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 #include "BaseWeapon.generated.h"
 
 UCLASS()
@@ -27,9 +29,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+public:
+	void PlayMuzzleFlash();
+
 protected:
 	/** Skeletal mesh of weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* WeaponSkeletalMeshComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* WeaponMuzzleComponent;
+
+	UPROPERTY(EditAnywhere, Category = "VFX", meta = (AllowPrivateAccess = "true"))
+	float CoefStrength = 1.0f;
+
+	UPROPERTY(EditAnywhere, Category = "VFX")
+	UNiagaraSystem* FireEffectMuzzle;
 
 };

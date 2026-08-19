@@ -235,6 +235,8 @@ void UWeaponComponent::Shoot()
 			// Shoot raycast line
 			RaycastShot();
 
+			PlayGunShotVFX();
+
 			// Try and play the sound if specified
 			PlayGunShotSFX();
 		}
@@ -417,6 +419,15 @@ void UWeaponComponent::PlayGunShotSFX()
 {
 	/*if(WeaponArray[WeaponIndex]->FireSound != nullptr)
 		UGameplayStatics::PlaySoundAtLocation(this, WeaponArray[WeaponIndex]->FireSound, Character->GetActorLocation());*/
+}
+
+void UWeaponComponent::PlayGunShotVFX()
+{
+	if (WeaponArray[WeaponIndex])
+	{
+		WeaponArray[WeaponIndex]->PlayMuzzleFlash();
+	}
+		
 }
 
 
