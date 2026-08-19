@@ -49,6 +49,7 @@ void AEnemyController::BeginPlay()
 
 void AEnemyController::Death()
 {
+	BehaviourTreeComponent->StopLogic("Death");
 }
 
 void AEnemyController::OnPossess(APawn* InPawn)
