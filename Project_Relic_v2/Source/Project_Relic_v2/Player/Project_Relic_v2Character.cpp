@@ -78,7 +78,10 @@ AProject_Relic_v2Character::AProject_Relic_v2Character()
 
 	// Health defaults
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-	
+
+	// UI Component defaults
+	UIComponent = CreateDefaultSubobject<UPlayerUIComponent>(TEXT("UIComponent"));
+
 	// Stamina defaults
 	MaxStamina = 100.0f;
 	CurrentStamina = MaxStamina;

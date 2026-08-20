@@ -11,6 +11,7 @@
 #include "Components/WeaponComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/HealthComponent.h"
+#include "Components/PlayerUIComponent.h"
 #include "AI/Enemy/EnemyController.h"
 #include "Animation/AnimMontage.h"
 #include "UI/PlayerHUDWidget.h"
@@ -78,6 +79,9 @@ class AProject_Relic_v2Character : public ABaseCharacter, public IDeathHandlerIn
 
 	UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true") )
 	UHealthComponent* HealthComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UPlayerUIComponent* UIComponent;
 
 protected:
 
