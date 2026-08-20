@@ -51,11 +51,9 @@ void UPlayerUIComponent::InitInputs()
 		}
 		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
 		{
-			/* ADS (Aim Down Sights) input actions
-				As the aim button should be held and not toggled, two actions are bound */
+			
 			EnhancedInputComponent->BindAction(WeaponWheelAction, ETriggerEvent::Triggered, this, &UPlayerUIComponent::ActivateWeaponWheel);
 			EnhancedInputComponent->BindAction(WeaponWheelAction, ETriggerEvent::Completed, this, &UPlayerUIComponent::DeactivateWeaponWheel);
-
 			
 		}
 	}

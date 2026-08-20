@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "UI/WeaponWheelWidget.h"
+#include "InputActionValue.h"
 #include "WeaponWheelComponent.generated.h"
 
 
@@ -34,6 +35,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool GetIsOpen() const { return bIsOpen; }
+
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")

@@ -3,6 +3,8 @@
 
 #include "Components/WeaponWheelComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Player/Project_Relic_v2Character.h"
+
 
 // Sets default values for this component's properties
 UWeaponWheelComponent::UWeaponWheelComponent()
@@ -48,11 +50,9 @@ void UWeaponWheelComponent::Display()
 		//WeaponWheelWidget = CreateWidget<UWeaponWheelWidget>(GetWorld(), WeaponWheelWidgetClass);
 		WeaponWheelWidget->AddToViewport(0);
 		bIsOpen = true;
-		UGameplayStatics::SetGlobalTimeDilation(GetWorld(),TimeDilation);
+		//UGameplayStatics::SetGlobalTimeDilation(GetWorld(),TimeDilation);
 
 	}
-
-	
 }
 
 void UWeaponWheelComponent::Remove()
@@ -62,8 +62,9 @@ void UWeaponWheelComponent::Remove()
 	{
 		WeaponWheelWidget->RemoveFromViewport();
 		// When closed, Set global dilation back to normal
-		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
+		//UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
 		bIsOpen = false;
 	}
 }
+
 
